@@ -76,25 +76,7 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
-"""
-SOCIALACCOUNT_PROVIDERS = {
 
-	"google": {
-	
-		"APP": {
-			"client_id": "234650295622-4vai92ffjq8p1b8tntakhqupeeaekt5b.apps.googleusercontent.com",
-			"secret": "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",
-			"key": ""
-		
-		}
-	
-	
-	
-	}
-
-
-}
-"""
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
