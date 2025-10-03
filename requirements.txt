@@ -28,7 +28,6 @@ httpx
 inflection
 jsonpointer
 markdown2
-mkl-service
 munkres
 oauthlib
 ollama
