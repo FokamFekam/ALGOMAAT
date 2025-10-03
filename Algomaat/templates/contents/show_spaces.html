@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block scripts %}
+
+ <script   src="{% static 'js/loadSpaceAndPUBLICATIOns.js' %}" type="text/javascript" ></script>    
+
+    <script>
+    			var panier_show_spaces= {};
+      			if( localStorage.getItem('panier') == null )
+    		        {
+    		        	 panier_show_spaces= {};
+    		        
+    		        }
+    		        else
+    		        {
+    		        	 panier_show_spaces = JSON.parse(localStorage.getItem('panier'));
+    		           		        
+    		        }
+                    
+      
+      
+    		const form = document.getElementById("register_participant_form");
+    		form.addEventListener("submit", submitHandler);
+    		
+    		function submitHandler(e)
+    		{
+    		  
+    		    e.preventDefault();			
+    		    post_ajax_form('#register_participant_form', '/registration/new_participant/', $(this).serialize() , 0);
+    		   
+    		        
+    		}
+    		
+    	     
+    		const form2 = document.getElementById("add_participant_form");
+    		form2.addEventListener("submit", submitBucketHandler);
+    		
+    		function submitBucketHandler(e)
+    		{
+    		        addNumberOfParticipants( index, '#participants')
+    			e.preventDefault();
+    			
+    		post_ajax_form('#add_participant_form', '/bucket/add_publications_to_bucket_of_inscriptions/', $(this).serialize() , 1);
+    		          
+    		          
+	    		   for( p=1; p<=index; p++ )
+	    		   {
+	    		      
+	    		   	participe_id = $('#participantId_'+p).val().toString();
+	    		   	pub_id = $('#publication_id').val().toString();
+	    		   	
+	    		   	if( Array.isArray(panier_show_spaces[pub_id]) )
+		                {
+		               	if( panier_show_spaces[pub_id].includes(participe_id) == false )
+		               	{
+		               		panier_show_spaces[pub_id].push(participe_id); 
+		               	}
+		                }
+		                else
+		                {
+		               				
+		               	panier_show_spaces[pub_id] = [participe_id];		
+		                }
+		               			
+	    		   	
+	    		   	
+	    		   	//panier[pub_id] = participant_ids;
+	    		   	
+	    		   	
+	    		   	
+	    		   	console.log("ajouter");
+	    		   
+	    		   }
+	    		   console.log(panier_show_spaces);
+	    		    
+	    		   localStorage.setItem('panier', JSON.stringify(panier_show_spaces));
+	    		   document.getElementById("panier").innerHTML ="Cart("+ Object.keys(panier_show_spaces).length+")";
+	    		   AfficherList();
+    		        
+    		   
+    		}
+    		
+    		 //panier_show_spaces = {};
+    		 //localStorage.setItem('panier', JSON.stringify(panier_show_spaces));
+                 //document.getElementById("panier").innerHTML ="Cart("+ Object.keys(panier_show_spaces).length+")";
+                 
+                 
+                 
+                 
+	function show_add_user_form()
+	{
+
+		
+		$('#selectParticipants').hide();
+		 
+		$('#add_new_participant_div').slideDown();
+
+	}
+	
+	
+	
+	function addParticipantToSelect( id, name , selector )
+	{
+   
+        	
+			 userLine  = '<div id="select_participant_' + id + '" style="margin:15px; width:90%; height:30px;" >'; 
+			 userLine += '<input type="hidden" id="select_participant_name_' + id + '" value="' + name + '" />';
+			 userLine += '<input type="hidden" id="select_participantId_' + id + '" name="select_participantId_' + id + '" value="' + id + '" />';
+			 //userLine += '<span class="" style="float:left; padding:5px; font-size:20px; color:black;" id="select_text_' + id + '">' + name + '</span>';
+			// userLine += '<button type="button" style="float:right; margin-left:5px;" id="select_deleteParticipant_'+ name  +'" class="btn btn-brand bx bxs-trash" style="">  </button>';
+			  userLine += '<button type="button" style="" id="select_addParticipant_'+ id  +'" class="btn btn-brand bx bx-plus-circle" style=""> ' + name + ' </button>';
+			 
+			 userLine  += '</div>'; 
+			$(selector).append(userLine);
+		    	
+		    	//participant_ids.push(id.toString());
+		       $('#select_addParticipant_' + id).click(addParticipantClick);
+				 	     						
+       
+         
+	}
+
+	
+	
+	function show_selected_users()
+	{
+		$.ajax({
+		    url:'/registration/ajax_get_users',
+		    data: {
+		      'username_query':  $('#search_participants').val()
+		    },
+		    dataType: 'json',
+		    success: function (data) 
+		    {
+		          $('#selectParticipants').empty();
+		          $('#selectParticipants').append('<h6>  Select the participant(s) </h6>');
+		          $.each(data, function(key, value) {
+		          
+		   addParticipantToSelect( data[key]["id"],data[key]["username"],'#selectParticipants' )
+		          	
+		          
+		          });
+				
+		          $('#add_new_participant_div').hide();
+		          $('#selectParticipants').slideDown();
+		       
+		       
+		    }
+		});   
+	 
+	 
+	 
+	}
+	
+	
+	       
+                
+    </script>
+      
+         
+      
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<input type="hidden" id="private" name="private" value="{{private}}">
+<input type="hidden" id="for_user" name="for_user" value="{{for_user}}">
+<input type="hidden" id="space_id" name="space_id" value="0">
+
+<div class="container-fluid">
+	<div class="row" style="height:auto;  margin-bottom:0px;">
+		        <div class="col-12">
+		            <div class="intro">
+		            {% if for_user == 1 %}
+		                <h6>My Spaces</h6>
+		            {% else %}
+		            	 <h6>  Spaces</h6>
+		            {% endif %} 
+		                <h1>My Publications</h1>
+		             {% if for_user == 1 %}
+		                <p class="mx-auto"> Here you can edit and add your Publications</p>
+		             {% else %}
+		             	 <p class="mx-auto"> Here, you can choose and buy the Publications</p>
+		             {% endif %} 
+		            </div>
+		        </div>
+	 </div>
+	 <section id="spaceContents"  class="text-center" style=" margin-top:-30px;">
+	 	
+	       
+	       
+	       
+	 
+	 
+	 </section>
+
+</div>
+
+  <!-- Memory Modal -->
+    <div class="modal fade" style="" id="modal-memory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row gy-1">
+                            <div class="col-lg-1 col-sm-12 "
+                                style="background-image: url({% static 'img/icon1.png' %}"); min-height:300px;">
+                                <div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-8" style="text-align:center;">
+       
+       			     <div id="loader" style ="">
+                                        <h1 style="color:var(--brand);">loader ...</h1>
+                                    </div>
+                                    <div id="save-succes" style ="display:none;">
+                                        <h1 style="color:var(--brand);">Succes! Content saved.</h1>
+                                    	  <p style="color:black;">Your publication is  saved into your memory </p>
+                                    </div>
+                                    
+                                    
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+<!-- Content to link Modal -->
+   <div class="modal fade" id="modal-pub-to-link" tabindex="-1" aria-labelledby="modalPubToLinkLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row gy-4">
+                           <!-- <div class="col-lg-4 col-sm-12 bg-cover"
+                                style="background-image: url({% static 'img/c2.jpg' %}"); min-height:300px;">
+                                <div>
+                                    
+                                </div>
+                            </div> -->
+                            <div class="col-lg-20 text-center">
+                               
+                                    <div>
+                                        <h1>Publications to link</h1>
+                                    <p>search and link your publication</p>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <label for="searchPublication" class="form-label">Search by Publication</label>
+                                        <input type="text" class="form-control" placeholder="Search by Publication ..." id="userName" name="content"
+                                            aria-describedby="searchPublication" style="">
+                                         <button type="submit" style=" margin-top:10px; " class="btn btn-brand">Search</button>
+                                    </div>
+                                    <div id="loader" style ="display:none;">
+                                        <h1 style="color:var(--brand);">loader ...</h1>
+                                    </div>
+                                    <div class="col-lg-6" id="relation-succes" style ="display:none;">
+                                        <h1 style="color:var(--brand);">Succes! Relation Created.</h1>
+                                    	  <p style="color:black;">The Relation between your pubications has been created </p>
+                                    </div>
+                                    <div class="col-lg-6" id="relation-failed" style ="display:none;">
+                                        <h1 style="color:var(--brand);">Failed! Relation Not Created.</h1>
+                                    	  <p style="color:black;">The Relation between your publications already exists </p>
+                                    </div>
+                                    <div  id="contents_to_link" style="overflow:scroll; height:300px;margin-top:50px;" class="p-lg-5 col-12 row g-3 text-center">
+                                       
+                                       
+                                       
+                                       
+                                    </div>
+                                    
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+ 
+ 
+<!-- Register participant  Modal -->
+   <div class="modal fade" id="modal-participant-to-add" tabindex="-1" aria-labelledby="modalPubToLinkLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row gy-4">
+                          
+                            <div class="col-lg-12 text-center" style="width:100%;" >
+                               
+                                    <div>
+                                        <h3><span>Add Participants to </span> <span style="color:var(--brand);" id="inscription_title" > Cours Niveau 1 </span></h3>
+                                    <p> here you can register a participant to an publication</p>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <!--<label for="searchUser" class="form-label">Search by Name:</label>-->
+     <input type="text" class="form-control" placeholder="Search by User names ..." id="search_participants" name="search_participant_name" aria-describedby="searchUser">
+         <button type="submit" onclick="show_selected_users()" style=" margin-top:10px; " class="btn btn-brand">Search</button>
+   <button  onclick="show_add_user_form()" style="margin-left:10px; margin-top:10px;" class="btn btn-brand">Add new participant?</button>
+                                         
+                                         
+                                            <div id="selectParticipants" class="row" style="display:none; overflow-y:scroll; margin-top:10px; padding:5px; background-color:#EDF2F4;  width:60%; margin-left:18%;  height:200px;"> 
+                                            
+                                            
+                                             </div>
+                                             
+                                             
+                              <div id="add_new_participant_div" class="row" style="width:60%; margin-left:18%; margin-top:10px; padding:5px; height:auto;  display:none;">
+                                	 <form method="post"  id="register_participant_form" class="">
+                                    {% csrf_token %}
+                                    <div>
+                                        <h6>Add new Participant</h6>
+                                    	 <hr/>
+                                    </div>
+                                    <div class="row">
+                                        <label for="username" class="form-label">User:</label>
+                                        <input type="text" class="form-control" placeholder="Username..." name="username" id="p_username"
+                                            aria-describedby="username">
+                                    </div>
+                                    <div class="row">
+                                       <label for="email" class="form-label">Email:</label>
+                                        <input type="text"  class="form-control" placeholder="Email..." name="email" id="p_email"
+                                            aria-describedby="email">
+                                    </div>
+                                    
+                                    <div class="row">
+                                       <label for="password" class="form-label">Password:</label>
+                                        <input type="text"  class="form-control" placeholder="Password..." name="password" id="p_password"
+                                            aria-describedby="password">
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <button type="submit" style="margin-top:10px;" class="btn btn-brand">Add new participant</button>
+                                    </div>
+                                </form>
+                                
+                                
+                            </div>  
+                            
+                                             
+                                             
+                                    </div>
+                                    
+                                    
+                                    
+                                    <form method="post"  id="add_participant_form">
+			    		 {% csrf_token %}
+			    		 <input type="hidden" id="publication_id" name="publication_id" value="" />
+		       		 <input type="hidden" id="space_to_buy_id" name="space_to_buy_id" value="" />
+		       		     
+		                            <div  id="participants" style="overflow-y:scroll; height:200px; margin-top:50px;" class="p-lg-5 col-12 row g-3 text-center">
+		                               <h6>Selected Participant(s)</h6>
+		                               
+		                               	
+		                               
+		                            </div>
+		                            <div style="margin-bottom:30px;" class="col-lg-10 text-center">
+				                         <button type="submit" id="btn_add_participants_to_bucket" style=" margin-top:10px; " class="btn btn-brand">Add to bucket
+				                         </button>
+		                            	</div> 
+		                            
+                                    </form>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+   
+
+{% endblock %}
+
+
+

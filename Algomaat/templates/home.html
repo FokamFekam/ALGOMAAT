@@ -1,0 +1,513 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+	Take your Meeting!
+{% endblock %}
+	
+{% block content %} 
+{% load static %}   
+  <!-- SLIDER -->
+    <div class="owl-carousel owl-theme hero-slider">
+    
+        <div class="slide slide1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center text-white">
+                        <h6 class="text-white text-uppercase">Robotique- Game 2D/3D Programming - Intelligence Artifielle -Developpement Applications</h6>
+                        <h1 class="display-3 my-4">Apprentissage pour<br />Enfants</h1>
+                        {% if not user.is_authenticated %}
+                		<a href="{% url 'registration:new_user' %}"  class="btn btn-brand">Register? </a> 
+                	 {% else %}
+                	 	 <a href="#" class="btn btn-brand">Get Started</a>
+               	 {% endif %}
+                       
+                        <a href="#" class="btn btn-outline-light ms-3">Our work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide slide2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-10 offset-lg-1 text-white">
+                        <h6 class="text-white text-uppercase">Microbit programming  for kids</h6>
+                        <h1 class="display-3 my-4">Robotique & <br /> Intelligence Artificielle </h1>
+                         {% if not user.is_authenticated %}
+                		<a href="{% url 'registration:new_user' %}"  class="btn btn-brand">Register ?</a> 
+                	 {% else %}
+                	 	 <a href="#" class="btn btn-brand">Get Started</a>
+               	 {% endif %}
+                        <a href="#" class="btn btn-outline-light ms-3">Our work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+         <div class="slide slide3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-10 offset-lg-1 text-white">
+                        <h6 class="text-white text-uppercase">Roblox- Scratch - Web - Android </h6>
+                        <h1 class="display-3 my-4"> 2D/3D Game Programming  & <br/> Developpement d'applications </h1>
+                         {% if not user.is_authenticated %}
+                		<a href="{% url 'registration:new_user' %}"  class="btn btn-brand">Register ?</a> 
+                	 {% else %}
+                	 	 <a href="#" class="btn btn-brand">Get Started</a>
+               	 {% endif %}
+                        <a href="#" class="btn btn-outline-light ms-3">Our work</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+             
+    </div>
+    
+    
+    
+    
+    
+    <section id="services" class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="intro">
+                        <h6>Nos Services</h6>
+                        <h1>Que faisons-nous?</h1>
+                        <p class="mx-auto">
+                           Chez <span style="color:var(--brand);"> Algomaat</span>, nous croyons que chaque enfant peut devenir acteur du monde digital de demain. À travers des ateliers ludiques, des projets concrets et des outils adaptés à chaque âge, nous aidons nos élèves à transformer leurs idées en programmes, applications, jeux et animations. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div  class="row g-4">
+            
+              <div  class="row" style="background-color: #efefef;   margin-bottom:20px; border-radius:5px;" >
+              
+                <div class="col-lg-4 col-md-6">
+                    <div class="service">
+                        <img src="{% static 'img/CAT3.png' %}" alt="">
+                        <h5 style="color:var(--brand);">2D/3D Game Programming <br/>[Scratch - Roblox]</h5>
+                        <p> Grâce à nos outils pédagogiques, vos enfants pourront programmer leurs jeux vidéo en 2D ou en 3D.</p>
+                        <a href="/publications/58/17/" style="color:#fff; margin:2px; padding:4px; padding-bottom:7px; width:10%;  background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                    
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service">
+                        <img src="{% static 'img/CAT3.png' %}" alt="">
+                        <h5 style="color:var(--brand);">2D Game Programming <br/>[ Scratch ]</h5>
+                        <p> Grâce à nos outils pédagogiques, vos enfants pourront eux-mêmes programmer leurs jeux vidéo en 2D.</p>
+                        <a href="/publications/18/" style="color:#fff; margin:2px; padding:4px;  padding-bottom:7px; width:10%; background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                    
+                </div>
+                
+                 <div class="col-lg-4 col-md-6">
+                    <div class="service">
+                        <img src="{% static 'img/CAT3.png' %}" alt="">
+                        <h5 style="color:var(--brand);">3D Game Programming <br/>[ Roblox ]</h5>
+                        <p> Grâce à nos outils pédagogiques, vos enfants pourront eux-mêmes programmer leurs jeux vidéo en 3D.</p>
+                        <a href="/publications/19/" style="color:#fff; margin:2px; padding:4px;  padding-bottom:7px; width:10%; background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                    
+                </div>
+                
+                
+            </div>
+            
+           <div  class="row" style="background-color: #efefef;   margin-bottom:20px; border-radius:5px; " >   
+           
+                <div class="col-lg-4 col-md-6">
+                    <div class="service">
+                        <img src="{% static 'img/CATA5.png' %}" alt="">
+                        <h5 style="color:var(--brand);">Robotique pour enfants</h5>
+                        <p >Construction et programmation de robots à partir des plans de montage de nos differents modèles de robot,  et de notre kit Microcontroller necessaire pour la pratique. </p>
+                         <a href="/publications/57/16/" style="color:#fff; margin:2px; padding:4px;  padding-bottom:7px; width:10%; background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service">
+                        <img src="{% static 'img/CATA4.png' %}" alt="">
+                        <h5 style="color:var(--brand);">Intelligence Artificielle pour enfants</h5>
+                        <p > Vos enfants pourront entrer dans le monde de la programmation en intelligence artificielle grâce à des projets et à nos approches pédagogiques.</p>
+                        <a href="/publications/55/12/" style="color:#fff; margin:2px; padding:4px;  padding-bottom:7px; width:10%; background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service">
+                        <img src="{% static 'img/CATA2.png' %}" alt="">
+                        <h5 style="color:var(--brand);">Developpement d'applications <br/>[ Web - Android ]</h5>
+                        <p >Grâce à nos outils pédagogiques, vos enfants pourront eux-mêmes programmer leurs applications Web et Android.</p>
+                         <a href="/publications/56/13/" style="color:#fff; margin:2px; padding:4px;  padding-bottom:7px; width:10%; background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                </div>
+               
+         </div>
+         
+         
+         <div  class="row" style="background-color: #efefef; margin-bottom:10px; border-radius:5px;" >  
+         
+                <div class="col-lg-4 col-md-6"  style="border-radius:10px;" >
+                    <div class="service">
+                        <img src="{% static 'img/CATA2.png' %}" alt="">
+                        <h5 style="color:var(--brand);">Developpement d'applications <br/> [ Web ] </h5>
+                        <p >Grâce à nos outils pédagogiques, vos enfants pourront eux-mêmes programmer leurs applications Web.</p>
+                         <a href="/publications/14/" style="color:#fff; margin:2px; padding:4px;  padding-bottom:7px; width:10%; background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6"  style="border-radius:10px;"  >
+                    <div class="service">
+                        <img src="{% static 'img/CATA2.png' %}" alt="">
+                        <h5 style="color:var(--brand);">Developpement d'applications <br/> [ Android ]</h5>
+                        <p >Grâce à nos outils pédagogiques, vos enfants pourront programmer eux-mêmes leurs applications Android.</p>
+                         <a href="/publications/15/" style="color:#fff; margin:2px; padding:4px;  padding-bottom:7px; width:10%;  background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;"> 
+                		&nbsp; plus d'infos... &nbsp;
+               	</a>
+                    </div>
+                </div>
+                
+        </div>
+        
+        
+              
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    
+    <!-- ABOUT -->
+   <!-- <section id="about">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 py-5">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="info-box">
+                                <img src="{% static 'img/icon6.png' %}" alt="">
+                                <div class="ms-4">
+                                    <h5>Digital Marketing</h5>
+                                    <p>It is a long established fact that a reader will be distracted by the readable
+                                        content of a page </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="info-box">
+                                <img src="{% static 'img/icon4.png' %}" alt="">
+                                <div class="ms-4">
+                                    <h5>E-mail Marketing</h5>
+                                    <p>It is a long established fact that a reader will be distracted by the readable
+                                        content of a page </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="info-box">
+                                <img src="{% static 'img/icon5.png' %}" alt="">
+                                <div class="ms-4">
+                                    <h5>Buisness Marketing</h5>
+                                    <p>It is a long established fact that a reader will be distracted by the readable
+                                        content of a page </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <img src="{% static 'img/ROBOT.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- MILESTONE -->
+    <section id="milestone">
+        <div class="container">
+            <div class="row text-center justify-content-center gy-4">
+                <div class="col-lg-2 col-sm-6">
+                    <h1 class="display-4">90K+</h1>
+                    <p class="mb-0">Happy Clients</p>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <h1 class="display-4">45M</h1>
+                    <p class="mb-0">Lines of code</p>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <h1 class="display-4">190</h1>
+                    <p class="mb-0">Total Downloads</p>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <h1 class="display-4">380K</h1>
+                    <p class="mb-0">YouTube Subscribers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="intro">
+                        <h6>Work</h6>
+                        <h1>Successful projects</h1>
+                        <p class="mx-auto">Contrary to popular belief, Lorem Ipsum is not simply random text. It has
+                            roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="projects-slider" class="owl-theme owl-carousel">
+            <div class="project">
+                <div class="overlay"></div>
+                <img src="{% static 'img/game1.jpg' %}" alt="">
+                <!-- <img src="{% static 'img/scratch.png' %}" alt=""> -->
+                <div class="content">
+                    <h2>2D Game Programming</h2>
+                    <h6>Website Design</h6>
+                </div>
+            </div>
+            <div class="project">
+                <div class="overlay"></div>
+                <img src="{% static 'img/game1.jpg' %}" alt="">
+               <!-- <img src="{% static 'img/IA2.png' %}" alt=""> -->
+                <div class="content">
+                    <h2> Portail automatique avec Intelligence Artificielle</h2>
+                    <h6>Website Design</h6>
+                </div>
+            </div>
+            <div class="project">
+                <div class="overlay"></div
+                <img src="{% static 'img/game1.jpg' %}" alt="">
+                <div class="content">
+                    <h2>Developpement d'une application de Quizz </h2>
+                    <h6>Website Design</h6>
+                </div>
+            </div>
+            <div class="project">
+                <div class="overlay"></div>
+                <img src="{% static 'img/game1.jpg' %}" alt="">
+                <div class="content">
+                    <h2>3D Game Programming</h2>
+                    <h6>Roblox Studio</h6>
+                </div>
+            </div>
+            <div class="project">
+                <div class="overlay"></div>
+               <!-- <img src="{% static 'img/robot1.png' %}" alt=""> -->
+                <img src="{% static 'img/game1.jpg' %}" alt="">
+                <div class="content">
+                    <h2>Robot Chien</h2>
+                    <h6>Website Design</h6>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="intro">
+                        <h6>Team</h6>
+                        <h1>Team Members</h1>
+                        <p class="mx-auto">Contrary to popular belief, Lorem Ipsum is not simply random text. It has
+                            roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-8">
+                    <div class="team-member">
+                        <div class="image">
+                            <img src="{% static 'img/team_1.jpg' %}" alt="">
+                            <div class="social-icons">
+                                <a href="#"><i class='bx bxl-facebook'></i></a>
+                                <a href="#"><i class='bx bxl-twitter'></i></a>
+                                <a href="#"><i class='bx bxl-instagram'></i></a>
+                                <a href="#"><i class='bx bxl-pinterest'></i></a>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+
+                        <h5>Marvin McKinney</h5>
+                        <p>Marketing Coordinator</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="team-member">
+                        <div class="image">
+                            <img src="{% static 'img/team_2.jpg' %}" alt="">
+                            <div class="social-icons">
+                                <a href="#"><i class='bx bxl-facebook'></i></a>
+                                <a href="#"><i class='bx bxl-twitter'></i></a>
+                                <a href="#"><i class='bx bxl-instagram'></i></a>
+                                <a href="#"><i class='bx bxl-pinterest'></i></a>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+
+                        <h5>Kathryn Murphy</h5>
+                        <p>Ethical Hacker</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8">
+                    <div class="team-member">
+                        <div class="image">
+                            <img src="{% static 'img/team_3.jpg' %}" alt="">
+                            <div class="social-icons">
+                                <a href="#"><i class='bx bxl-facebook'></i></a>
+                                <a href="#"><i class='bx bxl-twitter'></i></a>
+                                <a href="#"><i class='bx bxl-instagram'></i></a>
+                                <a href="#"><i class='bx bxl-pinterest'></i></a>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+
+                        <h5>Darrell Steward</h5>
+                        <p>Software Developer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!--
+    <section class="bg-light" id="reviews">
+
+        <div class="owl-theme owl-carousel reviews-slider container">
+            <div class="review">
+                <div class="person">
+                    <img src="{% static 'img/team_1.jpg' %}" alt="">
+                    <h5>Ralph Edwards</h5>
+                    <small>Market Development Manager</small>
+                </div>
+                <h3>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut quis, rem culpa labore voluptate
+                    ullam! In, nostrum. Dicta, vero nihil. Delectus minus vitae rerum voluptatum, excepturi incidunt ut,
+                    enim nam exercitationem optio ducimus!</h3>
+                <div class="stars">
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class="bx bxs-star-half"></i>
+                </div>
+                <i class='bx bxs-quote-alt-left'></i>
+            </div>
+            <div class="review">
+                <div class="person">
+                    <img src="{% static 'img/team_2.jpg' %}" alt="">
+                    <h5>Ralph Edwards</h5>
+                    <small>Market Development Manager</small>
+                </div>
+                <h3>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut quis, rem culpa labore voluptate
+                    ullam! In, nostrum. Dicta, vero nihil. Delectus minus vitae rerum voluptatum, excepturi incidunt ut,
+                    enim nam exercitationem optio ducimus!</h3>
+                <div class="stars">
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class="bx bxs-star-half"></i>
+                </div>
+                <i class='bx bxs-quote-alt-left'></i>
+            </div>
+            <div class="review">
+                <div class="person">
+                    <img src="{% static 'img/team_3.jpg' %}" alt="">
+                    <h5>Ralph Edwards</h5>
+                    <small>Market Development Manager</small>
+                </div>
+                <h3>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut quis, rem culpa labore voluptate
+                    ullam! In, nostrum. Dicta, vero nihil. Delectus minus vitae rerum voluptatum, excepturi incidunt ut,
+                    enim nam exercitationem optio ducimus!</h3>
+                <div class="stars">
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class="bx bxs-star-half"></i>
+                </div>
+                <i class='bx bxs-quote-alt-left'></i>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="intro">
+                        <h6>Blog</h6>
+                        <h1>Blog Posts</h1>
+                        <p class="mx-auto">Contrary to popular belief, Lorem Ipsum is not simply random text. It has
+                            roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <article class="blog-post">
+                        <img src="{% static 'img/project5.jpg' %}" alt="">
+                        <a href="#" class="tag">Web Design</a>
+                        <div class="content">
+                            <small>01 Dec, 2022</small>
+                            <h5>Web Design trends in 2022</h5>
+                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                                piece of classical Latin literature from</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="blog-post">
+                        <img src="{% static 'img/project4.jpg' %}" alt="">
+                        <a href="#" class="tag">Programming</a>
+                        <div class="content">
+                            <small>01 Dec, 2022</small>
+                            <h5>Web Design trends in 2022</h5>
+                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                                piece of classical Latin literature from</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="blog-post">
+                        <img src="{% static 'img/project2.jpg' %}" alt="">
+                        <a href="#" class="tag">Marketing</a>
+                        <div class="content">
+                            <small>01 Dec, 2022</small>
+                            <h5>Web Design trends in 2022</h5>
+                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                                piece of classical Latin literature from</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+-->
+    
+{% endblock %}
+    
+

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+<!--<script src="{% static 'js/show_PAIEMEnts.js' %}" type="text/javascript"></script> -->
+<!-- <link href="{% static 'css/show_paiements.css' %}" rel="stylesheet" type="text/css"> -->
+{% endblock %}
+{% block content %}
+
+<div class="container" style="height:auto;  margin-bottom:0px;">
+                <div class="col-12">
+                    <div class="intro">
+                        <h3 style="color:var(--brand);"><i class='bx bxs-pencil'></i></h3>
+                        <h2> My Lessons </h2>
+                        <p class="mx-auto"> Here you can read all your lessons.</p>
+                    </div>
+                </div>
+ </div>
+ <div id="contentsOfPaiements"  class="text-center" style=" margin-top:-30px;">
+ 	
+ 		{% for event_themes in  results %}
+       		<div id="paiement" class="container" style="background-color: #DAD7CD;  margin-bottom:50px;" >
+       		{% if user.groups.all.0.name == 'Admin'  %}
+       			<span class="btn btn-brand bx bxs-cart"  style="background-color:var(--brand); margin-bottom:5px;  margin-top:10px; padding:5px 5px; width:180px;  text-align:center; border-radius: 100px; font-size:14px; color: #fff; font-family:Helvetica;" ><b> {{event_themes.price}} FCFA</b></span>
+       		{%  endif %}	
+       			
+       			<h3 style="color:var(--brand);"> {{event_themes.title}}</h3>
+       			
+       			<div id="allContents" style=" padding-bottom:20px; margin-top:10px;" class="row g-4">
+       				
+       				{% for event in  event_themes.events %}
+       				<div id="" class="container" style="background-color:#fff; width:80%; margin-left:8%; margin-rigth:8%; margin-top:20px;" >
+       					<h4 style=""> {{event.title}} </h4>
+       					<span style="color:var(--brand); ">[ {{event.start_time}}  &nbsp;&nbsp; to &nbsp;&nbsp; {{event.end_time}}  ]</span>
+						
+						<table style="background-color:#efefef; width:97%; margin:10px;" class="bordered-table zebra-striped">
+       						<thead>
+       							<tr>
+       								<th> Theme  </th>
+       								<th> Type  </th>
+       								<th> Classes  </th>
+       								<th> Url  </th>
+       							</tr>
+       						</thead>
+       						<thead>
+       						     						
+       						<tbody>		
+       							{% for event_theme_objects in event.eventthemes %}
+       							     {% for event_theme in event_theme_objects %}
+       								<tr>
+	       								<th style="color:var(--brand);" > {{event_theme.theme.title}}  </th>
+	       								{%  if event_theme.theme.t_type == 1  %} 
+	       									<th style="color:var(--brand);"> Cours </th>
+	       								{% else %} 
+	       									<th style="color:var(--brand);" > Examen </th>
+	       								 {% endif %} 
+	       								 
+	       								 <th style="color:var(--brand);" > 
+	       								  {% for classe in event_theme.theme.classes.all %}
+	       								  
+	       								 	<span> {{classe.name}}   </span><br/>
+	       								
+										  {% endfor %}
+	       								 </th>
+	       								  
+	       								 
+	       								 
+	       								<th> <a target="_blank" rel="noopener noreferrer" href="{{event_theme.link_url}}"  style="color:var(--brand);" > show </a>  </th>
+       								</tr>
+       							      {% endfor %}
+       							{% endfor %}
+       						</tbody>
+       					</table>
+       				</div>
+       				{% endfor %}
+       			</div>
+       		
+       		
+       		</div>
+ 		{% endfor %}
+ 
+ </div>
+
+
+
+
+
+{% endblock %}

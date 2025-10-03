@@ -1,0 +1,43 @@
+from .event_list import AllEventsListView, RunningEventsListView
+from .other_views import (
+    CalendarViewNew,
+    CalendarView,
+    create_event,
+    EventEdit,
+    event_details,
+    create_file,
+    create_link,
+    add_eventmember,
+    EventMemberDeleteView,
+    delete_event,
+    next_week,
+    next_day,
+    event_all_weeks,
+    add_meeting,
+    update_meeting_link,
+    save_event_theme,
+    event_themes,
+)
+
+
+__all__ = [
+    AllEventsListView,
+    RunningEventsListView,
+    CalendarViewNew,
+    CalendarView,
+    create_event,
+    EventEdit,
+    event_details,
+    create_file,
+    create_link,
+    add_eventmember,
+    EventMemberDeleteView,
+    delete_event,
+    next_week,
+    next_day,
+    event_all_weeks,
+    add_meeting,
+    update_meeting_link,
+    save_event_theme,
+    event_themes,
+]

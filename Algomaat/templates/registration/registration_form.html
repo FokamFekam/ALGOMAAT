@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% load socialaccount %}
+
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="height:auto; padding:10px; margin-bottom:0px;">
+                <div class="col-12">
+                    <div class="intro">
+                      
+                        <h3 style="color:var(--brand);" > <i class='bx bxs-user'></i>Register </h3>
+                       
+                       <p style="color:black;" class="mx-auto"> Here you can create new User Account .</p>
+                    </div>
+                </div>
+                
+               		 
+	
+		  
+                 
+ </div>
+ <div id=""   class="container text-center" style="width:80%; height:600px; padding:10px; margin-bottom:50px; background-color:#DAD7CD;" >
+ 	   
+ 	   	 
+	 
+        
+     <a href="{% provider_login_url 'google' %}" style="text-decoration:none;"> <b style="color:var(--brand);"> <i class='bx bxl-gmail'></i> Sign with Google?</b></a>
+ 
+            
+            <!-- Register Form -->
+             
+                           <div style=" width:80%; height:80%; margin-top:4%; margin-left:10%; padding-bottom:10px; background-color:#fff;" class="text-center container">
+                               <form method="post" action="." enctype="multipart/form-data" class="p-lg-5 col-12 row g-3">
+                                     {% csrf_token %}
+                                   <div style="margin-top:-40px;">
+                                        <h4>Registration</h4>
+                                    <p>Please, full all fields to create your new account </p>
+                                    </div> 
+                                    {% for field in form %}
+                                      {% if field.errors %}
+		                            <div class="col-lg-6">
+		                                <label for="" class="form-label">{{ field.label_tag }}</label>
+		                                <div class="form-control">
+		                                	{{ field }}
+		                                	<span class="help-inline">{{ field.errors|join:", " }}</span>
+		                                </div>
+		                                
+		                            </div>
+                                    	{% else %}
+		                            		                             
+		                              <div class="col-lg-6">
+		                                <label for="" class="form-label">{{ field.label_tag }}</label>
+		                                <div class="form-control">
+		                                	{{ field }}
+		                                </div>
+		                             </div>
+		                             
+		                       {% endif %}
+                                    {% endfor %}
+                                     
+                                    <div style="height:40px; width:100%; margin-bottom:20px; margin-top:20px;" class="container">
+                                        <button type="submit" style="height:40px; width:100px;" class="btn btn-brand">Create</button>
+                                    </div>
+                                    
+                                    </form>
+                            </div>
+                    
+ 							
+	
+           <!-- end Register Form -->
+           
+   
+ </div>
+
+
+
+
+{% endblock %}
