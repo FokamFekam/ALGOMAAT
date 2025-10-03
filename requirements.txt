@@ -8,8 +8,6 @@ backports.weakref
 bcrypt
 black
 clyent
-conda-repo-cli
-conda-verify
 django-allauth
 django-channels
 django-htmx
