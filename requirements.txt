@@ -57,3 +57,4 @@ sqlparse
 txaio
 typing-inspection
 typing_extensions
+daphne
