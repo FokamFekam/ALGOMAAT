@@ -60,3 +60,4 @@ typing_extensions
 daphne
 jwt
 Pillow
+channels
