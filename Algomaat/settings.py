@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 
+"""
+
 import os
 from pathlib import Path
 from decouple import config
@@ -192,6 +194,8 @@ STATICFILES_DIRS = [
 	os.path.join(BASE_DIR, 'Algomaat/static')
 ]
 
+STATIC_ROOT = BASE_DIR/'staticfiles'
+
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Algomaat/static/')
@@ -208,15 +212,6 @@ MEDIA_URL = "/Algomaat/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 #configuration parameterEmail configuration setting
-"""
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST="smtp.gmail.com" 
-EMAIL_HOST_USER="remeetsa.entreprise@gmail.com"
-EMAIL_PORT=587
-EMAIL_HOST_PASSWORD="zjrf irmp wkdk ydrb"
-EMAIL_USE_TLS=True
-"""
-
 
 
 
