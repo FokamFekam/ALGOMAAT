@@ -188,22 +188,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "staticfiles/"
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-	os.path.join(BASE_DIR, 'Algomaat/staticfiles')
+	os.path.join(BASE_DIR, 'Algomaat/static')
 ]
 
 STATIC_ROOT = BASE_DIR/'staticfiles'
 
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'Algomaat/staticfiles/')
+MEDIA_ROOT = BASE_DIR/'mediafiles'
+
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = "/Algomaat/staticfiles/"
+#MEDIA_URL = "/Algomaat/staticfiles/"
+MEDIA_URL = "/media/"
 
 
 # Default primary key field type
