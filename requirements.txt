@@ -7,7 +7,6 @@ Automat
 backports.weakref
 bcrypt
 black
-clyent
 django-allauth
 django-channels
 django-htmx
