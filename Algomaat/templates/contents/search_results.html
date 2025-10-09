@@ -16,7 +16,7 @@
 		            </div>
 		        </div>
 	 </div>
-	 <section id="spaceContents"  class="container text-center" style="background-color: #efefef;  margin-bottom:50px;">
+	 <section id="spaceContents"  class="text-center" style="background-color: #efefef;  margin-bottom:50px;">
 	     
 	      <h3>Your Search: {{object_list.query}}</h3>
 	      
@@ -26,7 +26,7 @@
 	 		
 	 	{% for publication in object_list.results %}
 	       
-	        	<div id="" style="width:32%;" class="col-lg-4 col-md-6">
+	        <div id="" class="col-lg-4 col-md-6">
 	       		
 	       		<div   id=""  style="border-radius:10px;"  class="service container">
 	       		      {% if publication.categorie.id == 1 %}
@@ -57,7 +57,7 @@
 	       				
 	       				{% endfor %}
 	       				<div id="" class="" style="background-color:#fff; color:var(--brand); border-radius:30px; font-size:17px; font-weight:normal; border-radius:0px; width:90%; margin:10px; padding:10px;">
-	       					<p  id="" style="font-family:Helvetica; font-size:13px; font-weight:lighter; color: #46494B;" class="mx-auto"> {{publication.description }} </p>      					
+	       					<p  id="" style="font-family:Helvetica; font-size:15px; font-weight:lighter; color: #46494B;" class="mx-auto"> {{publication.description }} </p>      					
 	       				
 	       				</div>
 	       				<!--
@@ -85,7 +85,7 @@
 	 		</div>
 	 	{% endfor %}
 	 	</div>
-	 </section>
+	</section>
 
 </div>
 

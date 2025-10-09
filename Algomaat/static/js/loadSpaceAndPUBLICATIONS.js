@@ -302,7 +302,7 @@ function addPublications(data, id1, spaceId)
 				     		
 		 content += '<div id="infos_'+ id1 + '_' + spaceId + '_'+ data[key]['id'] +'" class="" style="background-color:#fff; color:var(--brand); border-radius:30px; font-size:17px; font-weight:normal; border-radius:0px; width:90%; margin:10px; padding:10px;">'
 			
-	 		content += '<p   id="description_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'" style="font-family:Helvetica; font-size:13px; font-weight:lighter; color: #46494B;" class="mx-auto">'+  data[key]['description'] +'<p>';
+	 		content += '<p   id="description_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'" style="font-family:Helvetica; font-size:15px; font-weight:lighter; color: #46494B;" class="mx-auto">'+  data[key]['description'] +'<p>';
 				 	
 	        content += ' </div>';
 	         if($('#for_user').val() == 1)
