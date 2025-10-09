@@ -267,23 +267,23 @@ function addPublications(data, id1, spaceId)
 		   content +='<div   id="service_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="border-radius:10px;"  class="service">';
 		  if(data[key]['categorie'] == 1)
 		  {
-	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/Algomaat/static/img/iconeG.png" alt="">';
+	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/static/img/iconeG.png" alt="">';
 		  }
 		  else if(data[key]['categorie'] == 2)
 		  {
-	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/Algomaat/static/img/iconeI.png" alt="">';
+	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/static/img/iconeI.png" alt="">';
 		  }
 		  else if(data[key]['categorie'] == 3)
 		  {
-	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/Algomaat/static/img/iconeR.png" alt="">';
+	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/static/img/iconeR.png" alt="">';
 		  }
 		   else if(data[key]['categorie'] == 4)
 		  {
-	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/Algomaat/static/img/iconeD.png" alt="">';
+	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/static/img/iconeD.png" alt="">';
 		  }
 		  else if(data[key]['categorie'] == 5)
 		  {
-	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/Algomaat/static/img/iconeG.png" alt="">';
+	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/static/img/iconeG.png" alt="">';
 		  }
 		  
 		  
