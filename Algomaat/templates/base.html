@@ -62,17 +62,19 @@
 	    {% endif %}
             <div class="collapse navbar-collapse"  id="navbarNav">
              
-             {% if  user.is_authenticated %}
+             
                 <ul class="navbar-nav ms-auto">
+
+                    {% if  user.is_authenticated %}
                     <li class="nav-item">
                         
-			 <a class="nav-link" href="{% url 'contents:all_public_spaces' %}"> Browse </a>
+			            <a class="nav-link" href="{% url 'contents:all_public_spaces' %}"> Browse </a>
                        
                     </li>
                     
                                        
                     <li class="nav-item">
-			  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#dropdown-menu"
+			            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#dropdown-menu"
                 aria-controls="dropdown-menu" aria-expanded="false" >MySpaces</a>
 			  <ul id="dropdown-menu" style=""  class=" collapse " >
 			      <li class="nav-item" ><a class="nav-link"  data-bs-toggle="modal" data-bs-target="#new-space-modal" href="#" >+ Space</a></li>
@@ -88,7 +90,7 @@
 			   </ul>
 		     </li>
 		     
-		     <li class="nav-item">
+		            <li class="nav-item">
                         <a class="nav-link" href="{% url 'calendarapp:calendar' %}">Calendar </a>
                     </li>
 		     
@@ -125,26 +127,20 @@
 			    	      
 			   </ul>
 		     </li>
+             {% else %}
      	             
-                </ul>
-                
-
-                
-                {% else %}
-
                  <input type="hidden" id="connected_user" name="connected_user" value="0" />
-              <ul class="navbar-nav ms-auto">
-                                         
-                                   
-                     <li class="nav-item">
-                	<a  class="btn btn-brand bx bxs-user ms-lg-3"  href="{% url 'registration:new_user' %}">Register</a>
+                    <li  class="nav-item">
+                	    <a  class="nav-link bx bxs-user"  href="{% url 'registration:new_user' %}">Register</a>
                     </li>
                     
                      <li class="nav-item">
-                	<a  class="btn btn-brand bx bxs-log-in ms-lg-3"  href="{% url 'registration:login' %}">Login</a>
+                	    <a  class="nav-link bx bxs-log-in"  href="{% url 'registration:login' %}">Login</a>
                     </li>
-              </ul>
-                {% endif %}
+             {% endif %}
+                </ul>
+                
+              
             </div>
         </div>
         
