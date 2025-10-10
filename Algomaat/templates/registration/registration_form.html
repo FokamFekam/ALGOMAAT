@@ -29,12 +29,13 @@
                     <div style=" width:100%; height:10%; margin-top:1%; " class="row text-center">          
                         <a href="{% provider_login_url 'google' %}" style="text-decoration:none;"> <b style="color:var(--brand);"> <i class='bx bxl-gmail'></i> Sign with Google?</b></a>
                     </div>
-                    <form method="post" action="." enctype="multipart/form-data" class="p-lg-5 col-12 row g-3">
-                        {% csrf_token %}
-                      <div class="container" style="margin-top:-50px;">
+                   
+                      <div class="container" style="margin-top:0px;">
                            <h4><i class="bx bxs-user"></i>Registration</h4>
                              <p style="font-size: 14.5px;">Please, full all fields to create your new account </p>
                        </div> 
+                    <form method="post" action="." enctype="multipart/form-data" class="">
+                        {% csrf_token %}
                        {% for field in form %}
                          {% if field.errors %}
                        <div class="col-lg-6">
