@@ -43,4 +43,12 @@ urlpatterns = [
     path(
         "save_event_theme/", views.save_event_theme, name="save_event_theme"
     ),
+
+    path(
+        "ajax_get_materials/", views.ajax_get_materials, name="ajax_get_materials"
+    ),
+     
+    path('remove_material_from_event/<int:event_id>/<int:material_id>/', views.remove_material_from_event, name='remove_material_from_event'),
+
+    path('add_material_to_event/<int:event_id>/<int:material_id>/', views.add_material_to_event, name='add_material_to_event'),
 ]

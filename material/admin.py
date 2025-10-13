@@ -88,8 +88,7 @@ class ActivityComponent(admin.ModelAdmin):
 @admin.register(models.MaterialEventDoc)
 class MaterialEventDoc(admin.ModelAdmin):
     model = models.MaterialEventDoc
-    list_display = ["id", "event"]
-    list_filter = ["event"]
+  
     
 
 

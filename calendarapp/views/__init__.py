@@ -17,6 +17,10 @@ from .other_views import (
     update_meeting_link,
     save_event_theme,
     event_themes,
+    ajax_get_materials,
+    remove_material_from_event,
+    add_material_to_event,
+
 )
 
 
@@ -40,4 +44,8 @@ __all__ = [
     update_meeting_link,
     save_event_theme,
     event_themes,
+    ajax_get_materials,
+    remove_material_from_event,
+    add_material_to_event,
+
 ]

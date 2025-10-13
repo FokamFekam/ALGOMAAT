@@ -187,7 +187,53 @@ def event_themes(request):
 	context = {"results": results }			
 	return render(request, "calendarapp/event-themes.html", context)		
 			
-			
+
+def remove_material_from_event(request, event_id, material_id):
+	ct_json = {"success":False}
+	event = get_object_or_404(Event, pk=event_id)
+	material = get_object_or_404(MaterialEventDoc, pk=material_id)
+	for evt in material.events.all():
+		if event == evt:
+			material.events.remove(event)
+			ct_json =  {"success":True}
+			return JsonResponse(ct_json)
+	
+	#return redirect(event.get_absolute_url())
+	return JsonResponse(ct_json)
+
+
+def add_material_to_event(request, event_id, material_id):
+	ct_json = {"success":False}
+	event = get_object_or_404(Event, pk=event_id)
+	material = get_object_or_404(MaterialEventDoc, pk=material_id) 
+	for evt in material.events.all():
+		if event == evt:
+			return JsonResponse(ct_json)
+	
+	material.events.add(event)
+	ct_json =  {"success":True}
+	#return redirect(event.get_absolute_url())
+	return JsonResponse(ct_json)
+	
+
+
+
+
+def ajax_get_materials(request): 
+	materials = MaterialEventDoc.objects.filter(owner=request.user)	
+	materials_results = []
+	for material in materials:
+		response_data = {}
+		response_data['id'] = material.id
+		response_data['title'] = material.title
+		response_data['description'] = material.description
+		#response_data['document'] = material.document
+		response_data['has_answer'] = material.has_answer
+		response_data['m_type'] = material.m_type
+		response_data['owner'] = material.owner.username
+
+		materials_results.append(response_data)
+	return JsonResponse(materials_results, safe=False)
 	
 
 
@@ -198,8 +244,10 @@ def event_details(request, event_id):
 	eventmember = EventMember.objects.filter(event=event)
 	member_count = eventmember.count()
 	eventthemes = EventTheme.objects.filter(event=event)
-		
-	materials = MaterialEventDoc.objects.filter(event=event_id)
+	
+	#materials = MaterialEventDoc.objects.filter(event=event_id)
+	materials = event.materialeventdoc_set.all()
+
 	meetings = Meeting.objects.filter(event=event)
 	publications_list =[]
 	for meeting in meetings:
@@ -217,8 +265,7 @@ def event_details(request, event_id):
 			users_list.append(inscription.participant)		
 		
 					
-	print("---users_list----")	
-	print(users_list)
+	
 	forms_member = AddMemberForm()
 	form_file = CreateMaterialFileForm(user=request.user, event_id=event_id, nodetype_id=11)
 	form_link = CreateMaterialLinkForm(user=request.user, event_id=event_id, nodetype_id=11)

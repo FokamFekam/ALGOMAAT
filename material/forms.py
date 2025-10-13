@@ -97,10 +97,10 @@ class CreateMaterialForm(ModelForm):
 				title=data["title"],
 				description=data["description"],
 				document=doc,
-				event=event,
 				owner=self.user
 			       )
 			material.save()
+			material.events.add(event)
 		
 		
 	 	      

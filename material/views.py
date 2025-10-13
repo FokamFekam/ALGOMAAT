@@ -22,3 +22,6 @@ def show_materials(request, event_id=None, template="materials/show_materials.ht
     context_dict = {'materials': materials}
     return render(request, template, context_dict)
 
+
+
+

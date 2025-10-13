@@ -118,7 +118,9 @@ class Material(models.Model):
 
 
 class MaterialEventDoc(Material):
-	event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    events = models.ManyToManyField(Event)
+	#event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
 	 
     
 class MaterialQuestionDoc(Material):

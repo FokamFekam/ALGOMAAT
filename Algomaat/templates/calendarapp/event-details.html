@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
+
 {% block title %}Event Details{% endblock title %}
 
 {% block breadcrumb %}
@@ -84,7 +85,9 @@
 							  <th style="width: 10px">#</th>
 							  <th>Meeting</th>
 							  <th>Url</th>
+							  {% if user.groups.all.0.name == 'Admin' %}	
 							  <th>Edit</th>
+							  {% endif %} 
 							 
 							</tr>
 						      </thead>
@@ -110,14 +113,17 @@
 								{%  if meeting.link_url  %} 
 		
  <a target="_blank" rel="noopener noreferrer" href="https://{{meeting.link_url}}"  class="btn btn-brand " > {{ meeting.link_url }} </a> 
-                                                               {% else %} 
+                                  {% else %} 
   					<span   class="btn btn-brand " > en attente ... </span> 
-		    		 			        {% endif %} 
+		    		 		      {% endif %} 
 								    </td>
-								   
+
+							{% if user.groups.all.0.name == 'Admin' %}					   
 								    <td>
 		   <span data-bs-toggle="modal" data-bs-target="#modal-edit-meeting" class="btn btn-brand " onclick="update_meeting_link( {{meeting.id}} )">edit</span> 
 								    </td>
+							{% endif %}	
+
 							</tr>
 							{% endfor %}
 							
@@ -190,10 +196,11 @@
 				     	     
 				     	     
 				     	     
-				     	       <div id="detail4"  style="margin-bottom:20px; display:none;"  class="clearfix">
+				     	<div id="detail4"  style="margin-bottom:20px; display:none;"  class="clearfix">
 							<h4 style="color:var(--brand);" > Materials of this Event</h4>
-							<a class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-file-modal" href="#"> Add File </a>
-							<a class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-link-modal" href="#"> Add Link </a>
+							<a  style="margin-bottom:10px;" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-file-modal" href="#"> Add new File </a>
+							<a  style="margin-bottom:10px;" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-link-modal" href="#"> Add new Link </a>
+							<a  style="margin-bottom:10px;" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#existing-materials-modal" onclick="loadMyMaterials({{event.id}});" href="#"> Add existing Material</a>
 						</div>
 						<div id="detail41" style="margin:10px; display:none; " class="row">
 							 <table class="table table-bordered">
@@ -239,7 +246,7 @@
 								    <td>
 								      {% if material.owner == user %}
 								      
-									<a class="btn btn-brand" href="">Remove</a>
+									<a class="btn btn-brand" onclick="removeMaterial( {{event.id}} , {{material.id}} )" href="">Remove</a>
 									
 								      {% endif %}
 								    </td>
@@ -467,6 +474,43 @@
 
 
 
+	  <!-- Add existing Material-->                     
+      <div class="modal fade"  id="existing-materials-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div style="width:65%; height:350px;"  class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body p-0" >
+                    <div class="container-fluid"  >
+                        <div  class="row gy-2">
+                        <!--
+                            <div class="col-lg-4 col-sm-12 bg-cover"
+                                style="background-image: url({% static 'img/SLIDE1.png' %}"); min-height:300px;">
+                                <div>
+                                    
+                                </div>
+                            </div> 
+                         -->
+
+                            <div id="selectMaterials" class="col-lg-8 text-center container">
+	 	                          
+ 	                        
+							</div>
+ 	                               
+			        
+                               
+                               
+                         
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    
+
+
+
 
 
 <!-- Update meeting Link-->                     
@@ -522,7 +566,7 @@
     
     
     
-       <!-- Add new File Form-->                     
+       <!-- Add Theme to Lesson-->                     
       <div class="modal fade"  id="new-theme-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div style="width:65%; height:350px;"  class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
@@ -588,6 +632,120 @@
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
     <script type="text/javascript" src="{% static 'js/event_DETAIls.js' %}"></script>
     <link href="{% static 'css/show_All_Lessons.css' %}" rel="stylesheet" type="text/css">
+
+
+	<script>
+
+
+		function addMaterialToSelect( event_id, id, title, description, has_answer,m_type,owner,selector )
+		{
+		 
+			materialLine = '<tr id="select_material_' + id + '"  role="row">';
+			materialLine += '<td><span style="color:black;">'+ title +'</span></td>';
+			materialLine += '<td><span style="color:black;">'+ description +'</span></td>';
+			if( m_type == 1 )
+			{
+				materialLine += '<td><span style="color:black;"> Cours </span></td>';
+
+			}
+			else if( m_type == 2 )
+			{
+				materialLine += '<td><span style="color:black;"> Exercice </span></td>';
+
+			}
+			else if( m_type == 3 )
+			{
+				materialLine += '<td><span style="color:black;"> Reponse Exercice </span></td>';
+
+			}
+			else
+			{
+				materialLine += '<td><span style="color:black;"> Correction </span></td>';
+
+			}
+			
+			materialLine += '<td><button type="button" id="select_addMaterial_'+ id +'" class="btn btn-brand bx bxs-plus-circle" style="">  </button></td>';
+			materialLine  += '</tr>'; 
+
+			$(selector).append(materialLine);
+		
+			//participant_ids.push(id.toString());
+			//$('#select_addMaterial_' + id).click(addMaterialClick);
+			$('#select_addMaterial_' + id).click(function(){
+
+				$.getJSON('/calendarapp/add_material_to_event/'+ event_id +'/'+ id +'/', function(result){
+					if(result.success)
+					{
+						alert("Material added");
+						window.location.reload();
+
+					}
+				});
+
+
+			});
+										  
+		
+
+
+		}
+
+
+		function loadMyMaterials(event_id)
+		{
+			
+			$.ajax({
+				url:'/calendarapp/ajax_get_materials/',
+				data: {},
+				dataType: 'json',
+				success: function (data) 
+				{
+					$('#selectMaterials').empty();
+					$('#selectMaterials').append('<h5 style="color:var(--brand);">  Select the material(s) </h5>');
+					$('#selectMaterials').append('<hr/>');
+
+					$('#selectMaterials').append('<table class="table table-bordered"><thead><tr style="color:var(--brand);"><th> Title </th><th> Description </th><th> Type </th><th>  </th></tr></thead><tbody id="list_my_materials"></tbody></table>');
+				
+							  
+				
+					$('#selectMaterials').show();
+								  
+							
+
+					$.each(data, function(key, value) {
+					
+			addMaterialToSelect( event_id, data[key]["id"],data[key]["title"], data[key]["description"],data[key]["has_answer"],data[key]["m_type"],data[key]["owner"],'#list_my_materials' )
+						
+					
+					});
+					
+								
+				
+				
+				}
+			});   
+
+
+		}
+
+		function removeMaterial(event_id, material_id)
+		{
+			
+			
+			$.getJSON('/calendarapp/remove_material_from_event/'+ event_id +'/'+ material_id +'/', function(result){
+				if(result.success)
+				{
+					alert("Material removed");
+					window.location.reload();
+
+				}
+			});
+
+		}
+
+	</script>
+
+
 {% endblock extrascripts %}
 
 
