@@ -384,7 +384,20 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 				    "end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
 				    "description": event.description,
 				}
-			    ) 
+			    )
+
+		eventmembers = EventMember.objects.filter(user=request.user)
+		for eventmember in eventmembers:
+		    #check if this event already saved in event_list
+		    if self.check_event_exists(event_list, eventmember.event.id) == False:
+			    event_list.append(
+				{   "id": eventmember.event.id,
+				    "title": eventmember.event.title,
+				    "start": eventmember.event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+				    "end": eventmember.event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+				    "description": eventmember.event.description,
+				}
+			    )
 		
 		
 		is_simple_customer = request.user.groups.filter(name='Simple_Customer').exists()
