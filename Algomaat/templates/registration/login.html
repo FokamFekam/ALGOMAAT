@@ -1,4 +1,19 @@
 {% extends "base.html" %}
+{% load static %}
+{% block scripts %}
+    <script>
+        const pwd = document.getElementById('id_password');
+        const btn = document.getElementById('togglePassword');
+    
+        btn.addEventListener('click', () => {
+        const isHidden = pwd.type === 'password';
+        pwd.type = isHidden ? 'text' : 'password';
+        btn.textContent = isHidden ? '🙈' : '👁️'; // toggle icon
+        });
+    </script>
+
+
+{% endblock %}
 
 {% load socialaccount %}
 
@@ -46,13 +61,18 @@
                                 <label for="" class="form-label">{{ field.label_tag }}</label>
                                 <div class="form-control">
                                     {{ field }}
+                                
                                 </div>
                             </div>
                             <br/>
                              {% endif %}
                             
                         {% endfor %}
-                            
+                        <div class="col-12">
+                            <button  style="width:60px; border: none;" type="button" id="togglePassword" aria-pressed="false" aria-label="Show password">
+                                👁️
+                            </button>
+                        </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-brand">Login</button>
                         </div>

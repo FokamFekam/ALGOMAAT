@@ -36,7 +36,7 @@ class RegistrationForm(forms.Form):
                                                                maxlength=75)),
                              label=_("E-mail"))
                              
-	password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict, render_value=False),
+	password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'id_password', 'class': 'required', 'placeholder': 'Enter your password'}, render_value=False),
                                 label=_("Password"))
                                 
 	password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict, render_value=False),
