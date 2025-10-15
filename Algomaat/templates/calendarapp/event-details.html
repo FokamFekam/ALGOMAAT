@@ -186,7 +186,9 @@
 							    <td><span style="color:black;">{{  user.username }}</span></td>
 							    <td><span style="color:black;">{{  user.email }}</span></td>
 							    <td><span style="color:black;">Participant</span></td>
-							    <td> </td>
+								{% if user.groups.all.0.name == 'Admin' %}	
+							    	<td> </td>
+								{% endif %} 
 							</tr>
 							
 							{% endfor %}
