@@ -165,12 +165,12 @@
 							    <td><span style="color:black;"> {{ member.user.firstname }}</span></td>
 							    <td><span style="color:black;">{{ member.user.username }}</span></td>
 							    <td><span style="color:black;">{{ member.user.email }}</span></td>
-							    <td><span style="color:black;"> Guest </span></td>
+							    <td><span style="color:black;"> Algomaat </span></td>
 							    <td>
-								{%  if member.is_added == True %}
+								{% if user.groups.all.0.name == 'Admin' %}	
+									
 									 <a class="btn btn-brand" href="{% url 'calendarapp:remove_event' member.id %}">Remove</a> 
-								{% else %} 
-									<a class="btn btn-brand" href="{% url 'calendarapp:remove_event' member.id %}">Add</a>   
+								  
 								{% endif %} 
 							    </td>
 							</tr>
