@@ -155,7 +155,9 @@
 							  <th>Username</th>
 							  <th>Email</th>
 							  <th> Type </th>
-							  <th>Action</th>
+							  {% if user.groups.all.0.name == 'Admin' %}	
+							  	<th>Action</th>
+							  {% endif %} 
 							</tr>
 						      </thead>
 						      <tbody>
@@ -166,13 +168,13 @@
 							    <td><span style="color:black;">{{ member.user.username }}</span></td>
 							    <td><span style="color:black;">{{ member.user.email }}</span></td>
 							    <td><span style="color:black;"> Algomaat </span></td>
-							    <td>
 								{% if user.groups.all.0.name == 'Admin' %}	
+							    <td>
 									
 									 <a class="btn btn-brand" href="{% url 'calendarapp:remove_event' member.id %}">Remove</a> 
-								  
-								{% endif %} 
+								
 							    </td>
+								{% endif %} 
 							</tr>
 							{% endfor %}
 							
