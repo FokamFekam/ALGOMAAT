@@ -142,7 +142,9 @@
 				     
 				       <div id="detail3" style="margin-bottom:20px; display:none;"  class="clearfix">
 					    <h4  style="color:var(--brand);" > Members of this Event</h4>
+						{% if user.groups.all.0.name == 'Admin' %}	
 					    <a class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-member-modal" href="#"> Add Member </a>
+						{% endif %} 
 					</div>
 					
 					
