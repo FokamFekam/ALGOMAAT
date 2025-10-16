@@ -77,9 +77,12 @@
 			            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#dropdown-menu"
                 aria-controls="dropdown-menu" aria-expanded="false" >MySpaces</a>
 			  <ul id="dropdown-menu" style=""  class=" collapse " >
+
+                {% if user.groups.all.0.name == 'Admin' %}
 			      <li class="nav-item" ><a class="nav-link"  data-bs-toggle="modal" data-bs-target="#new-space-modal" href="#" >+ Space</a></li>
 			      <li class="nav-item" ><a class="nav-link" href="/publications/new/">+ Publications</a></li>
 			      <li class="nav-item" ><a class="nav-link" href="{% url 'contents:public_spaces' True %}"> My Contents</a></li>
+                {% endif %}
 		      
 			       <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> My lessons </a></li>
 			      {% if user.groups.all.0.name == 'Admin' %}
