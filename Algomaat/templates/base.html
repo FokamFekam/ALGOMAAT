@@ -84,8 +84,13 @@
 			      <li class="nav-item" ><a class="nav-link" href="/publications/new/">+ Publications</a></li>
 			      <li class="nav-item" ><a class="nav-link" href="{% url 'contents:public_spaces' True %}"> My Contents</a></li>
                 {% endif %}
-		      
-			       <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> My lessons </a></li>
+		      	       {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
+			      	<li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> Parent </a></li>
+			       {% else %}
+			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> My Lessons </a></li>
+			       {% endif %}
+			      
+			      
 			      {% if user.groups.all.0.name == 'Admin' %}
 			      <li class="nav-item" ><a class='nav-link' href="{% url 'lessonapp:my_lessons'  %}"> All lessons </a></li>
 			      {% endif %}

@@ -11,7 +11,11 @@
                 <div class="col-12">
                     <div class="intro">
                         <h3 style="color:var(--brand);"><i class='bx bxs-pencil'></i></h3>
-                        <h2> My Lessons </h2>
+                        {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
+                        	<h2> My Child'lessons </h2>
+                        {%  else %}	
+                        	<h2> My lessons </h2>
+                        {%  endif %}	
                         <p class="mx-auto"> Here you can read all your lessons.</p>
                     </div>
                 </div>
@@ -20,8 +24,8 @@
  	
  		{% for event_themes in  results %}
        		<div id="paiement" class="container" style="background-color: #DAD7CD;  margin-bottom:50px;" >
-       		{% if user.groups.all.0.name == 'Admin'  %}
-       			<span class="btn btn-brand bx bxs-cart"  style="background-color:var(--brand); margin-bottom:5px;  margin-top:10px; padding:5px 5px; width:180px;  text-align:center; border-radius: 100px; font-size:14px; color: #fff; font-family:Helvetica;" ><b> {{event_themes.price}} FCFA</b></span>
+       		{% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
+       			<span class="btn btn-brand bx bxs-cart"  style="background-color:var(--brand); margin-bottom:5px;  margin-top:10px; padding:5px 5px; width:180px;  text-align:center; border-radius: 100px; font-size:14px; color: #fff; font-family:Helvetica;" ><b> {{event_themes.price}} EUR</b></span>
        		{%  endif %}	
        			
        			<h3 style="color:var(--brand);"> {{event_themes.title}}</h3>

@@ -15,7 +15,8 @@ from calendarapp.models import EventMember, Event, Meeting, EventTheme
 from calendarapp.utils import Calendar
 from calendarapp.forms import EventForm, AddMemberForm , MeetingForm
 from contents.models import Space, Publication
-from bucket.models import Inscription
+from bucket.models import Inscription, Order, OrderInscription
+from paiement.models import Paiement, PaiementEntrant
 from material.models import File, Link,   Material, MaterialEventDoc, MaterialQuestionDoc
 from material.forms import CreateMaterialFileForm, CreateMaterialLinkForm
 
@@ -149,8 +150,16 @@ def save_event_theme(request):
 
 @login_required(login_url="signup")
 def event_themes(request):
+	inscriptions = []
 	if request.user.groups.filter(name='Simple_Customer').exists():
 		inscriptions = Inscription.objects.filter(participant=request.user, status=2).order_by("created_at")
+	elif request.user.groups.filter(name='Parent').exists():
+		paiement_entrants = PaiementEntrant.objects.filter(owner=request.user)
+		for paiement in paiement_entrants:
+			orderInscriptions = OrderInscription.objects.filter(order=paiement.order)
+			for orderInscription in orderInscriptions:
+				inscriptions.append(orderInscription.inscription)
+		
 	else:
 		inscriptions = Inscription.objects.filter(status=2).order_by("created_at")
 		
@@ -351,9 +360,16 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 		
 		event_list = []
 		# add events from my inscriptions
+		inscriptions = []
 		inscriptions = Inscription.objects.filter(participant=request.user, status=2)
+		if request.user.groups.filter(name='Parent').exists():
+			paiement_entrants = PaiementEntrant.objects.filter(owner=request.user)
+			for paiement in paiement_entrants:
+				orderInscriptions = OrderInscription.objects.filter(order=paiement.order)
+				for orderInscription in orderInscriptions:
+					inscriptions.append(orderInscription.inscription)
+					
 		for inscription in inscriptions:
-			print(inscription.publication)
 			for meeting in inscription.publication.meetings.all():
 				event = meeting.event
 				#check if this event already saved in event_list
@@ -366,6 +382,9 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 						    "description": event.description,
 						}
 					)  
+		
+		
+			
 				
 			
 					
