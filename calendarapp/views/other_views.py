@@ -432,8 +432,9 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 		
 		
 		is_simple_customer = request.user.groups.filter(name='Simple_Customer').exists()
+		is_parent = request.user.groups.filter(name='Parent').exists()
 		context = {"form": forms, "events": event_list,
-		           "events_month": events_month, "is_simple_customer":is_simple_customer}
+		           "events_month": events_month, "is_simple_customer":is_simple_customer, "is_parent":is_parent}
 		return render(request, self.template_name, context)
 
 	def post(self, request, *args, **kwargs):
