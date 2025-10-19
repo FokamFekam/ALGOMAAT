@@ -35,7 +35,7 @@
   /* Card container */
   .login-card {
     background: #fff;
-    width: 90%;
+    width: 450px;
     max-width: 450px;
     padding: 2.5rem;
     border-radius: var(--radius);
@@ -171,7 +171,7 @@
   /* Responsive */
   @media (max-width: 480px) {
     .login-card {
-      max-width: 90%;       /* 🔥 occupe presque toute la largeur */
+      max-width: 450px;       /* 🔥 occupe presque toute la largeur */
       padding: 1.5rem;      /* réduit un peu le padding */
       margin: 1rem auto;    /* centre bien sur l’écran */
     }
