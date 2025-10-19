@@ -171,12 +171,18 @@
   /* Responsive */
   @media (max-width: 480px) {
     .login-card {
-      margin: 1rem;
-      padding: 1.75rem;
+      max-width: 90%;       /* 🔥 occupe presque toute la largeur */
+      padding: 1.5rem;      /* réduit un peu le padding */
+      margin: 1rem auto;    /* centre bien sur l’écran */
     }
   
     .login-card h1 {
-      font-size: 1.5rem;
+      font-size: 1.4rem;    /* texte plus compact */
+    }
+  
+    input,
+    button {
+      font-size: 0.95rem;   /* évite que le texte dépasse */
     }
   }
   
