@@ -360,15 +360,8 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 		
 		event_list = []
 		# add events from my inscriptions
-		inscriptions = []
 		inscriptions = Inscription.objects.filter(participant=request.user, status=2)
-		if request.user.groups.filter(name='Parent').exists():
-			paiement_entrants = PaiementEntrant.objects.filter(owner=request.user)
-			for paiement in paiement_entrants:
-				orderInscriptions = OrderInscription.objects.filter(order=paiement.order)
-				for orderInscription in orderInscriptions:
-					inscriptions.append(orderInscription.inscription)
-					
+		
 		for inscription in inscriptions:
 			for meeting in inscription.publication.meetings.all():
 				event = meeting.event
@@ -381,8 +374,27 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 						    "end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
 						    "description": event.description,
 						}
-					)  
+					)
 		
+		if request.user.groups.filter(name='Parent').exists():
+			paiement_entrants = PaiementEntrant.objects.filter(owner=request.user)
+			for paiement in paiement_entrants:
+				orderInscriptions = OrderInscription.objects.filter(order=paiement.order)
+				for orderInscription in orderInscriptions:
+					#inscriptions.append(orderInscription.inscription)
+					for meeting in orderInscription.inscription.publication.meetings.all():
+						event = meeting.event
+						#check if this event already saved in event_list
+						if self.check_event_exists(event_list, event.id) == False:
+							event_list.append(
+								{   "id": event.id,
+								    "title": event.title,
+								    "start": event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+								    "end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+								    "description": event.description,
+								}
+							)
+					
 		
 			
 				
