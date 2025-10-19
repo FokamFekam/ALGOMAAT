@@ -14,18 +14,18 @@ from django.views.decorators.csrf import csrf_protect
 
 @csrf_protect
 def new_user_view(request, template="registration_form.html"):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            new_user = form.save()
-            #redirect to info page
-            return redirect("/")
-           
-    else:
-        form = RegistrationForm()
-    context_dict = {"form": form}
-    return render(request, 'registration/registration_form.html', { 'form': form })
-    
+	if request.method == 'POST':
+		form = RegistrationForm(request.POST)
+		if form.is_valid():
+			new_user = form.save()
+			login(request, new_user, backend="allauth.account.auth_backends.AuthenticationBackend")
+			return redirect("/")
+		   
+	else:
+		form = RegistrationForm()
+	context_dict = {"form": form}
+	return render(request, 'registration/registration_form.html', { 'form': form })
+	    
 
 
 

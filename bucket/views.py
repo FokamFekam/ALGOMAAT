@@ -116,7 +116,6 @@ def check_inscription_exist(request, participant_id, publication_id):
 		return JsonResponse(ct_json)
 									
 	else:	
-		print("119")	
 		return JsonResponse(ct_json_false)
 	return JsonResponse(ct_json_false)
 		

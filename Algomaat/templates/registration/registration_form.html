@@ -1,73 +1,85 @@
-{% extends "base.html" %}
 
 {% load socialaccount %}
-
-
+{% load static %}
 {% block scripts %}
+ 
+    <link rel="stylesheet" href="{% static 'css/register.css' %}" type="text/css">
 
 {% endblock %}
 
+
 {% block content %}
 <div class="container-fluid">
-	<div class="row" style="height:auto;  margin-bottom:0px;">
-		        <div class="col-12">
-		            <div class="intro">	
-                        <br/>	           
-		                <h6>ALGOMAAT - [ learning for kids ]</h6>       
-		            
-		                <h1> New User </h1>
-		            
-		            </div>
-		        </div>
-	 </div>
+	
 	 <section  class="text-center" style=" margin-top:-30px;">
-	 	
-        <div class="container" style="background-color:#efefef;  margin-bottom:50px;" >
-            <div  style=" padding-bottom:20px;" class="row g-4 ">
-				<div  class="col-lg-4 col-md-6 container">
+        
+        <div class="register-card">
 
-                    <div style=" width:100%; height:10%; margin-top:1%; " class="row text-center">          
-                        <a href="{% provider_login_url 'google' %}" style="text-decoration:none;"> <b style="color:var(--brand);"> <i class='bx bxl-gmail'></i> Sign with Google?</b></a>
-                    </div>
-                   <br/>
-                      <div class="container" style="margin-top:0px;">
-                           <h4><i class="bx bxs-user"></i>Registration</h4>
-                             <p style="font-size: 14.5px;">Please, fill all fields to create your new account </p>
-                       </div> 
-                    <form method="post" action="." enctype="multipart/form-data" class="">
-                        {% csrf_token %}
-                       {% for field in form %}
-                         {% if field.errors %}
-                       <div class="col-lg-6">
-                           <label for="" class="form-label">{{ field.label_tag }}</label>
-                           <div class="form-control">
-                               {{ field }}
-                               <span class="help-inline">{{ field.errors|join:", " }}</span>
-                           </div>
-                           
-                       </div>
-                           {% else %}
-                                                            
-                         <div class="container">
-                           <label for="" class="form-label">{{ field.label_tag }}</label>
-                           <div class="form-control">
-                               {{ field }}
-                           </div>
-                        </div>
-                        
-                        {% endif %}
-                       {% endfor %}
-                        
-                       <div style="height:40px; width:100%; margin-bottom:20px; margin-top:20px;" class="container">
-                           <button type="submit" style="height:40px; width:100px;" class="btn btn-brand">Create</button>
-                       </div>
-                       
-                    </form>
-       
-                </div>	         
-	       
-            </div>
-        </div>        
+            <h4>  
+                <a href="/"><img width="200" height="60" src="{% static 'img/LOGO.png' %}" alt=""></a>
+
+            </h4>   
+
+            <h1>Créer un compte</h1>
+        
+            {% if form.non_field_errors %}
+              <div class="error-box">{{ form.non_field_errors }}</div>
+            {% endif %}
+        
+            <form method="post" action="/registration/new_user/" enctype="multipart/form-data"  novalidate>
+              {% csrf_token %}
+                
+              <div>
+                <label for="{{ form.firstname.id_for_label }}">Prénom </label>
+                {{ form.firstname }}
+                {% if form.firstname.errors %}
+                  <p class="error-box">{{ form.firstname.errors|striptags }}</p>
+                {% endif %}
+              </div>
+        
+
+              <div>
+                <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                  <p class="error-box">{{ form.username.errors|striptags }}</p>
+                {% endif %}
+              </div>
+        
+              <div>
+                <label for="{{ form.email.id_for_label }}">Adresse email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                  <p class="error-box">{{ form.email.errors|striptags }}</p>
+                {% endif %}
+              </div>
+        
+              <div>
+                <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                  <p class="error-box">{{ form.password1.errors|striptags }}</p>
+                {% endif %}
+              </div>
+        
+              <div>
+                <label for="{{ form.password2.id_for_label }}">Confirmation du mot de passe</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                  <p class="error-box">{{ form.password2.errors|striptags }}</p>
+                {% endif %}
+              </div>
+        
+              <button type="submit">S’inscrire</button>
+            </form>
+        
+            <p class="footer-text">
+              Déjà un compte ?
+              <a href="{% url 'registration:login' %}">Se connecter</a>
+            </p>
+        </div>
+      
+
 	 </section>
 
 </div>
