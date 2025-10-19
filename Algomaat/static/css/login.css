@@ -35,8 +35,8 @@
   /* Card container */
   .login-card {
     background: #fff;
-    width: 100%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 450px;
     padding: 2.5rem;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
