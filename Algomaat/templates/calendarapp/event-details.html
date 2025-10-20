@@ -155,9 +155,9 @@
 							  <th style="width: 10px">#</th>
 							  <th>Name</th>
 							  <th>Username</th>
-							  {% if user.groups.all.0.name == 'Admin' %}	
-							 	 <th>Email</th>
-							  {% endif %} 
+							 
+							   <th>Email</th>
+							  
 							  <th> Type </th>
 							 
 							  <th>Action</th>
@@ -170,9 +170,11 @@
 							    <td> <span style="color:black;">{{ forloop.counter }}</span></td>
 							    <td><span style="color:black;"> {{ member.user.firstname }}</span></td>
 							    <td><span style="color:black;">{{ member.user.username }}</span></td>
-							    {% if user.groups.all.0.name == 'Admin' %}	
-							    <td><span style="color:black;">{{ member.user.email }}</span></td>
-							    {% endif %} 
+							     <td>
+							     {% if user.groups.all.0.name == 'Admin' %}	
+							   	<span style="color:black;">{{ member.user.email }}</span>
+							     {% endif %} 
+							    </td>
 							    <td><span style="color:black;"> Algomaat </span></td>
 								
 							    <td>
@@ -191,9 +193,11 @@
 							    <td> <span style="color:black;">{{ forloop.counter }}</span></td>
 							    <td><span style="color:black;"> {{ user.firstname }}</span></td>
 							    <td><span style="color:black;">{{  user.username }}</span></td>
-							    {% if user.groups.all.0.name == 'Admin' %}
-							    <td><span style="color:black;">{{  user.email }}</span></td>
-							    {% endif %} 
+							     <td>
+							     {% if user.groups.all.0.name == 'Admin' %}
+							  	<span style="color:black;">{{  user.email }}</span>
+							     {% endif %} 
+							    </td>
 							    <td><span style="color:black;">Participant</span></td>
 								
 							    <td> </td>
