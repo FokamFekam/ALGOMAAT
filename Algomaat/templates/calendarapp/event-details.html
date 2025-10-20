@@ -155,7 +155,9 @@
 							  <th style="width: 10px">#</th>
 							  <th>Name</th>
 							  <th>Username</th>
-							  <th>Email</th>
+							  {% if user.groups.all.0.name == 'Admin' %}	
+							 	 <th>Email</th>
+							  {% endif %} 
 							  <th> Type </th>
 							  {% if user.groups.all.0.name == 'Admin' %}	
 							  	<th>Action</th>
@@ -168,7 +170,9 @@
 							    <td> <span style="color:black;">{{ forloop.counter }}</span></td>
 							    <td><span style="color:black;"> {{ member.user.firstname }}</span></td>
 							    <td><span style="color:black;">{{ member.user.username }}</span></td>
+							    {% if user.groups.all.0.name == 'Admin' %}	
 							    <td><span style="color:black;">{{ member.user.email }}</span></td>
+							    {% endif %} 
 							    <td><span style="color:black;"> Algomaat </span></td>
 								{% if user.groups.all.0.name == 'Admin' %}	
 							    <td>
@@ -186,7 +190,9 @@
 							    <td> <span style="color:black;">{{ forloop.counter }}</span></td>
 							    <td><span style="color:black;"> {{ user.firstname }}</span></td>
 							    <td><span style="color:black;">{{  user.username }}</span></td>
+							    {% if user.groups.all.0.name == 'Admin' %}
 							    <td><span style="color:black;">{{  user.email }}</span></td>
+							    {% endif %} 
 							    <td><span style="color:black;">Participant</span></td>
 								{% if user.groups.all.0.name == 'Admin' %}	
 							    	<td> </td>
@@ -217,8 +223,8 @@
 								  <th>Description</th>
 								  <th> Type </th>
 								  <th> Posted by </th>
-								  <th> </th>
-								  <th> </th>
+								  <th> Show </th>
+								  <th> Remove </th>
 								</tr>
 							      </thead>
 							      <tbody>
