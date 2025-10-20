@@ -188,14 +188,14 @@
 							{% endfor %}
 							
 							
-							{% for user in users %}
+							{% for user1 in users %}
 							<tr role="row">
 							    <td> <span style="color:black;">{{ forloop.counter }}</span></td>
-							    <td><span style="color:black;"> {{ user.firstname }}</span></td>
-							    <td><span style="color:black;">{{  user.username }}</span></td>
+							    <td><span style="color:black;"> {{ user1.firstname }}</span></td>
+							    <td><span style="color:black;">{{  user1.username }}</span></td>
 							     <td>
 							     {% if user.groups.all.0.name == 'Admin' %}
-							  	<span style="color:black;">{{  user.email }}</span>
+							  	<span style="color:black;">{{  user1.email }}</span>
 							     {% endif %} 
 							    </td>
 							    <td><span style="color:black;">Participant</span></td>
