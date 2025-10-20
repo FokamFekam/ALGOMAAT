@@ -121,13 +121,13 @@
                      {% endif %}
                      {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
                      	  <li>
-                            <a class="treeview-item" href="{% url 'calendarapp:event-themes'  %}"><i class="icon fa fa-circle-o"></i> <i class='bx bxs-save'></i> Parent </a>
+                            <a class="treeview-item" href="{% url 'calendarapp:event-themes'  %}"><i class="icon fa fa-circle-o"></i> Parent </a>
                         </li>
                      
                      {% else %}
                      
                      	  <li>
-                            <a class="treeview-item" href="{% url 'calendarapp:event-themes'  %}"><i class="icon fa fa-circle-o"></i> <i class='bx bxs-save'></i> My Lessons </a>
+                            <a class="treeview-item" href="{% url 'calendarapp:event-themes'  %}"><i class="icon fa fa-circle-o"></i> My Lessons </a>
                         </li>
                      
                     {% endif %}
@@ -136,19 +136,19 @@
                      {% if user.groups.all.0.name == 'Admin' %}  
                         
                         <li>
-                            <a class="treeview-item" href="{% url 'lessonapp:my_lessons'  %}"><i class="icon fa fa-circle-o"></i> <i class='bx bxs-save'></i> Lesson Materials </a>
+                            <a class="treeview-item" href="{% url 'lessonapp:my_lessons'  %}"><i class="icon fa fa-circle-o"></i> Lesson Materials </a>
                         </li>
                       {% endif %} 
                       
                       
                        <li>
-                            <a class="treeview-item" href="{% url 'chat:project_list'  %}"><i class="icon fa fa-circle-o"></i> <i class='bx bxs-save'></i> My IA</a>
+                            <a class="treeview-item" href="{% url 'chat:project_list'  %}"><i class="icon fa fa-circle-o"></i> My IA</a>
                         </li>
                         
                         
                     
                         <li>
-                            <a class="treeview-item" href="{% url 'bucket:bucket'  %}"><i class="icon fa fa-circle-o"></i> <i class='bx bxs-save'></i> Saved</a>
+                            <a class="treeview-item" href="{% url 'bucket:bucket'  %}"><i class="icon fa fa-circle-o"></i>Saved</a>
                         </li>
                     
                     
