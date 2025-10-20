@@ -186,6 +186,7 @@
                           <div class="modal-footer">
                           <input type="hidden" id="is_simple_customer" name="is_simple_customer" value="{{is_simple_customer}}">
                           <input type="hidden" id="is_parent" name="is_parent" value="{{is_parent}}">
+                          <input type="hidden" id="is_admin" name="is_admin" value="{{is_admin}}">
                           
                           {% if user.groups.all.0.name == 'Admin' %}
                           
@@ -423,22 +424,25 @@ $('#repeatedTimeClose').click(function(){
           var modalStart = document.getElementById('start_event_detail'); 
           var modalEnd = document.getElementById('end_event_detail'); 
           var modalDescripition = document.getElementById('description_event_detail'); 
-          var deleteButton = document.getElementById("delete-event-button");
-          var allWeeks = document.getElementById("add-to-all-week");
-          var nextWeek = document.getElementById("add-to-next-week");
-          var nextDay = document.getElementById("add-to-next-day");
+          if(  $('#is_admin').val() == "True"  )
+          {
+		  var deleteButton = document.getElementById("delete-event-button");
+		  var allWeeks = document.getElementById("add-to-all-week");
+		  var nextWeek = document.getElementById("add-to-next-week");
+		  var nextDay = document.getElementById("add-to-next-day");
+          }
 	  var detailsButton = document.getElementById("event-details-button");	
 		
        
-	if(  $('#is_simple_customer').val() == "False" || $('#is_parent').val() == "False" )
+	if(  $('#is_admin').val() == "True"  )
 	{
 	
-	/*	
+		
           deleteButton.setAttribute("data-event-id", id);
           allWeeks.setAttribute("data-event-id-all-week", id);
           nextWeek.setAttribute("data-event-id-week", id);
           nextDay.setAttribute("data-event-id-day", id);
-         */
+         
           
        }
        
@@ -516,8 +520,8 @@ $('#repeatedTimeClose').click(function(){
     };
     
     
-/*
-  if(  $('#is_simple_customer').val() == "False" || $('#is_parent').val() == "False")
+
+  if(  $('#is_admin').val() == "True"  )
   {  
   
 	    document.getElementById('delete-event-button').addEventListener('click', function() {
@@ -595,7 +599,7 @@ $('#repeatedTimeClose').click(function(){
 	});
 
 }// end if
-*/
+
 document.getElementById('event-details-button').addEventListener('click', function() {
 const eventId = this.getAttribute('data-event-details-id');
 
