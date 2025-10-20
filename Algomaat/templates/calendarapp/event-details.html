@@ -159,9 +159,9 @@
 							 	 <th>Email</th>
 							  {% endif %} 
 							  <th> Type </th>
-							  {% if user.groups.all.0.name == 'Admin' %}	
-							  	<th>Action</th>
-							  {% endif %} 
+							 
+							  <th>Action</th>
+							  
 							</tr>
 						      </thead>
 						      <tbody>
@@ -174,13 +174,14 @@
 							    <td><span style="color:black;">{{ member.user.email }}</span></td>
 							    {% endif %} 
 							    <td><span style="color:black;"> Algomaat </span></td>
-								{% if user.groups.all.0.name == 'Admin' %}	
-							    <td>
-									
-									 <a class="btn btn-brand" href="{% url 'calendarapp:remove_event' member.id %}">Remove</a> 
 								
-							    </td>
+							    <td>
+								{% if user.groups.all.0.name == 'Admin' %}	
+									
+						 <a class="btn btn-brand" href="{% url 'calendarapp:remove_event' member.id %}">Remove</a> 
 								{% endif %} 
+							    </td>
+								
 							</tr>
 							{% endfor %}
 							
@@ -194,9 +195,9 @@
 							    <td><span style="color:black;">{{  user.email }}</span></td>
 							    {% endif %} 
 							    <td><span style="color:black;">Participant</span></td>
-								{% if user.groups.all.0.name == 'Admin' %}	
-							    	<td> </td>
-								{% endif %} 
+								
+							    <td> </td>
+								
 							</tr>
 							
 							{% endfor %}
