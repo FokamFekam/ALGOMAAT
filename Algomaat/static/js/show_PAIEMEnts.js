@@ -103,7 +103,7 @@ function addContentsPaiement(Data)
 		        content =  '<div id="" class="container" style="background-color:#fff; width:97%; margin:10px;" >';        
                           content += '<h4 style=""> Order <span style="color:var(--brand); ">'+ orderState  +'</span></h4>';
                           content += '<span style="background-color:var(--brand); margin-bottom:5px; margin-left:20px; margin-top:-30px; padding:5px 5px; float:left; width:150px;  text-align:center; border-radius: 100px; font-size:12px; color: #fff; font-family:Helvetica;" ><b> By '+ Data[key2]["created_by_name"] +'</b></span>'
-                           content += '<span style="background-color:var(--brand); width:150px;  margin-bottom:5px; margin-left:20px; margin-top:-30px; padding:5px 5px; float:right;  text-align:center; border-radius: 100px; font-size:12px; color: #fff; font-family:Helvetica;" > <b>'+ Data[key2]["totalOrderPrice"] +'FCFA </b></span>'
+                           content += '<span style="background-color:var(--brand); width:150px;  margin-bottom:5px; margin-left:20px; margin-top:-30px; padding:5px 5px; float:right;  text-align:center; border-radius: 100px; font-size:12px; color: #fff; font-family:Helvetica;" > <b>'+ Data[key2]["totalOrderPrice"] +'EUR </b></span>'
                              content += '<table style="background-color:#efefef; width:97%; margin:10px;" class="bordered-table zebra-striped">';
 						content +='<thead>';
 						content +='<tr>';
@@ -147,7 +147,7 @@ function addContentsPaiement(Data)
 						    		content += '<td>';
 							  	$.each(DataPublications , function(key4, value) 
 		 	                 			{ 
-						    	          content +='<span>'+ DataPublications[key4]["price"] +'FCFA</span>';
+						    	          content +='<span>'+ DataPublications[key4]["price"] +'EUR</span>';
 						    	          
 						    		});
 						    		content +='</td>';
@@ -207,7 +207,7 @@ function addPaiements(data)
 				}
 				paiement += '<span class="btn btn-brand bx bxs-purchase-tag"  style="background-color:var(--brand); margin-bottom:5px;  margin-top:10px; padding:5px 5px; width:120px;  text-align:center; border-radius: 100px; font-size:12px; color: #fff; font-family:Helvetica;" ><b>'+ tranche +'</b></span>';
 				
-				paiement += '<h3 style="color:var(--brand);"> '+ data[key]["montant"]  +' FCFA / '+ data[key]["totalPrice"]  +' FCFA  </h3>';
+				paiement += '<h3 style="color:var(--brand);"> '+ data[key]["montant"]  +' EUR / '+ data[key]["totalPrice"]  +' EUR  </h3>';
 				
 				
 			      	paiement += '<br>';

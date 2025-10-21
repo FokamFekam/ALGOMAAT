@@ -132,7 +132,7 @@ def ajax_get_all_paiements_data(request):
 def ajax_get_order_data(request):
 	orders_dicts = []
 	#orders =  Order.objects.filter(buyer=request.user).order_by("status")
-	if request.user.groups.filter(name='Simple_Customer').exists():
+	if request.user.groups.filter(name='Simple_Customer').exists() or request.user.groups.filter(name='Parent').exists():
 		orders = Order.objects.filter(buyer=request.user.id).order_by("status")
 	else:
 		orders =  Order.objects.all().order_by("status")
@@ -167,7 +167,7 @@ def ajax_get_order_data(request):
 			"totalOrderPrice":order.total_amount,
 			"inscriptions": inscriptions_dicts,
 		}
-		orders_dicts.append(order_dict)
+		orders_dicts.prepend(order_dict)
 		
 	
 	return JsonResponse(orders_dicts, safe=False)

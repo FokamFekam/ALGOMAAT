@@ -141,7 +141,7 @@ function addContentsOrder(Data, order_id)
 						    		content += '<td>';
 							  	$.each(DataPublications , function(key3, value) 
 		 	                 			{ 
-						    	          content +='<span>'+ DataPublications[key3]["price"] +'FCFA</span>';
+						    	          content +='<span>'+ DataPublications[key3]["price"] +'EUR</span>';
 						    	          
 						    		});
 						    		content +='</td>';
@@ -182,7 +182,7 @@ function addOrders(data)
 		 	order =  '<div id="order" class="container" style="background-color: #DAD7CD;  margin-bottom:50px;" >';
 				  
 			     				
-				order += '<h3 style="color:var(--brand);">'+ data[key]["totalOrderPrice"] +' FCFA </h3>';
+				order += '<h3 style="color:var(--brand);">'+ data[key]["totalOrderPrice"] +' EUR</h3>';
 				order += '<input type="hidden" id="total_price_order_'+ data[key]["id"]+'" name="montant" value="'+ data[key]["totalOrderPrice"] +'">';
 				
 				var status = "Pending";
