@@ -167,7 +167,7 @@ def ajax_get_order_data(request):
 			"totalOrderPrice":order.total_amount,
 			"inscriptions": inscriptions_dicts,
 		}
-		orders_dicts.prepend(order_dict)
+		orders_dicts.append(order_dict)
 		
 	
 	return JsonResponse(orders_dicts, safe=False)
