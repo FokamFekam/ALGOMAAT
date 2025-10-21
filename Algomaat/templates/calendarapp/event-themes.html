@@ -12,11 +12,11 @@
                     <div class="intro">
                         <h3 style="color:var(--brand);"><i class='bx bxs-pencil'></i></h3>
                         {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
-                        	<h2> My Child'lessons </h2>
+                        	<h2> My children's course dates </h2>
                         {%  else %}	
                         	<h2> My lessons </h2>
                         {%  endif %}	
-                        <p class="mx-auto"> Here you can read all your lessons.</p>
+                        <p class="mx-auto"> Here you can read all your children's course dates.</p>
                     </div>
                 </div>
  </div>
