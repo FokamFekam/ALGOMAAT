@@ -13,14 +13,14 @@
   </div>
   <ul class="app-breadcrumb breadcrumb">
       <!--<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-      <li class="breadcrumb-item"><a href="#">Calendar</a></li> -->
+      <li class="breadcrumb-item"><a href="#">Calendar</a></li> 
       <form id="my_form"  action="{% url 'registration:logout'  %}" method="post"  >
                    {% csrf_token %} 
-                  <a class="btn btn-brand ms-lg-3" style="color:#fff; background-color:var(--brand)" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
-                    	Logout
+                  <a class="btn btn-brand" style="color:#fff; background-color:var(--brand)" href="javascript:{}" onclick="document.getElementById('my_form').submit();">
+                    	
                   </a>
                 
-      </form>
+      </form>  -->
   </ul>
 {% endblock breadcrumb %}
 
