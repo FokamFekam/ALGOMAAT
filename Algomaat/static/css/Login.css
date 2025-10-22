@@ -186,3 +186,35 @@
     }
   }
   
+  
+  
+  
+  /* Password field wrapper */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+  width: 100%;
+  padding-right: 2.5rem; /* espace pour le bouton 👁️ */
+}
+
+.toggle-password {
+  position: relative;
+  float:right;
+  margin-top:-2.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.0rem;
+  color: #9ca3af;
+  transition: color var(--transition);
+}
+
+.toggle-password:hover {
+  color: #D90229;
+}
+
