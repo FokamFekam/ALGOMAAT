@@ -277,48 +277,56 @@ function removeNonWordChars(string)
 function post_ajax_form(selector, url, value , type)
 {  
       
-         
-                      $.ajax({
-				type:'POST',
-				url: url,
-				data:value,
-				//dataType:'json',
-				success:function(json)
-				{
-				      switch (type) 
-				       {
-					  case 0:
-					    document.getElementById("register_participant_form").reset();
-					    $('#show_user_register').hide();
-					    $('#selectParticipants').hide();		 
-	            			    $('#add_new_participant_div').hide();
-	            			     
-					    addParticipantLine( json.id,  json.username , '#participants' );    	   						    //participants.push(json.username);
-					    
-					    break;
-					 case 1:
-					    close_modal('#modal-participant-to-add');
-					    break;
-					 case 2:
-					    //close_modal('#modal-participant-to-add');
-					    //alert(json.message);
-					    $('#repeated_time_div').hide();
-					    $('#repeated_time_form').reset();
-					    
-					    window.location.reload();
-					    break;
-					 case 3:
-					 	return json['success'];
-					    break;
-					
+          
+			 
+			 $.ajax({
+			    type: 'POST',
+			    url: url,
+			    data: value,
+			    dataType: 'json',
+			    success: function (json) {
+				switch (type) {
+				    case 0:
+					// Réinitialiser le formulaire et masquer les sections
+					$('#register_participant_form')[0].reset();
+					$('#show_user_register').hide();
+					$('#selectParticipants').hide();
+					$('#add_new_participant_div').hide();
+					$('#button_new').hide();
+                         		$('#button_exist').hide();
+
+					// Ajouter le participant créé
+					addParticipantLine(json.id, json.username, '#participants');
+					break;
+
+				    case 1:
+					// Si succès, redirection
+					if (json.success === true) {
+					    window.location.href = "/calendarapp/event/themes/";
 					}
-					
-				  
-				},
-				error : function(xhr,errmsg,err) {
-				console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+					break;
+
+				    case 2:
+					// Réinitialiser le formulaire répétitif
+					$('#repeated_time_div').hide();
+					$('#repeated_time_form')[0].reset();
+					window.location.reload();
+					break;
+
+				    case 3:
+					return json.success;
+
+				    default:
+					console.warn("Type de requête non reconnu :", type);
+					break;
+				}
+			    },
+			    error: function (xhr, errmsg, err) {
+				console.error("Erreur AJAX :", xhr.status + " → " + xhr.responseText);
 			    }
-			 });
+			});
+			
+
 
 
 

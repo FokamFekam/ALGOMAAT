@@ -102,7 +102,7 @@
             	 {% if  user.is_authenticated %}
                 <ul class="navbar-nav ms-auto">
                     <li class="">
-                        <a class="app-menu__item" style="" href="{% url 'contents:all_public_spaces' %}">Browse</a>
+                        <a class="app-menu__item" style="" href="{% url 'contents:all_public_spaces' %}"> Services</a>
                     </li>
                     
                                        
@@ -137,6 +137,14 @@
                         
                         <li>
                             <a class="treeview-item" href="{% url 'lessonapp:my_lessons'  %}"><i class="icon fa fa-circle-o"></i> Lesson Materials </a>
+                        </li>
+                        
+                          <li>
+                            <a class="treeview-item" href="{% url 'paiement:read_my_orders'  %}"><i class="icon fa fa-circle-o"></i> My Orders</a>
+                        </li>
+                        
+                          <li>
+                            <a class="treeview-item" href="{% url 'paiement:read_enter_all_paiements'  %}"><i class="icon fa fa-circle-o"></i> My Paiements </a>
                         </li>
                       {% endif %} 
                       

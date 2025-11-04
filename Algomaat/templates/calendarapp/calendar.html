@@ -81,6 +81,11 @@
                                     <label for="desctiption" style="color:black;" class="col-form-label">Description:</label>
                                     {{ form.description }}
                                 </div>
+                                 <div class="form-group">
+                                    <label for="is_test" style="color:black;" class="col-form-label">Is this Event a test?:&nbsp;</label>
+                                    {{ form.is_test }}
+                                </div>
+                                
                                 <div class="form-group">
                                     <label for="start" style="color:black;" class="col-form-label">Start Date:</label>
                                     {{ form.start_time }}
@@ -89,6 +94,9 @@
                                     <label for="end" style="color:black;" class="col-form-label">End Date:</label>
                                     {{ form.end_time }}
                                 </div>
+                                
+                                
+                                
                             </div>
                             <div class="modal-footer">
                                 <button id="modalClose2" type="button" class="btn btn-brand">Close</button>

@@ -297,7 +297,7 @@ function addContentsBucket(data)
 				     		
 				 	   content += '<div class="" style="background-color:#fff; border-radius:30px; width:90%; margin:10px; padding:10px; font-size:18px; font-weight:normal; color:var(--brand); font-family:Helvetica;">'
 			
-	content += '<span class="" style=" " >'+ data[key]['price'] +' FCFA </span>';
+	content += '<span class="" style=" " >'+ data[key]['price'] +' EUR </span>';
 	                       
 	                       
 	

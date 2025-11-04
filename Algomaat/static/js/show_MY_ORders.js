@@ -117,7 +117,7 @@ function addContentsOrder(Data, order_id)
 		         		  	$.each(Data , function(key2, value) 
 	 	                 			{ 
 	 	                 				var inscriptionState = "Waiting";
-	 	                 				alert(Data[key2]["status"]);
+
 								if( Data[key2]["status"] == 2 )
 								{
 								   inscriptionState = "Confirmed";

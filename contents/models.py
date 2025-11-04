@@ -27,6 +27,14 @@ class Category(models.Model):
 
 
 class Publication(models.Model):
+    parent = models.ForeignKey(
+        'self',  # utiliser 'self' pour référencer le même modèle
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        default=None,
+        related_name='children'  # optionnel, pour accéder aux sous-publications
+    )
     title = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)

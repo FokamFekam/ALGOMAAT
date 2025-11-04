@@ -252,6 +252,18 @@ function addSpacesPublications(data , id1)
 
 
 
+function create_child_of_publication(publication_id, publication_title, space_id)
+{       
+	$('#parent_publication_id').val(publication_id);
+	$('#parent_publication_title').val(publication_title);
+	$('#update_publication_title').text(publication_title);
+	$('#space_id_of_child').val(space_id);
+
+}
+
+
+
+
 function addPublications(data, id1, spaceId)
 {
 	 if( data != null && data.length > 0 ) 
@@ -265,6 +277,17 @@ function addPublications(data, id1, spaceId)
 	 		 
 	content = '<div id="content_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  class="col-lg-4 col-md-6">';
 		   content +='<div   id="service_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="border-radius:10px;"  class="service">';
+		   
+		  if( $('#admin').val() )
+		  {
+		  	content += '<i data-bs-toggle="modal" data-bs-target="#modal-child-publication" ' +
+    'onclick="create_child_of_publication(' + data[key]['id'] + ', \'' + data[key]['title'].replace(/'/g, "\\'") + '\', ' + spaceId + ');" ' +
+    'class="bx bxs-calendar-plus" style="float:right; cursor:pointer; font-size:20px; font-weight:normal; margin:1px;"></i>';
+
+		  
+		  }
+		  
+		  
 		  if(data[key]['categorie'] == 1)
 		  {
 	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/static/img/iconeG.png" alt="">';
@@ -286,7 +309,11 @@ function addPublications(data, id1, spaceId)
 	content +=' <img id="image_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"  style="width:80px;" src="/static/img/iconeG.png" alt="">';
 		  }
 		  
-		  
+	if ( data[key]['parent'] !== null) 
+	{ 
+		content += '<span style="color:var(--brand);" > CHILD </span>';	
+	
+	}
 	content += '<h5 id="contentTitle_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'"   style="" ><a  style="text-decoration: none;" href="/publications/'+ spaceId + '/' + data[key]['id'] +'">'+ data[key]['title'] +'</a></h5>';
 				 	     		
 				 	     		
@@ -318,7 +345,9 @@ content += '</div>';
  content += '<input type="hidden" id="pubId_'+ id1 + '_' + spaceId +'" name="pubId_'+ id1 + '_' + spaceId +'" value="'+ data[key]['id'] +'">';
 				 	     			 	     		
 				 	     			 	     		
-		content += '<div id="content_buy_'+ id1 + '_' + spaceId + '_'+ data[key]['id'] +'" data-bs-toggle="modal" data-bs-target="#modal-participant-to-add"  class="container" style="background-color:#DAD7CD; border-radius:10px; padding:10px;   margin-bottom:10px;" >';
+		content += '<div id="content_buy_'+ id1 + '_' + spaceId + '_'+ data[key]['id'] +'"   class="container" style="background-color:#DAD7CD; border-radius:10px; padding:10px;   margin-bottom:10px;" >';
+		
+		content += '<span style="color:var(--brand);" > &nbsp; Réservez une séance Test gratuite </span>';
 				
 				     		
  content += '<div id="price_content_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'" class="" style="background-color:#fff; border-radius:30px; width:90%; margin:10px; padding:10px; font-size:20px; font-weight:normal; color:var(--brand); font-family:Helvetica;">'
@@ -413,23 +442,10 @@ content += '</div>'
 				 	     	
 				 	     		$('#content_buy_'+ id1 + '_' + spaceId + '_'+ data[key]['id']).click(function(){
 				 	     		        
-				 	     		        
-				 	     		// buy choice = 1
-				 	     		 modal_choice = 1;  
-
-				 	     		 
-				 	     		        $('#publication_id').val(data[key]['id']);
-				 	     		        $('#search_participants').val('');
-				 	     		         $('#inscription_title').text(data[key]['title']);
-				 	     		          $('#participants').empty();
-				 	     		          
-				 	     		           $('#selectParticipants').empty();
-				 	     		            $('#selectParticipants').hide();
-				 	     		          // reset array of participants declared in common.js
-				 	     		           participants = [];
-				 	     		           participant_ids=[];
-				 	     		           index = 0;
-				 	     		        
+				 	     		    
+				 	     		 window.location = '/bucket/create/reservation/'+ data[key]['id'];
+				 	     		       
+				 	     		
 				 	     							 	     		
 				 	     		});
 				 	     			

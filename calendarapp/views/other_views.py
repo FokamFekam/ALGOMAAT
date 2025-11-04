@@ -58,7 +58,7 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
 		return context
 
 
-@login_required(login_url="signup")
+#@login_required(login_url="signup")
 def create_event(request):
 	form = EventForm(request.POST or None)
 	if request.POST and form.is_valid():
@@ -85,7 +85,7 @@ class EventEdit(generic.UpdateView):
 	template_name = "calendarapp/event.html"
 
 
-@login_required(login_url="signup")
+#@login_required(login_url="signup")
 def update_meeting_link(request):
 	if request.method == 'POST':
 		event_id = request.POST.get('event_id')
@@ -125,7 +125,7 @@ def check_publication_saved(publication, publications_list):
 
 
 
-@login_required(login_url="signup")
+#@login_required(login_url="signup")
 def save_event_theme(request):
 	if request.method == 'POST':
 		event_id = request.POST.get('event_id')
@@ -148,8 +148,10 @@ def save_event_theme(request):
 
 
 
-@login_required(login_url="signup")
+#@login_required(login_url="signup")
 def event_themes(request):
+	if not request.user.is_authenticated:
+		return redirect("/registration/login/?page_id=%s&page_type=event_themes" %  0 )
 	inscriptions = []
 	if request.user.groups.filter(name='Simple_Customer').exists():
 		inscriptions = Inscription.objects.filter(participant=request.user, status=2).order_by("created_at")
@@ -171,7 +173,7 @@ def event_themes(request):
 		if check_publication_saved(publication, publications_list) == False:
 			publications_list.append(publication)
 			events_list =[]
-			for meeting in publication.meetings.all().order_by('-created_at'):
+			for meeting in publication.meetings.all().order_by('created_at'):
 				event = meeting.event
 				event_themes_list =[]
 				if check_event_saved(event, events_list) == False:
@@ -247,8 +249,11 @@ def ajax_get_materials(request):
 
 
 
-@login_required(login_url="signup")
+#@login_required(login_url="signup")
 def event_details(request, event_id):
+	if not request.user.is_authenticated:
+		return redirect("/registration/login/?page_id=%s&page_type=event_details" %  event_id )
+		
 	event = Event.objects.get(id=event_id)
 	eventmember = EventMember.objects.filter(event=event)
 	member_count = eventmember.count()
@@ -284,7 +289,7 @@ def event_details(request, event_id):
 
 
 
-@login_required
+#@login_required
 def create_file(request, event_id=None, nodetype_id=11):
     if request.method == 'POST':
         form = CreateMaterialFileForm(request.POST, request.FILES, user=request.user, event_id=event_id, nodetype_id=nodetype_id)
@@ -302,7 +307,7 @@ def create_file(request, event_id=None, nodetype_id=11):
     
     
     
-@login_required
+#@login_required
 def create_link(request, event_id=None, nodetype_id=11):
     if request.method == 'POST':
         form = CreateMaterialLinkForm(request.POST, request.FILES, user=request.user, event_id=event_id, nodetype_id=nodetype_id)
@@ -346,7 +351,7 @@ class EventMemberDeleteView(generic.DeleteView):
 	success_url = reverse_lazy("calendarapp:calendar")
 
 class CalendarViewNew(LoginRequiredMixin, generic.View):
-	login_url = "accounts:signin"
+	login_url = "/registration/login/?page_id=%s&page_type=calendar" %  0 
 	template_name = "calendarapp/calendar.html"
 	form_class = EventForm
 	def check_event_exists(self, event_list, event_id):
@@ -470,8 +475,6 @@ def clone_meeting_and_update_pub(event_id, cloned_event):
 	publications_from = Publication.objects.filter(meetings__in=meetings).distinct()
 	for meeting in meetings:
 		for publication in publications_from:
-			print("373----revoir cloned meeting---")
-			print(cloned_event)
 			cloned_meeting =  Meeting.objects.create(m_type=meeting.m_type, event = cloned_event,  is_active=meeting.is_active)
 			#meeting.get_cloned_meeting(cloned_event)
 			publication.meetings.add(cloned_meeting)

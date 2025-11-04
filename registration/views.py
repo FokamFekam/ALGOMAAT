@@ -100,6 +100,19 @@ def login_view(request):
 			page_type = request.POST.get("page_type")
 			if page_type == "t":
 				return redirect("lessonapp:read_theme", theme_id=page_id)
+			elif page_type == "reserve":
+				return redirect("bucket:create_reservation", publication_id=page_id)
+			elif page_type == "new_space":
+				return redirect("contents:create_space")
+			elif page_type == "new_publication":
+				return redirect("contents:create_publication", publication_id=page_id)
+			elif page_type == "event_themes":
+				return redirect("calendarapp:event-themes")
+			elif page_type == "event_details":
+				return redirect("calendarapp:event_details", event_id=page_id)
+			elif page_type == "calendar":
+				return redirect("calendarapp:calendar")
+			
 			else:
 				return redirect("/")
 			

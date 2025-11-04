@@ -5,12 +5,14 @@ from django.http import HttpResponse, JsonResponse
 import json as simplejson
 from django.core import serializers
 from django.contrib.auth.models import User
-from .models import BucketOfContents, BucketOfInscriptions, Inscription, Order, OrderInscription
+from .models import BucketOfContents, BucketOfInscriptions, Inscription, Order, OrderInscription, Reservation
 from contents.models import Publication, Space
 from bucket.serializers import BucketOfContentsSerializer, InscriptionSerializer
 from contents.serializers import PublicationSerializer
 import decimal
 from django.db.models import Q
+from calendarapp.models import EventMember, Event, Meeting, EventTheme
+from django.utils import formats
 
 
 
@@ -96,11 +98,11 @@ def add_publication_to_bucket(request, publication_id):
 def add_or_create_inscription2(participant_id, publication_id):
 	foundUser = User.objects.get(id=participant_id)
 	publication = Publication.objects.filter(pk=publication_id)[0]
-	if Inscription.objects.filter(participant=foundUser, status=1, publication=publication).exists():
+	if Inscription.objects.filter(participant=foundUser, status__in=[0, 1], publication=publication).exists():
 		inscription = Inscription.objects.get(participant=foundUser, publication=publication)
 
 	else:	
-		inscription = Inscription.objects.create(participant=foundUser, status=1, publication=publication)
+		inscription = Inscription.objects.create(participant=foundUser, status=0, publication=publication)
 	return inscription
 
 
@@ -110,8 +112,8 @@ def check_inscription_exist(request, participant_id, publication_id):
 	publication = Publication.objects.filter(pk=publication_id)[0]
 	ct_json_false = JSON_DICT_FALSE
 	ct_json = JSON_DICT
-	if Inscription.objects.filter(participant=foundUser, status=1, publication=publication).exists():
-		inscription = Inscription.objects.get(participant=foundUser, status=1, publication=publication)
+	if Inscription.objects.filter(participant=foundUser, status__in=[0, 1], publication=publication).exists():
+		inscription = Inscription.objects.get(participant=foundUser, status__in=[0, 1], publication=publication)
 		print(inscription)
 		return JsonResponse(ct_json)
 									
@@ -129,32 +131,169 @@ def add_inscription_into_order(request, bucket, inscription, order):
 		order.save()
 		OrderInscription.objects.create(order=order, inscription=inscription)
 	
-			
+
+
+def ajax_get_reservations(request):
+	reservations_list = []
+	admin = False
+	if request.user.groups.filter(name='Simple_Customer').exists():
+		reservations = Reservation.objects.filter(inscription__participant=request.user)
+	elif request.user.groups.filter(name='Parent').exists():
+		reservations = Reservation.objects.filter(created_by = request.user)
+	else:
+		reservations = Reservation.objects.all()
+		admin = True
 	
-# call just add_or_create_inscription(participant_name, publication, bucket, user)
-def add_publications_to_bucket_of_inscriptions(request):
-	if request.method == 'POST':
-		bucket = BucketOfInscriptions.objects.get_or_create(owner=request.user)
-		order = Order.objects.get_or_create(buyer=request.user, status=1)
+	
+	
+	for reservation in reservations:
+		events_list = []
+		if not OrderInscription.objects.filter(inscription=reservation.inscription).exists():
+			if reservation.event is not None:
+				event_dict = {
+					"id"  : reservation.event.id,
+					"title": reservation.event.title,
+					"start_time":  formats.date_format(reservation.event.start_time, "N j, Y, P"), 
+					"end_time": formats.date_format(reservation.event.end_time, "N j, Y, P"), 
+				}
+				events_list.append(event_dict)
+			else:
+				event_dict = {
+					"id"  : 0,
+					"title": "En attente du Test gratuit",
+					"start_time": "---",
+					"end_time": "---",
+				}
+				events_list.append(event_dict)
 				
+			
+			reservation_dict = {
+				"reservation_id":reservation.pk,
+				"id"  : reservation.inscription.publication.pk,
+				"title": reservation.inscription.publication.title,
+				"price": reservation.inscription.publication.price,
+				"events":events_list,
+				"list_attente": reservation.list_attente,
+				"email_parent":reservation.email_parent,
+				"telephone_parent":reservation.telephone_parent,
+				"admin":admin,
+			}
+			reservations_list.append(reservation_dict)
+	
+	return JsonResponse(reservations_list, safe=False)	
+		
+
+
+
+def  ajax_get_reservated_users(request):
+    reservations = Reservation.objects.filter(created_by=request.user)
+    users_results = []
+    seen_ids = set()  # Pour éviter les doublons
+
+    for reservation in reservations:
+        participant = reservation.inscription.participant
+
+        if participant.id not in seen_ids:
+            users_results.append({
+                'id': participant.id,
+                'username': participant.username,
+                'first_name': participant.first_name,
+                'email': participant.email
+            })
+            seen_ids.add(participant.id)
+
+    return JsonResponse(users_results, safe=False)
+
+	
+	
+def ajax_get_test_events(request, publication_id):
+	publication = Publication.objects.filter(pk=publication_id)[0]
+	events_list =[]
+	for meeting in publication.meetings.all().order_by('created_at'):
+		event = meeting.event
+		if event.is_test == True:
+			if Reservation.objects.filter(event=event).count() < 1:
+				event_dict = {
+					"id"  : event.pk,
+					"title": event.title,
+					"start_time":  formats.date_format(event.start_time, "N j, Y, P"), 
+					"end_time": formats.date_format(event.end_time, "N j, Y, P"), 
+				}
+				events_list.append(event_dict)
+	return JsonResponse(events_list, safe=False)
+		
+
+
+
+def create_reservation(request, publication_id):
+	if not request.user.is_authenticated:
+		return redirect("/registration/login/?page_id=%s&page_type=reserve" %   publication_id )
+	publication = Publication.objects.filter(pk=publication_id)[0]		
+	context_dict = {"publication":publication}
+    
+	return render(request, 'bucket/reservations.html', context_dict )
+    
+
+
+
+def add_reservations_of_inscriptions(request):
+	ct_json = JSON_DICT_FALSE
+	if request.method == 'POST':
 		publication_id = request.POST.get('publication_id')
 		number_of_participants = request.POST.get('index')
 		for index in range(1, int(number_of_participants) + 1):
 			user_name = str(request.POST.get('participant_name_'+ str(index)))
 			user_id = request.POST.get('participantId_'+ str(index))
+			event_id = request.POST.get('reserved_event_'+ str(index))
+			email_parent = request.POST.get('email_'+ str(index))
+			telephone_parent = request.POST.get('telephone_'+ str(index))
+			
+			
+			
+			
+			
 			if int(publication_id) != int(0) :
 				publication = Publication.objects.filter(pk=publication_id)[0]
 				inscription = add_or_create_inscription2(user_id, publication_id)
-				add_inscription_into_order(request, bucket, inscription, order)
+				if event_id is None:
+					reservation = Reservation.objects.create(created_by=request.user, inscription=inscription, email_parent=email_parent, telephone_parent=telephone_parent, list_attente=True)
+				else:
+					event = Event.objects.filter(pk=event_id)[0]
+					reservation = Reservation.objects.create(created_by=request.user, event=event, inscription=inscription, email_parent=email_parent, telephone_parent=telephone_parent, list_attente=False)
+				ct_json = JSON_DICT
+				#return redirect("calendarapp:event-themes")
+				
+
 				
 			else:
+				space_id = request.POST.get('space_id')
 				space = Space.objects.filter(pk=space_id)[0]
 				for publication in space.get_publications():
 					if not publication.is_private:
 						inscription = add_or_create_inscription2(user_id, publication_id)
-						add_inscription_into_order(request, bucket, inscription, order)
+						if event_id is None:
+							reservation = Reservation.objects.create(created_by=request.user, inscription=inscription, email_parent=email_parent, telephone_parent=telephone_parent, list_attente=True)
+						else:
+							reservation = Reservation.objects.create(created_by=request.user, event=event, inscription=inscription, email_parent=email_parent, telephone_parent=telephone_parent, list_attente=False)
+				ct_json = JSON_DICT
+				#return redirect("calendarapp:event-themes")
+
 				
-		ct_json = JSON_DICT
+		
+	return JsonResponse(ct_json)
+	#return redirect("calendarapp:event-themes")
+
+	
+	
+
+def from_reseravtion_make_order(request, reservation_id):
+	ct_json = JSON_DICT_FALSE
+	reservation = Reservation.objects.filter(pk=reservation_id)[0]
+	order = Order.objects.get_or_create(buyer=request.user, status=1)
+	inscription = reservation.inscription
+	bucket = BucketOfInscriptions.objects.get_or_create(owner=request.user)
+	add_inscription_into_order(request, bucket, inscription, order)
+	ct_json = JSON_DICT
 	return JsonResponse(ct_json)
 
 def remove_publication_from_bucket(request, publication_id):

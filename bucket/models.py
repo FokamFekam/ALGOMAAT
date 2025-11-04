@@ -79,11 +79,12 @@ class BucketOfContents(Bucket):
 class Inscription(Abstract):
 	participant = models.ForeignKey(User,  on_delete=models.CASCADE)
 	publication = models.ForeignKey(Publication,  on_delete=models.CASCADE)
+	TESTING = 0
 	WAITING = 1
 	CONFIRMED = 2
 	CANCEL = 3
-	TYPES_CHOICES = ( (WAITING, 'Waiting'),(CONFIRMED, 'Confirmed'),(CANCEL, 'Cancel') )
-	status = models.IntegerField(TYPES_CHOICES, default=1)
+	TYPES_CHOICES = ( (TESTING, 'Testing'), (WAITING, 'Waiting'),(CONFIRMED, 'Confirmed'),(CANCEL, 'Cancel') )
+	status = models.IntegerField(TYPES_CHOICES, default=0)
 	
 	
 	
@@ -197,6 +198,31 @@ class OrderInscription(models.Model):
     
 
 
+class Reservation(Abstract):
+    """ Event member model """
+    created_by = models.ForeignKey(User,  on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True, default=None)
+    inscription = models.ForeignKey(Inscription, on_delete=models.CASCADE)
+    email_parent = models.EmailField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text="Adresse email du parent."
+    )
+
+    telephone_parent = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        help_text="Numéro de téléphone du parent."
+    )
+    list_attente = models.BooleanField(null=True,default=False)
+
+    class Meta:
+        unique_together = ["event", "inscription"]
+
+    def __str__(self):
+        return str(self.inscription)
 
 
 	  

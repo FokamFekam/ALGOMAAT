@@ -2,7 +2,7 @@
 {% load static %}
 {% block scripts %}
 
- <script   src="{% static 'js/bucketOfINSCRIPTIons.js' %}" type="text/javascript" ></script>    
+ <script   src="{% static 'js/bucketOfInscriptions.js' %}" type="text/javascript" ></script>    
 
  
   <script  type="text/javascript" >
@@ -171,9 +171,9 @@
 		        <div class="col-12">
 		            <div class="intro">
 		                <h3 style="color:var(--brand);"><i class='bx bxs-cart'></i></h3>
-		                <h2 style="color:var(--brand);"> Total: <span id="totalPrice" style="display:none;"> </span>FCFA</h2>
+		                <h2 style="color:var(--brand);"> Total: <span id="totalPrice" style="display:none;"> </span>EUR</h2>
 		                 {% if order != 0 %}  
-		                <button id="buyBucket" style="width:80px; float:right; margin:10px;" data-bs-toggle="modal" data-bs-target="#modal-paiement" class="btn btn-brand" onclick="show_paiement()">Buy</button>
+		                <button id="buyBucket" type="button" style="width:80px; float:right; margin:10px;" data-bs-toggle="modal" data-bs-target="#modal-paiement" class="btn btn-brand" onclick="show_paiement()">Buy</button>
 		                 {% endif %}
 		                <h1>My Cart</h1>
 		                <p class="mx-auto"> Here you can buy your Publications</p>

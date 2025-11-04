@@ -37,8 +37,11 @@ class SearchResultsView(ListView):
 		object_list = {"results": results,"query": query}
 		return  object_list
 
-@login_required(login_url="/users/login/")
+#@login_required(login_url="/users/login/")
 def create_publication(request, space_id=0, template="new_publication.html"):
+    if not request.user.is_authenticated:
+        return redirect("/registration/login/?page_id=%s&page_type=new_publication" %  space_id )
+		
     if request.method == 'POST':
         form = CreatePublicationForm(request.POST,request.FILES, user=request.user, space_id=space_id)
         if form.is_valid():
@@ -49,6 +52,25 @@ def create_publication(request, space_id=0, template="new_publication.html"):
         form = CreatePublicationForm(user=request.user, space_id=space_id)
     context_dict = {"form": form}
     return render(request, 'contents/new_publication.html', { 'form': form })
+
+
+
+
+
+def create_child(request):
+	if request.method == 'POST':
+		publication_id = request.POST.get('publication_id')
+		publication_title = request.POST.get('publication_title')
+		space_id = request.POST.get('space_id_of_child')
+        
+		publication = Publication.objects.filter(pk=publication_id)[0]
+		child_publication = Publication(categorie=publication.categorie,title=publication_title,description=publication.description, price=publication.price,image=publication.image,is_private=True)
+		child_publication.save()
+		space = Space.objects.filter(pk=space_id)[0]
+		space.publications.add(child_publication)
+	return redirect("contents:private_spaces", private=False)
+
+
 
 
 def show_publication(request, space_id=None, publication_id=None, template="show_publication.html"):
@@ -88,9 +110,11 @@ def ajax_get_publication(request, publication_id):
 
 
 
-@login_required(login_url="/users/login/")
+#@login_required(login_url="/users/login/")
 def create_space(request):
-    # # # BAD BAD BAD ASS fast and hacky #TODO
+    if not request.user.is_authenticated:
+        return redirect("/registration/login/?page_id=%s&page_type=new_space" %  0 )
+	
     if request.method == 'POST':
         title = request.POST.get('title', "None")
         is_private = request.POST.get('is_private', False)
@@ -99,11 +123,13 @@ def create_space(request):
     
     
 def show_spaces(request, private=0, for_user=1, template="show_spaces.html"):
-    context_dict = {'private':0, 'for_user':1}
+    admin = request.user.groups.filter(name='Admin').exists()
+    context_dict = {'private':0, 'for_user':1, 'admin':admin }
     return render(request, 'contents/show_spaces.html', context_dict)
     
 def show_space_of_content(request, space_id=None, template="show_space.html"):
-    context_dict = { 'space_id': space_id }
+    admin = request.user.groups.filter(name='Admin').exists()
+    context_dict = { 'space_id': space_id , 'admin':admin}
     return render(request, 'contents/show_space.html', context_dict)
     
 def ajax_get_space_data(request, space_id=None):

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from bucket import models
-from .models import Inscription, Order
+from .models import Inscription, Order, Reservation
 
 
 # Register your models here.
@@ -63,7 +63,13 @@ class BucketOfInscriptionsAdmin(admin.ModelAdmin):
     
 
   
-    
+
+admin.site.register(Reservation)  
+#@admin.register(models.Order)
+class ReservationAdmin(admin.ModelAdmin):
+    model = models.Reservation
+
+   
   
 
 

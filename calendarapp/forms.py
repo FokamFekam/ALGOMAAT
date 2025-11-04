@@ -9,7 +9,7 @@ from django.forms.widgets import CheckboxSelectMultiple
 class EventForm(ModelForm):
 	class Meta:
 		model = Event
-		fields = ["title", "description", "start_time", "end_time"]
+		fields = ["title", "description", "is_test", "start_time", "end_time"]
 		# datetime-local is a HTML5 input type
 		widgets = {
 			"title": forms.TextInput(
@@ -21,6 +21,10 @@ class EventForm(ModelForm):
 		            		"placeholder": "Enter event description",
 		        	}
 		    	),
+		    	
+		    	"is_test": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+
+
 		    	"start_time": DateInput(
 		        	attrs={"type": "datetime-local", "class": "form-control"},
 		        	format="%Y-%m-%dT%H:%M",
@@ -35,6 +39,7 @@ class EventForm(ModelForm):
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user')
 		super(EventForm, self).__init__(*args, **kwargs)
+		self.fields['is_test'] = forms.BooleanField(initial=False)
 		self.fields["start_time"].input_formats = ("%Y-%m-%dT%H:%M",)
 		self.fields["end_time"].input_formats = ("%Y-%m-%dT%H:%M",)	
 		self.fields['meetings'] = forms.MultipleChoiceField(
@@ -53,7 +58,7 @@ class EventForm(ModelForm):
 			
 	def save(self):
 		data = self.cleaned_data
-		event = Event.objects.create(title=data["title"], description=data["description"], start_time=data["start_time"], 				end_time=data["end_time"], user=self.user )
+		event = Event.objects.create(title=data["title"], is_test=data["is_test"], description=data["description"], start_time=data["start_time"], 				end_time=data["end_time"], user=self.user )
 		#publications = Publication.objects.filter(spaces__owner=self.user)
 		for meeting2 in data["meetings"]:
 			meeting =  Meeting.objects.create(m_type=meeting2, event = event, is_active=True)
