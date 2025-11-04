@@ -9,6 +9,8 @@ from django.contrib.auth import login, logout
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_protect
+from django.core.mail import send_mail
+from django.contrib import messages
 
 # Create your views here.
 
@@ -127,5 +129,38 @@ def logout_view(request):
 		return redirect("/")	
 		
 		
-	
-    
+
+def send_email(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Sujet et contenu du mail
+        subject = f"Nouveau message de {first_name} {last_name}"
+        full_message = f"""
+        Vous avez reçu un nouveau message via le formulaire de contact :
+        
+        Nom : {first_name} {last_name}
+        Email : {email}
+        
+        Message :
+        {message}
+        """
+
+        try:
+            send_mail(
+                subject,
+                full_message,
+                email,  # Adresse de l'expéditeur
+                ['fokamfekamcedric@gmail.com'],  # Ton adresse de réception
+                fail_silently=False,
+            )
+            messages.success(request, "Votre message a été envoyé avec succès !")
+        except Exception as e:
+            messages.error(request, f"Erreur lors de l'envoi du message : {e}")
+
+        return redirect('/')  # Redirige où tu veux (page d'accueil par ex.)
+
+    return redirect('/')
