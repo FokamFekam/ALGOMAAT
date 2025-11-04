@@ -37,7 +37,7 @@
     background: #fff;
     width: 90%;
     
-    
+    max-width: 850px;
     padding: 2.5rem;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
