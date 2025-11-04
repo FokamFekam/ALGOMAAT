@@ -32,6 +32,11 @@
     color: var(--text);
   }
   
+  
+  @media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
   /* Card container */
   .login-card {
     background: #fff;
@@ -137,6 +142,9 @@
   
   button:active {
     transform: translateY(0);
+  }
+  
+  
   }
   
   /* Footer */
