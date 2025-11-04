@@ -257,13 +257,13 @@ function addParticipantLine( id, name , selector )
 						 
 		         index = index + 1;   
 		       
-			 userLine  = '<div id="participant_line_' + id + '" style="background-color:#DAD7CD; border-radius:10px; padding:10px;   margin-bottom:10px; width:80%; " class="container text-center" >'; 
+			 userLine  = '<div id="participant_line_' + id + '" style="background-color:#DAD7CD; border-radius:10px; padding:10px;   margin-bottom:10px; width:90%; " class="container text-center" >'; 
 			 userLine += '<input type="hidden" name="participant_name_' + index + '" value="' + name + '" />';
 			 userLine += '<input type="hidden" id="participantId_' + index + '" name="participantId_' + index + '" value="' + id + '" />';
-			  userLine += '<button type="button" id="deleteParticipant_'+ id +'_'+ name +'" class="btn btn-brand bx bxs-trash" style="float:right;"></button>';
+			  userLine += '<button type="button" id="deleteParticipant_'+ id +'_'+ name +'" class="btn btn-brand bx bxs-trash" style="float:right; border-radius:10px; "></button>';
 			 userLine += '<h4><span style="color:var(--brand);" > Participant: </span>'+ name +'</h4>';
 			 
-				 userLine +='<div  class="container" style=" width:80%; margin-left:10%; background-color:#fff; border-radius:30px;  padding:10px;">';
+				 userLine +='<div  class="container" style=" width:95%; margin-left:2.5%; background-color:#fff; border-radius:30px;  padding:10px;">';
 				 				 
 				 	userLine +=' <div style="width:80%; margin-left:10%;" class="row">';
 				 	
@@ -347,6 +347,56 @@ function addNumberOfParticipants( index, selector )
     </script>
       
          
+    
+   <style>
+  /* --- Styles de base (écrans de bureau) --- */
+  #add_new_participant_div {
+    width: 40%;
+    margin: 10px auto 0 auto;
+    padding: 5px;
+    height: auto;
+    display: none;
+  }
+
+  #selectParticipants {
+    display: none;
+    overflow-y: scroll;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #EDF2F4;
+    width: 60%;
+    margin-left: 18%;
+    height: 200px;
+  }
+
+  #participants {
+    width: 80%;
+    margin: 50px auto 0 auto;
+    padding: 10px;
+  }
+
+  /* --- Styles responsives (mobile/tablette ≤ 768px) --- */
+  @media (max-width: 768px) {
+    #add_new_participant_div {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #selectParticipants {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      height: auto; /* adapte la hauteur au contenu */
+    }
+
+    #participants {
+      width: 98%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>
 
 
 
@@ -374,13 +424,13 @@ function addNumberOfParticipants( index, selector )
                             </div>
                                     
                                         
-                             <div id="selectParticipants" class="row intro" style="display:none; overflow-y:scroll; margin-top:10px; padding:5px; background-color:#EDF2F4;  width:60%; margin-left:18%;  height:200px;"> 
+                             <div id="selectParticipants" class="row intro" > 
                                             
                                             
                              </div>
                                              
                                              
-                             <div id="add_new_participant_div" class="container intro" style="width:40%;  margin-top:10px; padding:5px; height:auto;  display:none;">
+                             <div id="add_new_participant_div" class="container intro" >
                                 	 <form method="post"  id="register_participant_form" class="">
                                     {% csrf_token %}
                                     <div>
@@ -414,12 +464,12 @@ function addNumberOfParticipants( index, selector )
              
                        
                            
-                               <form method="post"  id="add_participant_form">
+                               <form method="post"  width="100%;" id="add_participant_form">
 			    		 {% csrf_token %}
 			    		 <input type="hidden" id="publication_id" name="publication_id" value="{{publication.id}}" />
 		       		 <input type="hidden" id="space_to_buy_id" name="space_to_buy_id" value="" />
 		       		     
-		                            <div  id="participants" style="margin-top:50px;" class="container">
+		                            <div  id="participants"  class="container">
 
 		                               
 		                               	
