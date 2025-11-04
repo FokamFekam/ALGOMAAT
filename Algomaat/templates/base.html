@@ -270,7 +270,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-8">
-                                <form  method="post"  action="{% url 'registration:login' %}" class="p-lg-5 col-12 row g-3">
+                                <form  method="post"  action="{% url 'registration:send_email' %}" class="p-lg-5 col-12 row g-3">
                                   {% csrf_token %}
                                     <div>
                                         <h1> Contact us</h1>
@@ -278,22 +278,22 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="userName" class="form-label">First name</label>
-                                        <input type="text" class="form-control" placeholder="Jon"  id="id_search_content"
+                                        <input type="text" name="first_name" class="form-control" placeholder="Jon"  id="id_search_content"
                                             aria-describedby="emailHelp">
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="userName" class="form-label">Last name</label>
-                                        <input type="text" class="form-control" placeholder="Doe" id="userName"
+                                        <input type="text" name="last_name" class="form-control" placeholder="Doe" id="userName"
                                             aria-describedby="emailHelp">
                                     </div>
                                     <div class="col-12">
                                         <label for="userName" class="form-label">Email address</label>
-                                        <input type="email" class="form-control" placeholder="Johndoe@example.com" id="userName"
+                                        <input type="email" name="email" class="form-control"  placeholder="Johndoe@example.com" id="userName"
                                             aria-describedby="emailHelp">
                                     </div>
                                     <div class="col-12">
                                         <label for="exampleInputEmail1" class="form-label">Enter Message</label>
-                                        <textarea name="" placeholder="This is looking great and nice." class="form-control" id=""  rows="4"></textarea>
+                                        <textarea name="message" placeholder="This is looking great and nice." class="form-control" id=""  rows="4"></textarea>
                                     </div>
 
                                     <div class="col-12">
