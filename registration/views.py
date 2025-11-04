@@ -138,7 +138,7 @@ def send_email(request):
         message = request.POST.get('message')
 
         # Sujet et contenu du mail
-        subject = f"Nouveau message de {first_name} {last_name}"
+        subject = f"Algomaat_Nouveau message du client {first_name} {last_name}"
         full_message = f"""
         Vous avez reçu un nouveau message via le formulaire de contact :
         
