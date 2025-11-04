@@ -33,6 +33,33 @@
   }
   
   
+  /* --- Base --- */
+.login-card {
+  background: #fff;
+  width: 90%;
+  max-width: 450px;
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.6s ease;
+  margin: auto;
+}
+
+/* --- Tablette (écrans moyens) --- */
+@media (max-width: 1024px) {
+  .login-card {
+    width: 80%;
+    max-width: 500px;
+    padding: 2rem;
+  }
+}
+
+
+
+
+
+  
+  
   @media (max-width: 768px) {
   body {
     padding: 1rem;
