@@ -33,7 +33,13 @@
 {% block content %}
 
 
-        <div class="login-card"  style="zoom: 1.4;  width:300px; height:200px;" >
+        <div class="login-card" style="
+        	    
+		    width: 90vw;          /* prend 80% de la largeur de l’écran */
+		    max-width: 450px;     /* limite la taille max sur PC */
+		    padding: 20px;
+		    background: white;
+		    border-radius: 10px;" >
             
             <h4>  
                 <a href="/"><img width="200" height="60" src="{% static 'img/LOGO.png' %}" alt=""></a>
@@ -59,7 +65,7 @@
               </div>
         
               <div >
-                  
+                  <label>Mot de passe</label>
                 {{ form.password }}
                 
                  <button type="button"  class="toggle-password" aria-label="Afficher le mot de passe">
