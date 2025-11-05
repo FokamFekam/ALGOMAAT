@@ -24,19 +24,7 @@
     
     <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css">
     
-    <style>
-  @media (max-width: 600px) {
-     .login-card {
-      max-width: none;      /* enlève la limite */
-      width: 400px;   
-      height:600px;
-      padding: 1.5rem;      /* réduit un peu le padding */
-      margin: 1rem auto;    /* centre bien sur l’écran */
-      transform: scale(1.05);      /* ✅ petit zoom visuel */
-      transform-origin: center top; /* centre le zoom */
-    }
-  }
-</style>
+  
 
 {% endblock %}
 
@@ -45,7 +33,7 @@
 {% block content %}
 
 
-        <div class="login-card" >
+        <div class="login-card"  style="zoom: 1.4;  width:300px; height:200px;" >
             
             <h4>  
                 <a href="/"><img width="200" height="60" src="{% static 'img/LOGO.png' %}" alt=""></a>
