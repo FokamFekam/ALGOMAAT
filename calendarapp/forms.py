@@ -39,7 +39,7 @@ class EventForm(ModelForm):
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user')
 		super(EventForm, self).__init__(*args, **kwargs)
-		self.fields['is_test'] = forms.BooleanField(initial=False)
+		self.fields['is_test'] = forms.BooleanField(required=False, initial=False)
 		self.fields["start_time"].input_formats = ("%Y-%m-%dT%H:%M",)
 		self.fields["end_time"].input_formats = ("%Y-%m-%dT%H:%M",)	
 		self.fields['meetings'] = forms.MultipleChoiceField(
