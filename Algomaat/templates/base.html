@@ -124,6 +124,13 @@
 			            <a class="nav-link" style="margin-top:-5px;"  href="{% url 'contents:all_public_spaces' %}"> Services </a>
                        
                     </li>
+                    
+                        
+                    <li class="nav-item">
+                    		
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"> Réservation cours d'essai gratuit </a>
+                    </li>
+                    
                        
              	{% else %}
                      <li class="nav-item">
@@ -131,6 +138,14 @@
 			            <a class="nav-link" href="{% url 'contents:all_public_spaces' %}"> Services </a>
                        
                     </li>
+                    
+                       
+                    <li class="nav-item">
+                    		
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"> Réservation </a>
+                    </li>
+                    
+                    
                 {% endif %}
                     
                     
@@ -166,12 +181,7 @@
 		            <li class="nav-item">
                         <a class="nav-link" href="{% url 'calendarapp:calendar' %}">Calendar </a>
                     </li>
-		     
-                    <li class="nav-item">
-                    		
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"> Réservation </a>
-                    </li>
-                    
+		  
                    
                     
                      <li class="nav-item">
