@@ -66,6 +66,24 @@
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'> 
    <link rel="stylesheet" href="{% static 'css/STYle2.css' %}"> 
+   
+   <script>
+document.head.insertAdjacentHTML("beforeend", `
+<style>
+.whatsapp-icon {
+  width: 22px;
+  height: 22px;
+  fill: #fff; /* Vert WhatsApp */
+  transition: 0.3s;
+}
+
+.whatsapp-link:hover .whatsapp-icon {
+  fill: #fff; /* Vert foncé au hover */
+}
+</style>
+`);
+</script>
+
     
      <!-- Popper CSS
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  -->

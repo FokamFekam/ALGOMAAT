@@ -68,16 +68,74 @@
     
     
     
+        <!-- ABOUT -->
+    <section id="about">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 py-5">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="info-box">
+                                <img style="width:50px; height:50px;" src="{% static 'img/iconeE.png' %}" alt="">
+                                <div class="ms-4">
+                                    <h5>Enfants de 8 à 10 ans:</h5>
+                                    <p>Apprentissage des bases de la programmation avec Scratch, création de jeux vidéo, initiation à l’ordinateur et à la logique mathématique. </p>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="info-box">
+                                <img style="width:50px; height:50px;" src="{% static 'img/iconeE.png' %}" alt="">
+                                <div class="ms-4">
+                                    <h5>Enfants de 10 à 13 ans:</h5>
+                                    <p>Robotique, programmation d'intelligences artificielles,  développement de jeux, d’applications, Programmation avec Python, Java, C,.  </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="info-box">
+                                <img style="width:50px; height:50px;" src="{% static 'img/iconeO.png' %}" alt="">
+                                <div class="ms-4">
+                                    <h5>Lieu</h5>
+                                    <p>Les séances se déroulent en ligne, sous la supervision d’un enseignant certifié. Notre plateforme dispose d’outils qui facilitent l’apprentissage des enfants. </p>
+                                </div>
+                            </div>
+                          <!--  <a href="{% url 'contents:all_public_spaces' %}" class="btn btn-brand bxl-whatsapp">J'ai une question</a> -->
+                            
+                            <a href="https://wa.me/0000000000" class="whatsapp-link btn btn-brand" target="_blank" aria-label="WhatsApp">
+			  <svg viewBox="0 0 24 24" class="whatsapp-icon">
+			    <path d="M12 0C5.372 0 0 5.372 0 12c0 2.114.548 4.092 1.507 5.821L0 24l6.33-1.507A11.95 11.95 0 0012 24c6.628 0 12-5.372 12-12S18.628 0 12 0zm0 22.05c-1.861 0-3.618-.487-5.17-1.338l-.37-.21-3.755.893.8-3.65-.24-.38A9.98 9.98 0 012.05 12C2.05 6.48 6.48 2.05 12 2.05S21.95 6.48 21.95 12 17.52 21.95 12 21.95zm5.248-7.338c-.284-.142-1.675-.83-1.934-.925-.26-.095-.45-.142-.64.142-.19.284-.735.925-.9 1.115-.166.19-.333.213-.617.071-.284-.142-1.2-.443-2.286-1.414-.845-.753-1.415-1.68-1.58-1.964-.166-.284-.018-.438.124-.58.128-.128.284-.333.425-.5.142-.166.19-.284.284-.474.095-.19.047-.355-.024-.497-.07-.142-.64-1.542-.875-2.11-.23-.553-.465-.478-.64-.487-.166-.007-.355-.009-.545-.009a1.05 1.05 0 00-.76.355c-.26.284-.994.97-.994 2.363 0 1.393 1.02 2.741 1.162 2.927.142.19 2.01 3.067 4.874 4.302.681.294 1.212.47 1.626.603.683.217 1.305.187 1.796.113.548-.082 1.675-.684 1.91-1.345s.236-1.226.166-1.345c-.07-.118-.26-.19-.545-.333z"/>
+			  </svg>
+			  J'ai une question
+			</a>
+
+                            <span data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-brand"> un cours d'essai?</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <img src="{% static 'img/ROBOT.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </section> 
+    
+    
+    
+    
     <section id="services" class="text-center">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="intro">
-                        <h6>Nos Services</h6>
-                        <h1>Que faisons-nous?</h1>
-                        <p class="mx-auto">
+                        <!--<h6>Nos Services</h6>-->
+                        <h1>Nos Services</h1>
+                      <!--  <p class="mx-auto">
                            Chez <span style="color:var(--brand);"> Algomaat</span>, nous croyons que chaque enfant peut devenir acteur du monde digital de demain. À travers des ateliers ludiques, des projets concrets et des outils adaptés à chaque âge, nous aidons nos élèves à transformer leurs idées en programmes, applications, jeux et animations. 
-                        </p>
+                        </p> -->
                     </div>
                 </div>
             </div>
@@ -199,51 +257,7 @@
     
     
     
-    <!-- ABOUT -->
-   <!-- <section id="about">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-5 py-5">
-                    <div class="row">
 
-                        <div class="col-12">
-                            <div class="info-box">
-                                <img src="{% static 'img/icon6.png' %}" alt="">
-                                <div class="ms-4">
-                                    <h5>Digital Marketing</h5>
-                                    <p>It is a long established fact that a reader will be distracted by the readable
-                                        content of a page </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 mt-4">
-                            <div class="info-box">
-                                <img src="{% static 'img/icon4.png' %}" alt="">
-                                <div class="ms-4">
-                                    <h5>E-mail Marketing</h5>
-                                    <p>It is a long established fact that a reader will be distracted by the readable
-                                        content of a page </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 mt-4">
-                            <div class="info-box">
-                                <img src="{% static 'img/icon5.png' %}" alt="">
-                                <div class="ms-4">
-                                    <h5>Buisness Marketing</h5>
-                                    <p>It is a long established fact that a reader will be distracted by the readable
-                                        content of a page </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <img src="{% static 'img/ROBOT.png' %}" alt="">
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <!-- MILESTONE -->
     <section id="milestone">
