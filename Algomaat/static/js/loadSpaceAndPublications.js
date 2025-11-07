@@ -345,9 +345,10 @@ content += '</div>';
  content += '<input type="hidden" id="pubId_'+ id1 + '_' + spaceId +'" name="pubId_'+ id1 + '_' + spaceId +'" value="'+ data[key]['id'] +'">';
 				 	     			 	     		
 				 	     			 	     		
-		content += '<div id="content_buy_'+ id1 + '_' + spaceId + '_'+ data[key]['id'] +'"   class="container" style="background-color:#DAD7CD; border-radius:10px; padding:10px;   margin-bottom:10px;" >';
+		content += '<div data-bs-toggle="modal" data-bs-target="#exampleModal"   class="container" style="background-color:#DAD7CD; border-radius:10px; padding:10px;   margin-bottom:10px;" >';
 		
-		content += '<span style="color:var(--brand);" > &nbsp; Réservez une séance Test gratuite </span>';
+		content += '<span style="color:var(--brand);">&nbsp; Réservez un cours d\'essai gratuit</span>';
+
 				
 				     		
  content += '<div id="price_content_'+ id1 + '_' + spaceId + '_' + data[key]['id']+'" class="" style="background-color:#fff; border-radius:30px; width:90%; margin:10px; padding:10px; font-size:20px; font-weight:normal; color:var(--brand); font-family:Helvetica;">'

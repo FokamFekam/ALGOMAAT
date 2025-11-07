@@ -35,7 +35,7 @@
   /* Card container */
   .login-card {
     background: #fff;
-    width: 35%;
+    width: 98%;
     
     max-width: 850px;
     padding: 2.5rem;
@@ -173,7 +173,7 @@
   @media (max-width: 768px) {
     .login-card {
       max-width: none;      /* enlève la limite */
-      width: 90%;   
+      width: 98%;   
       padding: 1.5rem;      /* réduit un peu le padding */
       margin: 1rem auto;    /* centre bien sur l’écran */
       transform: scale(1.05);      /* ✅ petit zoom visuel */

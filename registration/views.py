@@ -134,8 +134,11 @@ def send_email(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
+        age = request.POST.get('age')
+        phone = request.POST.get('phone')
         email = request.POST.get('email')
         message = request.POST.get('message')
+        parent_consent = request.POST.get('parent_consent')
 
         # Sujet et contenu du mail
         subject = f"Algomaat_Nouveau message du client {first_name} {last_name}"
@@ -144,6 +147,8 @@ def send_email(request):
         
         Nom : {first_name} {last_name}
         Email : {email}
+        Age : {age}
+        Phone : {phone}
         
         Message :
         {message}

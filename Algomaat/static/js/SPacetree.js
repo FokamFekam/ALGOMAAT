@@ -212,7 +212,7 @@ function init(){
 		
 		    	if( $('#treeType').val() == 1 )
 		    	{
-				$.getJSON("/relations/publication/"+nodeId.substr(4), function(data)
+				$.getJSON("/relations/publication/"+ nodeId.substr(4), function(data)
 				{
 						var newNode = data.children;
 						var ans = {"id" : nodeId, 'children' : newNode};
@@ -682,9 +682,10 @@ function init(){
 			}
 			
 			
-   
+              if(!node.data.is_private)
+              {
 	label.innerHTML += "<a href='/publications/"+ node.id.substr(4) +"' class='container'  style='color:#fff; margin:2px; padding:4px; width:90%; background-color:var(--brand); text-decoration:none;  text-align:center; border-radius:5px;'>Show</a>";
-	
+	      }
 	     		
 			
 	}

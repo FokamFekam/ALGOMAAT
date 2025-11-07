@@ -44,6 +44,41 @@
       
          
 
+  
+   <style>
+  /* Par défaut : rien n’est visible sur mobile/tablette */
+  
+  #sectionLaptop {
+    display: none;
+  }
+  
+  #sectionMobile {
+    display: block;
+  }
+
+  /* À partir de 1025px (Laptop / Desktop) */
+  @media (min-width: 1025px) {
+    #sectionLaptop {
+      display: block; /* ou flex / grid */
+    }
+    #sectionMobile {
+      display: none;
+    }
+  }
+  
+  
+  
+   /* Uniquement sur mobile */
+  @media (max-width: 767px) {
+    #reserve {
+      width: 90vw !important;   /* quasi pleine largeur */
+      min-height: 120px;        /* hauteur minimale pour donner du volume */
+      margin: 10px auto;        /* centré */
+      display: block;
+    }
+  }
+  
+</style>
 
 
 {% endblock %}
@@ -60,9 +95,9 @@
                         		<h2> {{publication.title}} </h2>
                        	        <p class="mx-auto"> {{publication.description}} </p>
                        	        
-                       	        <div onclick="reservation('{{ publication.id }}');"  class="container" style="background-color:#DAD7CD; width:30%; border-radius:10px; padding:10px;   margin-bottom:10px; cursor:pointer;" >
-                       	        <span style="color:var(--brand);" > &nbsp; Réservez une séance Test gratuite </span>
-		               	        <div  class="mx-auto" style="background-color:var(--brand); border-radius:30px; width:220px; margin:10px; padding:10px; font-size:20px; font-weight:normal; color:#fff; font-family:Helvetica; cursor:pointer;">
+                       	        <div id="reserve"  data-bs-toggle="modal" data-bs-target="#exampleModal"  class="container" style="background-color:#DAD7CD; width:30%; border-radius:10px; padding:10px;   margin-bottom:10px; cursor:pointer;" >
+                       	        <span style="color:var(--brand);" > &nbsp; Réservez un cours d'essai gratuit </span>
+		               	        <div  class="mx-auto" style="background-color:var(--brand); border-radius:30px; width:90%; margin:10px; padding:10px; font-size:20px; font-weight:normal; color:#fff; font-family:Helvetica; cursor:pointer;">
 		                
 				      			 <span  id="" class="" style=" " >{{publication.price}} EUR </span>
 				      		        <i  class="bx bxs-cart" style="float:right; font-size:20px; font-weight:normal; margin-top:5px;"  >  </i>			</div>
@@ -160,7 +195,8 @@
 	  <input type="hidden" id="treeType" name="treeType" value="1">
 	  <input type="hidden" id="pubId" name="pubId" value="{{publication.id}}">
 	<div/>
-	 <section id=""  class="text-center" style=" ">
+	
+	 <section id="sectionLaptop"  class="text-center" style=" ">
 	 	<div  class="container" style="background-color: #DAD7CD; " >
 	       		
 	       	<h4>Related Publications:</h4>
@@ -173,6 +209,26 @@
 	       	
 	       	</div>
 		       <div id="log" style="visibility:hidden"></div>
+	 	</div>
+	 
+	 </section>
+	 
+	 
+	 
+	 
+	  <section id="sectionMobile"  class="text-center" style=" ">
+	 	<div  class="container" style="background-color: #DAD7CD; " >
+	       		
+	       	<h4>Related Publications: Mobile</h4>
+	       	<h4 style="color:var(--brand);" > <i class='bx bxs-hand-down'></i></h4>	
+	       	<div id="" style=" padding-bottom:20px;  height:600px;" class="row g-4">
+	       		
+	       		
+				
+	       	
+	       	
+	       	</div>
+		       
 	 	</div>
 	 
 	 </section>

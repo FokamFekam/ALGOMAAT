@@ -99,7 +99,7 @@ class Publication(models.Model):
         node_dict = {
                     "id"  : "node%s" % self.pk,
                     "name": "%s" % self.title,
-                    "data": {"linkUrl": "#TODO", "linkName":"#TODO",  "relationWeight":rel_weight, "relationId":rel_id},
+                    "data": {"linkUrl": "#TODO", "linkName":"#TODO", "is_private":self.is_private, "relationWeight":rel_weight, "relationId":rel_id},
                     "children":children,
                 }
         return node_dict

@@ -81,8 +81,8 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-auto">
-                    <p> <i class='bx bxs-envelope'></i> algomaat@gmail.com</p>
-                    <p> <i class='bx bxs-phone-call'></i> +33 616 95 82  </p>
+                    <p style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" > <i class='bx bxs-envelope'></i> Réservez un cours d'essai gratuit </p>
+                   <!--  <p> <i class='bx bxs-phone-call'></i> +33 616 95 82  </p>  -->
                 </div>
                 <div class="col-auto social-icons">
                     <a href="#"><i class='bx bxl-facebook'></i></a>
@@ -169,7 +169,7 @@
 		     
                     <li class="nav-item">
                     		
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"> Contact </a>
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"> Réservation </a>
                     </li>
                     
                    
@@ -273,32 +273,56 @@
                                 <form  method="post"  action="{% url 'registration:send_email' %}" class="p-lg-5 col-12 row g-3">
                                   {% csrf_token %}
                                     <div>
-                                        <h1> Contact us</h1>
-                                    <p>Fell free to contact us and we will get back to you as soon as possible</p>
+                                        <h4> RÉSERVEZ VOTRE PLACE POUR UN COURS D'ESSAI !  </h4>
+                                    <p style="text-align:center;color:var(--brand);">  ON VOUS RAPPEL EN 24H !</p>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label for="userName" class="form-label">First name</label>
+                                        <label for="userName" class="form-label">Nom</label>
                                         <input type="text" name="first_name" class="form-control" placeholder="Jon"  id="id_search_content"
                                             aria-describedby="emailHelp">
                                     </div>
                                     <div class="col-lg-6">
-                                        <label for="userName" class="form-label">Last name</label>
+                                        <label for="userName" class="form-label">Prenom</label>
                                         <input type="text" name="last_name" class="form-control" placeholder="Doe" id="userName"
                                             aria-describedby="emailHelp">
                                     </div>
                                     <div class="col-12">
-                                        <label for="userName" class="form-label">Email address</label>
+                                        <label for="userName" class="form-label">Email</label>
                                         <input type="email" name="email" class="form-control"  placeholder="Johndoe@example.com" id="userName"
                                             aria-describedby="emailHelp">
                                     </div>
-                                    <div class="col-12">
-                                        <label for="exampleInputEmail1" class="form-label">Enter Message</label>
-                                        <textarea name="message" placeholder="This is looking great and nice." class="form-control" id=""  rows="4"></textarea>
-                                    </div>
+                                    
+                                     <!-- ✅ Champ Téléphone ajouté -->
+				    <div class="col-lg-6">
+					<label for="id_phone" class="form-label">Téléphone</label>
+					<input type="tel" name="phone" class="form-control" placeholder="06 12 34 56 78" id="id_phone">
+				    </div>
 
+				    <!-- ✅ Champ Âge ajouté -->
+				    <div class="col-lg-6">
+					<label for="id_age" class="form-label">Âge</label>
+					<input type="number" name="age" class="form-control" placeholder="Votre âge" min="1" max="99" id="id_age">
+				    </div>
+				    
+                                    
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-brand">Send Message</button>
+                                        <label for="exampleInputEmail1" class="form-label">Message</label>
+                                        <textarea name="message" placeholder="Ecrivez-nous!" class="form-control" id=""  rows="4"></textarea>
                                     </div>
+                                    
+                                    
+                                      <!-- Checkbox consentement parent/légal -->
+				    <div class="col-12 form-check">
+					<input class="form-check-input" type="checkbox" value="1" id="id_parent_consent" name="parent_consent" required>
+					<label class="form-check-label" for="id_parent_consent">
+					    Je certifie être le parent ou le représentant légal
+					</label>
+				    </div>
+
+                                    <div class="col-12" style="margin-bottom:10px;">
+                                        <button type="submit" class="btn btn-brand">ENVOYER</button>
+                                    </div>
+                                    
                                 </form>
                             </div>
                         </div>
