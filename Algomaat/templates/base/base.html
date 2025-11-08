@@ -51,6 +51,7 @@
     </head>
 <body class="app sidebar-mini" style="padding-top:0;">
      
+     
         <!-- Navbar-->
        
     <!-- TOP NAV -->
@@ -58,8 +59,8 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-auto" style="margin-left:20%;" >
-                    <p> <i class='bx bxs-envelope'></i> algomaat@gmail.com</p>
-                    <p> <i class='bx bxs-phone-call'></i> +33 616 08 95 82 </p>
+                      <p style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" > <i class='bx bxs-envelope'></i> Réservez un cours d'essai gratuit </p>
+                   <!-- <p> <i class='bx bxs-phone-call'></i> +33 616 08 95 82 </p> -->
                    
                 </div>
                 <div class="col-auto social-icons">
@@ -226,6 +227,85 @@
     -->
             </ul>
         </aside>
+        
+         <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row gy-4">
+                            <div class="col-lg-4 col-sm-12 bg-cover"
+                                style="background-image: url({% static 'img/SLIDE1.png' %}"); min-height:300px;">
+                                <div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <form  method="post"  action="{% url 'registration:send_email' %}" class="p-lg-5 col-12 row g-3">
+                                  {% csrf_token %}
+                                    <div>
+                                        <h4> RÉSERVEZ VOTRE PLACE POUR UN COURS D'ESSAI !  </h4>
+                                    <p style="text-align:center;color:var(--brand);">  ON VOUS RAPPEL EN 24H !</p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="userName" class="form-label">Nom</label>
+                                        <input type="text" name="first_name" class="form-control" placeholder="Jon"  id="id_search_content"
+                                            aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="userName" class="form-label">Prenom</label>
+                                        <input type="text" name="last_name" class="form-control" placeholder="Doe" id="userName"
+                                            aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="userName" class="form-label">Email</label>
+                                        <input type="email" name="email" class="form-control"  placeholder="Johndoe@example.com" id="userName"
+                                            aria-describedby="emailHelp">
+                                    </div>
+                                    
+                                     <!-- ✅ Champ Téléphone ajouté -->
+				    <div class="col-lg-6">
+					<label for="id_phone" class="form-label">Téléphone</label>
+					<input type="tel" name="phone" class="form-control" placeholder="06 12 34 56 78" id="id_phone">
+				    </div>
+
+				    <!-- ✅ Champ Âge ajouté -->
+				    <div class="col-lg-6">
+					<label for="id_age" class="form-label">Âge</label>
+					<input type="number" name="age" class="form-control" placeholder="Votre âge" min="1" max="99" id="id_age">
+				    </div>
+				    
+                                    
+                                    <div class="col-12">
+                                        <label for="exampleInputEmail1" class="form-label">Message</label>
+                                        <textarea name="message" placeholder="Ecrivez-nous!" class="form-control" id=""  rows="4"></textarea>
+                                    </div>
+                                    
+                                    
+                                      <!-- Checkbox consentement parent/légal -->
+				    <div class="col-12 form-check">
+					<input class="form-check-input" type="checkbox" value="1" id="id_parent_consent" name="parent_consent" required>
+					<label class="form-check-label" for="id_parent_consent">
+					    Je certifie être le parent ou le représentant légal
+					</label>
+				    </div>
+
+                                    <div class="col-12" style="margin-bottom:10px;">
+                                        <button type="submit" class="btn btn-brand">ENVOYER</button>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
         <main class="app-content"  >
             <div class="app-title" style="padding-bottom:10px;">
                 {% block breadcrumb %}
@@ -233,10 +313,14 @@
             </div>
             {% block content %}
             {% endblock content %}
+            
         </main>
         <!-- Essential javascripts for application to work -->
         {% include 'base/js.html' %} 
         {% block extrascripts %}
         {% endblock extrascripts %}
+        
+        
+        
     </body>
 </html>
