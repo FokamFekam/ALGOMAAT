@@ -44,7 +44,7 @@
       
          
 
-  
+  <!--
    <style>
   /* Par défaut : rien n’est visible sur mobile/tablette */
   
@@ -79,6 +79,7 @@
   }
   
 </style>
+-->
 
 
 {% endblock %}
@@ -124,12 +125,25 @@
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeOb.png' %}" alt="">
                                 <div class="ms-4">
                                     <h5>Objectifs</h5>
-                                     <ul id="" style="" >
+                                    
+					      {% if publication.id == 18 %}
+						Apprentissage des bases de la programmation avec Scratch. <br/>
+						Création de jeux vidéo 2D. 
+					      {% elif publication.id == 19 %}
+					        Apprentissage des bases de la programmation 3D avec Roblox Studio. <br/>
+						Création de jeux vidéo 3D. 
+					      {% elif publication.id == 11 %}
+					        Decoupe du plan 2D de construction. <br/>
+						Montage du robot.<br/>
+						Programmation du robot avec Microsoft MakeCode for Micro:bit. 
+					      {% elif publication.id == 12 %}
+					       Apprentissage des bases du machine learning avec Teachable Machine  <br />
+					       Apprendre à créer des applications avec des modèles de machine learning dans Scratch. <br />
+					       Programmation d’une intelligence artificielle à un ou deux neurones avec Jupyter Notebook.
+					        					        
 					      
-						<li> Apprendre à coder des jeux 2D sur Scratch. </li>
-						<li> Apprendre à coder des jeux 3D sur Roblox. </li>
-						
-					</ul>
+					      {%endif%} 
+					
                                 </div>
                             </div>
                         </div>
@@ -138,11 +152,21 @@
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeE.png' %}" alt="">
                                 <div class="ms-4">
                                     <h5>Concernés</h5>
-                                    <p>Enfants à partir de 8 ans</p>
+                                    <p>
+                                        {% if publication.id == 18 %}
+						Enfants de 8  à 10 ans  <br/>
+						
+					  {% else %}
+					       Pré-ados et ados (10 à 14 ans)
+					      
+					  {%endif%} 
+                                        
+                                        
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 mt-4">
+                       <!-- <div class="col-12 mt-4">
                             <div class="info-box">
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeC.png' %}" alt="">
                                 <div class="ms-4">
@@ -150,13 +174,13 @@
                                     <p>1 Seance de 1h par semaine <br/>[ à choisir pendant la procédure d'inscription ]</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                          <div class="col-12 mt-4">
                             <div class="info-box">
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeCh.png' %}" alt="">
                                 <div class="ms-4">
                                     <h5>Durée cette formation</h5>
-                                    <p> En tout, 15h de formation. <br/> [ environ 3 mois] </p>
+                                    <p> 24h de formation. <br/> </p>
                                 </div>
                             </div>
                         </div>
@@ -165,9 +189,19 @@
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeO.png' %}" alt="">
                                 <div class="ms-4">
                                     <h5>Lieu</h5>
-                                    <p>Les seances se font en ligne.</p>
+                                    <p>Les séances se déroulent en ligne(Google Meet), sous la supervision d’un enseignant certifié. Notre plateforme intègre des outils interactifs qui facilitent l’apprentissage des enfants.</p>
                                 </div>
                             </div>
+                             <a href="https://wa.me/0000000000" style="margin-bottom:10px;" class="whatsapp-link btn btn-brand" target="_blank" aria-label="WhatsApp">
+			  <svg viewBox="0 0 24 24" class="whatsapp-icon">
+			    <path d="M12 0C5.372 0 0 5.372 0 12c0 2.114.548 4.092 1.507 5.821L0 24l6.33-1.507A11.95 11.95 0 0012 24c6.628 0 12-5.372 12-12S18.628 0 12 0zm0 22.05c-1.861 0-3.618-.487-5.17-1.338l-.37-.21-3.755.893.8-3.65-.24-.38A9.98 9.98 0 012.05 12C2.05 6.48 6.48 2.05 12 2.05S21.95 6.48 21.95 12 17.52 21.95 12 21.95zm5.248-7.338c-.284-.142-1.675-.83-1.934-.925-.26-.095-.45-.142-.64.142-.19.284-.735.925-.9 1.115-.166.19-.333.213-.617.071-.284-.142-1.2-.443-2.286-1.414-.845-.753-1.415-1.68-1.58-1.964-.166-.284-.018-.438.124-.58.128-.128.284-.333.425-.5.142-.166.19-.284.284-.474.095-.19.047-.355-.024-.497-.07-.142-.64-1.542-.875-2.11-.23-.553-.465-.478-.64-.487-.166-.007-.355-.009-.545-.009a1.05 1.05 0 00-.76.355c-.26.284-.994.97-.994 2.363 0 1.393 1.02 2.741 1.162 2.927.142.19 2.01 3.067 4.874 4.302.681.294 1.212.47 1.626.603.683.217 1.305.187 1.796.113.548-.082 1.675-.684 1.91-1.345s.236-1.226.166-1.345c-.07-.118-.26-.19-.545-.333z"/>
+			  </svg>
+			  J'ai une question
+			</a>
+
+                            <span style="margin-bottom:10px;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-brand"> un cours d'essai gratuit?</span>
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -177,7 +211,7 @@
               {% elif publication.categorie.id == 2 %}
               		<img src="{% static 'img/CATB5-INTEL-ARTI.png' %}" alt=""> 
               {% elif publication.categorie.id == 3 %}
-              		<img src="{% static 'img/CATB2-REPE.png' %}" alt=""> 
+              		<img src="{% static 'img/ROBOT.png' %}" alt=""> 
               {% elif publication.categorie.id == 4 %}
               		<img src="{% static 'img/CATB3-DEV-APPLI.png' %}" alt=""> 
               {% elif publication.categorie.id == 5 %}
@@ -191,12 +225,13 @@
         </div>
     </section>
 
+
    	<div class="row">
 	  <input type="hidden" id="treeType" name="treeType" value="1">
 	  <input type="hidden" id="pubId" name="pubId" value="{{publication.id}}">
 	<div/>
 	
-	 <section id="sectionLaptop"  class="text-center" style=" ">
+	<!-- <section id="sectionLaptop"  class="text-center" style=" ">
 	 	<div  class="container" style="background-color: #DAD7CD; " >
 	       		
 	       	<h4>Related Publications:</h4>
@@ -231,7 +266,7 @@
 		       
 	 	</div>
 	 
-	 </section>
+	 </section>  -->
 
 
 </div>
