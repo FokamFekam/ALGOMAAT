@@ -137,7 +137,7 @@
 						Montage du robot.<br/>
 						Programmation du robot avec Microsoft MakeCode for Micro:bit. 
 					      {% elif publication.id == 12 %}
-					       Apprentissage des bases du machine learning avec Teachable Machine  <br />
+					       Apprentissage des bases du machine learning avec Teachable Machine.  <br />
 					       Apprendre à créer des applications avec des modèles de machine learning dans Scratch. <br />
 					       Programmation d’une intelligence artificielle à un ou deux neurones avec Jupyter Notebook.
 					        					        
@@ -166,15 +166,21 @@
                                 </div>
                             </div>
                         </div>
-                       <!-- <div class="col-12 mt-4">
+                     {% if publication.categorie.id == 3 %}
+                       <div class="col-12 mt-4">
                             <div class="info-box">
-                                <img style="width:50px; height:50px;" src="{% static 'img/iconeC.png' %}" alt="">
+                                <img style="width:50px; height:50px;" src="{% static 'img/iconeR.png' %}" alt="">
                                 <div class="ms-4">
-                                    <h5>Calendrier</h5>
-                                    <p>1 Seance de 1h par semaine <br/>[ à choisir pendant la procédure d'inscription ]</p>
+                                    <h5>Kit de formation</h5>
+                                    <p>Cette formation en robotique nécessite l’acquisition préalable d’un kit pédagogique, disponible <span style="color:var(--brand);"> entre 75 et 100 € </span> selon le modèle choisi. <br/></p>
+                                 
+                                  <img style="width:400px; height:400px;" src="{% static 'img/kit.jpg' %}" alt="">
+                                  <!--<a href="https://cardboard.lofirobot.com/inventor-kit/" class="btn btn-brand" target="_blank" rel="noopener noreferrer"> Achat du kit</a>-->
                                 </div>
                             </div>
-                        </div> -->
+                        </div> 
+                     {%endif%} 
+                        
                          <div class="col-12 mt-4">
                             <div class="info-box">
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeCh.png' %}" alt="">
