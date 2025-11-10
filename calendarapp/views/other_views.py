@@ -288,6 +288,7 @@ def events_materials(request):
 	inscriptions = Inscription.objects.filter(participant=request.user, status=2)
 		
 	for inscription in inscriptions:
+		events_list = []
 		for meeting in inscription.publication.meetings.all():
 			event = meeting.event
 			#check if this event already saved in event_list
