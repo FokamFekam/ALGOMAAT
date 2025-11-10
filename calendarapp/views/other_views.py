@@ -237,7 +237,7 @@ def ajax_get_my_materials(request, event_id):
 		response_data['id'] = material.id
 		response_data['title'] = material.title
 		response_data['description'] = material.description
-		response_data['doc_link'] = material.document.doc_link
+		response_data['doc_id'] = material.document.id
 		response_data['has_answer'] = material.has_answer
 		response_data['m_type'] = material.m_type
 		response_data['owner'] = material.owner.username

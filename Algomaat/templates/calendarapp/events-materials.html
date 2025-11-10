@@ -9,7 +9,13 @@
 	<script>
 
 
-		function addMaterialToSelect( event_id, id, title, description, has_answer,m_type,owner, doc_link )
+	 	function loadDocument( doc_id )
+	 	{
+	 	
+	 	
+	 	}
+
+		function addMaterialToSelect( event_id, id, title, description, has_answer,m_type,owner, doc_id )
 		{
 		 
 			materialLine = '<tr id="select_material_' + id + '"  role="row">';
@@ -36,7 +42,7 @@
 
 			}
 			materialLine += '<td><span style="color:black;">'+ owner +'</span></td>';
-			materialLine += ' <td> <a class="btn btn-brand" href="'+doc_link +'" target="_blank" > Show </a></td>';
+			materialLine += ' <td> <span class="btn btn-brand" onclick="loadDocument('+doc_id +');" target="_blank" > Show </span></td>';
 			materialLine  += '</tr>'; 
 
 			$('#list_my_materials_'+ event_id).append(materialLine);
@@ -76,7 +82,7 @@
 					
 					$.each(data, function(key, value) {
 					
-			addMaterialToSelect( event_id, data[key]["id"],data[key]["title"], data[key]["description"],data[key]["has_answer"],data[key]["m_type"],data[key]["owner"],data[key]["doc_link"])
+			addMaterialToSelect( event_id, data[key]["id"],data[key]["title"], data[key]["description"],data[key]["has_answer"],data[key]["m_type"],data[key]["owner"],data[key]["doc_id"])
 						
 					
 					});
