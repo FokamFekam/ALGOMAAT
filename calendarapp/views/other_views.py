@@ -173,7 +173,7 @@ def event_themes(request):
 		if check_publication_saved(publication, publications_list) == False:
 			publications_list.append(publication)
 			events_list =[]
-			for meeting in publication.meetings.all().order_by('created_at'):
+			for meeting in publication.meetings.all().order_by('-created_at'):
 				event = meeting.event
 				event_themes_list =[]
 				if check_event_saved(event, events_list) == False:
