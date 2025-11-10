@@ -247,6 +247,14 @@ def ajax_get_materials(request):
 	return JsonResponse(materials_results, safe=False)
 	
 
+
+def check_event_exists(event_list, event_id):
+	for event in event_list:
+		if event["id"] == event_id:
+			return True
+	return False
+		
+		
 def events_materials(request):
 	if not request.user.is_authenticated:
 		return redirect("/registration/login/?page_id=%s&page_type=events_materials" %  0 )	
@@ -261,7 +269,7 @@ def events_materials(request):
 		for meeting in inscription.publication.meetings.all():
 			event = meeting.event
 			#check if this event already saved in event_list
-			if self.check_event_exists(events_list, event.id) == False:
+			if check_event_exists(events_list, event.id) == False:
 				materials = event.materialeventdoc_set.all()
 				"""for material in materials:
 					materials_list.append({   
