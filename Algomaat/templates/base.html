@@ -233,18 +233,18 @@ document.addEventListener("DOMContentLoaded", function() {
 		      	       {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
 			      	<li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> Parent </a></li>
 			       {% else %}
-			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> My Lessons </a></li>
+			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> Lessons </a></li>
 			        </a></li>
 			       {% endif %}
-			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:events-materials'  %}"> My Materials
+			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:events-materials'  %}"> Materials
 			      
 			      {% if user.groups.all.0.name == 'Admin' %}
 			      <li class="nav-item" ><a class='nav-link' href="{% url 'lessonapp:my_lessons'  %}"> All lessons </a></li>
-			      <li class="nav-item" ><a class='nav-link' href="{% url 'paiement:read_my_orders'  %}"> My orders </a></li>
-			       <li class="nav-item" ><a class='nav-link' href="{% url 'paiement:read_enter_all_paiements'  %}"> My paiements </a></li>
+			      <li class="nav-item" ><a class='nav-link' href="{% url 'paiement:read_my_orders'  %}"> Orders </a></li>
+			       <li class="nav-item" ><a class='nav-link' href="{% url 'paiement:read_enter_all_paiements'  %}"> Paiements </a></li>
 			      {% endif %}
-			       <li class="nav-item" ><a class='nav-link' href="{% url 'chat:project_list'  %}"> My IA </a></li>
-			       <li class="nav-item" ><a class='nav-link' href="{% url 'bucket:bucket'  %}"> My Save </a></li>
+			       <li class="nav-item" ><a class='nav-link' href="{% url 'chat:project_list'  %}"> IA </a></li>
+			       <li class="nav-item" ><a class='nav-link' href="{% url 'bucket:bucket'  %}"> Save </a></li>
 			   </ul>
 		     </li>
 		     
