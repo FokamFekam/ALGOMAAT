@@ -19,6 +19,7 @@ from .other_views import (
     event_themes,
     events_materials,
     ajax_get_materials,
+    ajax_get_my_materials,
     remove_material_from_event,
     add_material_to_event,
 
@@ -47,6 +48,7 @@ __all__ = [
     event_themes,
     events_materials,
     ajax_get_materials,
+    ajax_get_my_materials,
     remove_material_from_event,
     add_material_to_event,
 

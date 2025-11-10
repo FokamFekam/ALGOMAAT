@@ -228,6 +228,23 @@ def add_material_to_event(request, event_id, material_id):
 	
 
 
+def ajax_get_my_materials(request, event_id): 
+	event = get_object_or_404(Event, pk=event_id)
+	materials = event.materialeventdoc_set.all()
+	materials_results = []
+	for material in materials:
+		response_data = {}
+		response_data['id'] = material.id
+		response_data['title'] = material.title
+		response_data['description'] = material.description
+		#response_data['document'] = material.document
+		response_data['has_answer'] = material.has_answer
+		response_data['m_type'] = material.m_type
+		response_data['owner'] = material.owner.username
+
+		materials_results.append(response_data)
+	return JsonResponse(materials_results, safe=False)
+	
 
 
 def ajax_get_materials(request): 
@@ -270,8 +287,8 @@ def events_materials(request):
 			event = meeting.event
 			#check if this event already saved in event_list
 			if check_event_exists(events_list, event.id) == False:
-				materials = event.materialeventdoc_set.all()
-				"""for material in materials:
+				"""materials = event.materialeventdoc_set.all()
+				for material in materials:
 					materials_list.append({   
 						"id": material.id,
 						"title": material.title,
@@ -285,8 +302,7 @@ def events_materials(request):
 					"title": event.title,
 					"start": event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
 					"end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
-					"description": event.description,
-					"materials":materials
+					"description": event.description
 				})
 		
 		publications_list.append({   
@@ -298,7 +314,7 @@ def events_materials(request):
 			"events":events_list
 		})
 	
-	print(publications_list)
+
 	context = {"results":publications_list}
 	return render(request, "calendarapp/events-materials.html", context)
 

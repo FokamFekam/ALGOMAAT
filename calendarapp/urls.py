@@ -48,6 +48,9 @@ urlpatterns = [
     path(
         "ajax_get_materials/", views.ajax_get_materials, name="ajax_get_materials"
     ),
+    path(
+        "ajax_get_my_materials/<event_id>", views.ajax_get_my_materials, name="ajax_get_my_materials"
+    ),
      
     path('remove_material_from_event/<int:event_id>/<int:material_id>/', views.remove_material_from_event, name='remove_material_from_event'),
 
