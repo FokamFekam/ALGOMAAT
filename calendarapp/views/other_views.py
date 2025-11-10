@@ -306,8 +306,8 @@ def events_materials(request):
 				events_list.append({   
 					"id": event.id,
 					"title": event.title,
-					"start": event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
-					"end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+					"start": event.start_time.strftime("%d/%m/%Y %H:%M"),
+					"end": event.end_time.strftime("%d/%m/%Y %H:%M"),
 					"description": event.description
 				})
 		
