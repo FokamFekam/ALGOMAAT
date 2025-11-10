@@ -289,7 +289,7 @@ def events_materials(request):
 		
 	for inscription in inscriptions:
 		events_list = []
-		for meeting in inscription.publication.meetings.all():
+		for meeting in inscription.publication.meetings.all().order_by('-created_at'):
 			event = meeting.event
 			#check if this event already saved in event_list
 			if check_event_exists(events_list, event.id) == False:
