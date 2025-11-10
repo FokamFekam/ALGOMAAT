@@ -9,7 +9,7 @@
 	<script>
 
 
-		function addMaterialToSelect( event_id, id, title, description, has_answer,m_type,owner )
+		function addMaterialToSelect( event_id, id, title, description, has_answer,m_type,owner, doc_link )
 		{
 		 
 			materialLine = '<tr id="select_material_' + id + '"  role="row">';
@@ -36,7 +36,7 @@
 
 			}
 			materialLine += '<td><span style="color:black;">'+ owner +'</span></td>';
-			materialLine += ' <td> <a class="btn btn-brand" href="'+material.doc_link +'" target="_blank" > Show </a></td>';
+			materialLine += ' <td> <a class="btn btn-brand" href="'+doc_link +'" target="_blank" > Show </a></td>';
 			materialLine  += '</tr>'; 
 
 			$('#list_my_materials_'+ event_id).append(materialLine);
@@ -76,7 +76,7 @@
 					
 					$.each(data, function(key, value) {
 					
-			addMaterialToSelect( event_id, data[key]["id"],data[key]["title"], data[key]["description"],data[key]["has_answer"],data[key]["m_type"],data[key]["owner"])
+			addMaterialToSelect( event_id, data[key]["id"],data[key]["title"], data[key]["description"],data[key]["has_answer"],data[key]["m_type"],data[key]["owner"], ,data[key]["doc_link"])
 						
 					
 					});
@@ -116,7 +116,7 @@
 <div class="container" style="height:auto;  margin-bottom:0px;">
                 <div class="col-12">
                     <div class="intro">
-                        <h3 style="color:var(--brand);"><i class='bx bxs-pencil'></i></h3>
+                        <h3 style="color:var(--brand);"><i class='bx bxs-file'></i></h3>
                         {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
                         	<h2> My Materials </h2>
                         {%  else %}	
