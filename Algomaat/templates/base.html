@@ -234,8 +234,9 @@ document.addEventListener("DOMContentLoaded", function() {
 			      	<li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> Parent </a></li>
 			       {% else %}
 			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> My Lessons </a></li>
+			        </a></li>
 			       {% endif %}
-			      
+			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:events-materials'  %}"> My Materials
 			      
 			      {% if user.groups.all.0.name == 'Admin' %}
 			      <li class="nav-item" ><a class='nav-link' href="{% url 'lessonapp:my_lessons'  %}"> All lessons </a></li>

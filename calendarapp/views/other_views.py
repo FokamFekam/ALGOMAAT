@@ -247,7 +247,55 @@ def ajax_get_materials(request):
 	return JsonResponse(materials_results, safe=False)
 	
 
+def events_materials(request):
+	if not request.user.is_authenticated:
+		return redirect("/registration/login/?page_id=%s&page_type=events_materials" %  0 )	
+	
+	#materials_list = []
+	events_list = []
+	publications_list = []
+	# add events from my inscriptions
+	inscriptions = Inscription.objects.filter(participant=request.user, status=2)
+		
+	for inscription in inscriptions:
+		for meeting in inscription.publication.meetings.all():
+			event = meeting.event
+			#check if this event already saved in event_list
+			if self.check_event_exists(events_list, event.id) == False:
+				materials = event.materialeventdoc_set.all()
+				"""for material in materials:
+					materials_list.append({   
+						"id": material.id,
+						"title": material.title,
+						"description": material.description,
+						"m_type": material.m_type,
+						"document": material.document,
+					})"""
+				
+				events_list.append({   
+					"id": event.id,
+					"title": event.title,
+					"start": event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+					"end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+					"description": event.description,
+					"materials":materials
+				})
+		
+		publications_list.append({   
+			"id": inscription.publication.id,
+			"title": inscription.publication.title,
+			"description": inscription.publication.description,
+			"price":inscription.publication.price,
+			"categorie":inscription.publication.categorie,
+			"events":events_list
+		})
+	
+	print(publications_list)
+	context = {"results":publications_list}
+	return render(request, "calendarapp/events-materials.html", context)
 
+	
+	
 
 #@login_required(login_url="signup")
 def event_details(request, event_id):

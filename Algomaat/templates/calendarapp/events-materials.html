@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+<!--<script src="{% static 'js/show_PAIEMEnts.js' %}" type="text/javascript"></script> -->
+<!-- <link href="{% static 'css/show_paiements.css' %}" rel="stylesheet" type="text/css"> -->
+
+
+
+
+{% endblock %}
+{% block content %}
+
+<div class="container" style="height:auto;  margin-bottom:0px;">
+                <div class="col-12">
+                    <div class="intro">
+                        <h3 style="color:var(--brand);"><i class='bx bxs-pencil'></i></h3>
+                        {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
+                        	<h2> My Materials </h2>
+                        {%  else %}	
+                        	<h2> My Materials </h2>
+                        {%  endif %}	
+                        <p class="mx-auto"> Here you can read all your materials.</p>
+                    </div>
+                </div>
+ </div>
+ <div id="contentsOfPaiements"  class="text-center" style=" margin-top:-30px;">
+  	
+ 		{% for data in  results %}
+       		<div id="paiement" class="container" style="background-color: #DAD7CD;  margin-bottom:50px;" >
+       		{% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
+       			<span class="btn btn-brand bx bxs-cart"  style="background-color:var(--brand); margin-bottom:5px;  margin-top:10px; padding:5px 5px; width:180px;  text-align:center; border-radius: 100px; font-size:14px; color: #fff; font-family:Verdana, sans-serif;" ><b> {{data.price}} EUR</b></span>
+       		{%  endif %}	
+       			
+       			<h3 style="color:var(--brand);"> {{data.title}}</h3>
+       			
+       			<div id="allContents" style=" padding-bottom:20px; margin-top:10px;" class="row g-4">
+       				
+       				{% for event in  data.events %}
+       				<div id="" class="container" style="background-color:#fff; width:80%; margin-left:8%; margin-rigth:8%; margin-top:20px;" >
+       					<h4 style=""> {{event.title}} </h4>
+       					<span style="color:var(--brand); ">[ {{event.start_time}}  &nbsp;&nbsp; to &nbsp;&nbsp; {{event.end_time}}  ]</span>
+						
+						<table style="background-color:#efefef; width:97%; margin:10px;" class="bordered-table zebra-striped">
+       						<thead>
+       							<tr>
+       								<th> Title  </th>
+       								<th> Description  </th>
+       								<th> Type  </th>
+       								<th> Posted by </th>
+       								<th> Show </th>
+       							</tr>
+       						</thead>
+       						<thead>
+       						     						
+       						<tbody>		
+       							{% for material in event.materials %}
+       							   
+       								<tr>
+       								       <th style="" >
+       								        material.title
+       								       </th>
+       								       <th style="" >
+       								        material.description
+       								       </th>
+	       								<th style="color:var(--brand);" > {{event_theme.theme.title}}  </th>
+	       								{%  if material.m_type == 1  %} 
+	       									<th style="color:var(--brand);"> Cours </th>
+	       								{% elif material.m_type == 2 %} 
+	       									<th style="color:var(--brand);" > Exercice </th>
+	       								{% elif material.m_type == 3 %} 
+	       									<th style="color:var(--brand);" > Reponse Exercice </th>
+	       								{% elif material.m_type == 4 %} 
+	       									<th style="color:var(--brand);" > Correction </th>
+	       								 {% endif %} 
+	       								 
+	       								<th style="" >
+       								        material.owner.username
+       								       </th>
+	       								<th>
+	        <a target="_blank" rel="noopener noreferrer" href="{{material.link_url}}"  style="color:var(--brand);" > show </a> 
+	       								 </th>
+	       								  
+	       								 
+	       							
+       								</tr>
+       							     
+       							{% endfor %}
+       						</tbody>
+       					</table>
+       				</div>
+       				{% endfor %}
+       			</div>
+       		
+       		
+       		</div>
+ 		{% endfor %}
+ 
+ </div>
+
+
+
+
+
+{% endblock %}

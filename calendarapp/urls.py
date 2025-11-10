@@ -17,6 +17,7 @@ urlpatterns = [
     #path("event/<int:event_id>/details/", views.event_details, name="event-detail"),
     path("event/details/<int:event_id>", views.event_details, name="event-detail"),
     path("event/themes/", views.event_themes, name="event-themes"),
+    path("events/materials/", views.events_materials, name="events-materials"),
     
     path("create_file/<event_id>/<nodetype_id>/", views.create_file, name="event_create_file"),
     path("create_link/<event_id>/<nodetype_id>/", views.create_link, name="event_create_link"),
