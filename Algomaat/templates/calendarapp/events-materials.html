@@ -79,6 +79,7 @@
 				success: function (data) 
 				{
 					$('#list_my_materials_'+ event_id).empty();
+					$('#list_my_materials_'+ event_id).hide();
 					
 					$.each(data, function(key, value) {
 					
@@ -86,6 +87,8 @@
 						
 					
 					});
+					
+					$('#list_my_materials_'+ event_id).show();
 					
 								
 				
