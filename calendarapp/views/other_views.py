@@ -285,7 +285,7 @@ def events_materials(request):
 	events_list = []
 	publications_list = []
 	# add events from my inscriptions
-	inscriptions = Inscription.objects.filter(participant=request.user, status=2)
+	inscriptions = Inscription.objects.filter(participant=request.user, status=2).order_by('-created_at')
 		
 	for inscription in inscriptions:
 		events_list = []
