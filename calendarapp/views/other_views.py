@@ -258,7 +258,12 @@ def ajax_get_materials(request):
 		#response_data['document'] = material.document
 		response_data['has_answer'] = material.has_answer
 		response_data['m_type'] = material.m_type
-		response_data['owner'] = material.owner.username
+		response_data['doc_link'] = material.doc_link
+		if material.owner.groups.all()[0].name == 'Simple_Customer':
+			response_data['owner'] = material.owner.username
+		else:
+			response_data['owner'] = "Algomaat"
+		
 
 		materials_results.append(response_data)
 	return JsonResponse(materials_results, safe=False)

@@ -35,8 +35,8 @@
 				materialLine += '<td><span style="color:black;"> Correction </span></td>';
 
 			}
-			
-			materialLine += '<td><button type="button" id="select_addMaterial_'+ id +'" class="btn btn-brand bx bxs-plus-circle" style="">  </button></td>';
+			materialLine += '<td><span style="color:black;">'+ owner +'</span></td>';
+			materialLine += ' <td> <a class="btn btn-brand" href="'+material.doc_link +'" target="_blank" > Show </a></td>';
 			materialLine  += '</tr>'; 
 
 			$('#list_my_materials_'+ event_id).append(materialLine);
@@ -140,7 +140,7 @@
        				
        				{% for event in  data.events %}
        				<div id="" class="container" style="background-color:#fff; width:80%; margin-left:8%; margin-rigth:8%; margin-top:20px;" >
-       					<a  style="" class="btn btn-brand"  onclick="loadMyMaterials({{event.id}});" href="#"> Show Materials</a>
+       					<a  style="float:right;" class="btn btn-brand"  onclick="loadMyMaterials({{event.id}});" href="#"> Show Materials</a>
        					<h4 style=""> {{event.title}} </h4>
        					<span style="color:var(--brand); ">[ {{event.start}}  &nbsp;&nbsp; to &nbsp;&nbsp; {{event.end}}  ]</span>
 						
