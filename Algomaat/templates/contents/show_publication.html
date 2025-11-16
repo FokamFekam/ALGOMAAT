@@ -215,13 +215,17 @@
                 </div>
                 <div class="col-lg-5">
               {% if publication.categorie.id == 1 %}
-               	<img src="{% static 'img/CATB4-GAM-PRO.png' %}" alt="">
+              		 {% if publication.id == 18 %}
+               	<img src="{% static 'img/VIS-CAT2D.png' %}" alt="">
+               	{% elif publication.id == 19 %}
+               	<img src="{% static 'img/VIS-CAT3-roblox.png' %}" alt="">
+               	{% endif %}
               {% elif publication.categorie.id == 2 %}
               		<img src="{% static 'img/CATB5-INTEL-ARTI.png' %}" alt=""> 
               {% elif publication.categorie.id == 3 %}
-              		<img src="{% static 'img/ROBOT.png' %}" alt=""> 
+              		<img src="{% static 'img/CATB1-ROBOT.png' %}" alt=""> 
               {% elif publication.categorie.id == 4 %}
-              		<img src="{% static 'img/CATB3-DEV-APPLI.png' %}" alt=""> 
+              		<img src="{% static 'img/CATB3-DEV.png' %}" alt=""> 
               {% elif publication.categorie.id == 5 %}
               		<img src="{% static 'img/CATB4-GAM-PRO.png' %}" alt=""> 
               {% else %}
