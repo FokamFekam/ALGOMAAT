@@ -149,7 +149,7 @@
        				
        				{% for event in  data.events %}
        				<div id="" class="container" style="background-color:#fff; width:80%; margin-left:8%; margin-rigth:8%; margin-top:20px;" >
-       					<a  style="float:right;" class="btn btn-brand"  onclick="loadMyMaterials({{event.id}});" href="#"> Show Materials</a>
+       					<a  style="float:right;" class="btn btn-brand"   onclick="event.preventDefault(); loadMyMaterials({{event.id}});" href="#"> Show Materials</a>
        					<h4 style=""> {{event.title}} </h4>
        					<span style="color:var(--brand); ">[ {{event.start}}  &nbsp;&nbsp; to &nbsp;&nbsp; {{event.end}}  ]</span>
 						
