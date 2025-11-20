@@ -16,6 +16,8 @@ urlpatterns = [
     path('remove/publication/<publication_id>', views.remove_publication_from_bucket, name="bucket_remove_publication"),
     path('remove/inscription/<inscription_id>', views.remove_inscription_from_bucket, name="bucket_remove_inscription"),
     
+    path('add_publications_to_bucket_of_inscriptions/', views.add_publications_to_bucket_of_inscriptions, name="add_publications_to_bucket_of_inscriptions"),
+    
     path('create/reservation/<publication_id>', views.create_reservation, name="create_reservation"),
     #path('remove/publication/<publication_id>/<inscription_id>', views.remove_publication_from_inscription, name="inscription_remove_publication"),
     path("ajax_get_contents_data", views.ajax_get_contents_data, name="get_ajax_contents"),

@@ -315,6 +315,10 @@ function post_ajax_form(selector, url, value , type)
 
 				    case 3:
 					return json.success;
+					
+				    case 4:
+					close_modal('#modal-participant-to-add');
+					break;
 
 				    default:
 					console.warn("Type de requête non reconnu :", type);

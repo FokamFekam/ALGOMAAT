@@ -102,7 +102,7 @@ def add_or_create_inscription2(participant_id, publication_id):
 		inscription = Inscription.objects.get(participant=foundUser, publication=publication)
 
 	else:	
-		inscription = Inscription.objects.create(participant=foundUser, status=0, publication=publication)
+		inscription = Inscription.objects.create(participant=foundUser, status=1, publication=publication)
 	return inscription
 
 
@@ -114,7 +114,7 @@ def check_inscription_exist(request, participant_id, publication_id):
 	ct_json = JSON_DICT
 	if Inscription.objects.filter(participant=foundUser, status__in=[0, 1], publication=publication).exists():
 		inscription = Inscription.objects.get(participant=foundUser, status__in=[0, 1], publication=publication)
-		print(inscription)
+		#print(inscription)
 		return JsonResponse(ct_json)
 									
 	else:	
@@ -284,6 +284,38 @@ def add_reservations_of_inscriptions(request):
 	#return redirect("calendarapp:event-themes")
 
 	
+
+
+
+
+def add_publications_to_bucket_of_inscriptions(request):
+	if request.method == 'POST':
+		bucket = BucketOfInscriptions.objects.get_or_create(owner=request.user)
+		order = Order.objects.get_or_create(buyer=request.user, status=1)
+				
+		publication_id = request.POST.get('publication_id')
+		number_of_participants = request.POST.get('index')
+		for index in range(1, int(number_of_participants) + 1):
+			user_name = str(request.POST.get('participant_name_'+ str(index)))
+			user_id = request.POST.get('participantId_'+ str(index))
+			if int(publication_id) != int(0) :
+				publication = Publication.objects.filter(pk=publication_id)[0]
+				inscription = add_or_create_inscription2(user_id, publication_id)
+				add_inscription_into_order(request, bucket, inscription, order)
+				
+			else:
+				space = Space.objects.filter(pk=space_id)[0]
+				for publication in space.get_publications():
+					if not publication.is_private:
+						inscription = add_or_create_inscription2(user_id, publication_id)
+						add_inscription_into_order(request, bucket, inscription, order)
+				
+		ct_json = JSON_DICT
+	return JsonResponse(ct_json)
+
+
+
+
 	
 
 def from_reseravtion_make_order(request, reservation_id):
