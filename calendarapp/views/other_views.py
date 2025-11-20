@@ -240,6 +240,7 @@ def ajax_get_my_materials(request, event_id):
 		response_data['doc_id'] = material.document.id
 		response_data['has_answer'] = material.has_answer
 		response_data['m_type'] = material.m_type
+		response_data['doc_link'] = material.doc_link()
 		response_data['owner'] = material.owner.username
 
 		materials_results.append(response_data)
