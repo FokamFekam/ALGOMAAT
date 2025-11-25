@@ -334,7 +334,7 @@ def events_materials(request):
 				for meeting in orderInscription.inscription.publication.meetings.all():
 					event = meeting.event
 					#check if this event already saved in event_list
-					if check_event_exists(event_list, event.id) == False:	
+					if check_event_exists(events_list, event.id) == False:	
 						events_list.append({   
 							"id": event.id,
 							"title": event.title,
