@@ -353,7 +353,43 @@ def events_materials(request):
 				})	
 				
 								
-					
+	### admin ###	
+	events_list = []
+	events = Event.objects.get_all_events(user=request.user)
+	for event in events:
+		#check if this event already saved in event_list
+		if check_event_exists(events_list, event.id) == False:
+			events_list.append({
+				"id": event.id,	
+				"title": event.title,
+				"start": event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+				"end": event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+				"description": event.description,
+			})
+		
+		
+			    
+	### Tutor ###	
+	for eventmember in eventmembers:
+		if check_event_exists(events_list, eventmember.event.id) == False:
+			events_list.append({
+				"id": eventmember.event.id,
+				"title": eventmember.event.title,
+				"start": eventmember.event.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+				"end": eventmember.event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+				"description": eventmember.event.description,
+			})
+	
+	publications_list.append({   
+		"id": 0,
+		"title": "All Events",
+		"description": "",
+		"price":0,
+		"categorie":0,
+		"events":events_list
+	})
+	
+			   
 	
 
 	context = {"results":publications_list}
