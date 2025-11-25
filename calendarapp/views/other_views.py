@@ -312,6 +312,7 @@ def events_materials(request):
 					"description": event.description
 				})
 		
+				
 		publications_list.append({   
 			"id": inscription.publication.id,
 			"title": inscription.publication.title,
@@ -320,6 +321,39 @@ def events_materials(request):
 			"categorie":inscription.publication.categorie,
 			"events":events_list
 		})
+		
+		
+	### Parent ###
+	if request.user.groups.filter(name='Parent').exists():
+		paiement_entrants = PaiementEntrant.objects.filter(owner=request.user)
+		for paiement in paiement_entrants:
+			orderInscriptions = OrderInscription.objects.filter(order=paiement.order)
+			for orderInscription in orderInscriptions:
+				events_list = []
+				#inscriptions.append(orderInscription.inscription)
+				for meeting in orderInscription.inscription.publication.meetings.all():
+					event = meeting.event
+					#check if this event already saved in event_list
+					if self.check_event_exists(event_list, event.id) == False:	
+						events_list.append({   
+							"id": event.id,
+							"title": event.title,
+							"start": event.start_time.strftime("%d/%m/%Y %H:%M"),
+							"end": event.end_time.strftime("%d/%m/%Y %H:%M"),
+							"description": event.description
+						})
+				
+				publications_list.append({   
+					"id": orderInscription.inscription.publication.id,
+					"title": orderInscription.inscription.publication.title,
+					"description": orderInscription.inscription.publication.description,
+					"price":orderInscription.inscription.publication.price,
+					"categorie":orderInscription.inscription.publication.categorie,
+					"events":events_list
+				})	
+				
+								
+					
 	
 
 	context = {"results":publications_list}
