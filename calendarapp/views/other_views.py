@@ -369,7 +369,8 @@ def events_materials(request):
 		
 		
 			    
-	### Tutor ###	
+	### Tutor ###
+	eventmembers = EventMember.objects.filter(user=request.user)	
 	for eventmember in eventmembers:
 		if check_event_exists(events_list, eventmember.event.id) == False:
 			events_list.append({
