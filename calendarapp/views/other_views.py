@@ -355,7 +355,7 @@ def events_materials(request):
 								
 	### admin ###	
 	events_list = []
-	events = Event.objects.get_all_events(user=request.user)
+	events = Event.objects.get_all_events(user=request.user).order_by('-created_at')
 	for event in events:
 		#check if this event already saved in event_list
 		if check_event_exists(events_list, event.id) == False:
@@ -370,7 +370,7 @@ def events_materials(request):
 		
 			    
 	### Tutor ###
-	eventmembers = EventMember.objects.filter(user=request.user)	
+	eventmembers = EventMember.objects.filter(user=request.user).order_by('-created_at')
 	for eventmember in eventmembers:
 		if check_event_exists(events_list, eventmember.event.id) == False:
 			events_list.append({
