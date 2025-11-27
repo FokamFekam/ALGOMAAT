@@ -497,7 +497,7 @@ def add_eventmember(request, event_id):
 
 class EventMemberDeleteView(generic.DeleteView):
 	model = EventMember
-	template_name = "event_delete.html"
+	template_name = "calendarapp/event_delete.html"
 	success_url = reverse_lazy("calendarapp:calendar")
 
 class CalendarViewNew(LoginRequiredMixin, generic.View):
@@ -620,14 +620,20 @@ def delete_event(request, event_id):
 
 def clone_meeting_and_update_pub(event_id, cloned_event):
 	event = get_object_or_404(Event, id=event_id)
-	print(event)
 	meetings = Meeting.objects.filter(event=event)
 	publications_from = Publication.objects.filter(meetings__in=meetings).distinct()
 	for meeting in meetings:
 		for publication in publications_from:
-			cloned_meeting =  Meeting.objects.create(m_type=meeting.m_type, event = cloned_event,  is_active=meeting.is_active)
+			cloned_meeting =  Meeting.objects.create(m_type=meeting.m_type, link_url=meeting.link_url, event = cloned_event,  is_active=meeting.is_active)
 			#meeting.get_cloned_meeting(cloned_event)
 			publication.meetings.add(cloned_meeting)
+	#add same event's members
+	eventmembers = EventMember.objects.filter(event=event).order_by('-created_at')
+	for eventmember in eventmembers:
+		EventMember.objects.create(event=cloned_event, user=eventmember.user, is_added=eventmember.is_added)
+		
+	
+			
 
 
 
@@ -641,6 +647,7 @@ def next_week(request, event_id):
 		next.save()		
 		#get cloned meeting with next and update pubications
 		clone_meeting_and_update_pub(event_id, next)
+		
 		return JsonResponse({'message': 'Sucess!'})
 	else:
         	return JsonResponse({'message': 'Error!'}, status=400)
