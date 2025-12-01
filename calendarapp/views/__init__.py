@@ -7,6 +7,7 @@ from .other_views import (
     event_details,
     create_file,
     create_link,
+    create_message,
     add_eventmember,
     EventMemberDeleteView,
     delete_event,
@@ -22,6 +23,7 @@ from .other_views import (
     ajax_get_my_materials,
     remove_material_from_event,
     add_material_to_event,
+    duplicate_meeting,
 
 )
 
@@ -36,6 +38,7 @@ __all__ = [
     event_details,
     create_file,
     create_link,
+    create_message,
     add_eventmember,
     EventMemberDeleteView,
     delete_event,
@@ -51,5 +54,6 @@ __all__ = [
     ajax_get_my_materials,
     remove_material_from_event,
     add_material_to_event,
+    duplicate_meeting,
 
 ]

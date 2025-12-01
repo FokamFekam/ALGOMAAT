@@ -81,6 +81,7 @@
 							  <th>Url</th>
 							  {% if user.groups.all.0.name == 'Admin' %}	
 							  <th>Edit</th>
+							  <th>Duplicate</th>
 							  {% endif %} 
 							 
 							</tr>
@@ -115,6 +116,10 @@
 							{% if user.groups.all.0.name == 'Admin' %}					   
 								    <td>
 		   <span data-bs-toggle="modal" data-bs-target="#modal-edit-meeting" class="btn btn-brand " onclick="update_meeting_link( {{meeting.id}} )">edit</span> 
+								    </td>
+								    
+								     <td>
+		   <span class="btn btn-brand " onclick="duplicated_meeting( {{meeting.id}} )">duplicate</span> 
 								    </td>
 							{% endif %}	
 
@@ -211,6 +216,9 @@
 							<h4 style="color:var(--brand);" > Materials of this Event</h4>
 							<a  style="margin-bottom:10px;" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-file-modal" href="#"> Add new File </a>
 							<a  style="margin-bottom:10px;" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-link-modal" href="#"> Add new Link </a>
+							
+							<a  style="margin-bottom:10px;" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#modal-message-material" href="#"> Add new Message </a>
+							
 							<a  style="margin-bottom:10px;" class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#existing-materials-modal" onclick="loadMyMaterials({{event.id}});" href="#"> Add existing Material</a>
 						</div>
 						<div id="detail41" style="margin:10px; display:none; " class="row">
@@ -253,11 +261,16 @@
 								      	<span style="color:black;">  Algomaat </span>
 								      {% endif %}
 								     </td>
-								    <td> <a class="btn btn-brand" href="{{ material.doc_link }}" target="_blank" > Show </a></td>
+								    <td> 
+							 {% if material.doc_link != None %}
+			 <a class="btn btn-brand" href="{{ material.doc_link }}" target="_blank" > Show </a>
+							{% endif %}	    
+								    </td>
 								    <td>
 								      {% if material.owner == user %}
-								      
-									<a class="btn btn-brand" onclick="removeMaterial( {{event.id}} , {{material.id}} )" href="">Remove</a>
+								            {% if material.doc_link != None %}
+			<a class="btn btn-brand" onclick="removeMaterial( {{event.id}} , {{material.id}} )" href="">Remove</a>
+									     {% endif %}	    
 									
 								      {% endif %}
 								    </td>
@@ -504,7 +517,7 @@
                             <div id="selectMaterials" class="col-lg-8 text-center container">
 	 	                          
  	                        
-							</div>
+			    </div>
  	                               
 			        
                                
@@ -558,6 +571,79 @@
 							</div>
 						    </div>
 					  
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-brand">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+    
+    
+    
+<!-- add message material-->                     
+      <div class="modal fade" id="modal-message-material" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row gy-4">
+                            <div class="col-lg-4 col-sm-12 bg-cover"
+                                style="background-image: url({% static 'img/SLIDE1.png' %}"); min-height:300px;">
+                                <div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                            
+                                
+                                <form method="post" action="{% url 'calendarapp:event_create_message' %}"  enctype="multipart/form-data"  class="p-lg-5 col-12 row g-3">
+                                    {% csrf_token %}
+                                    <div  class="col-lg-6">
+                                        <h3>Add the message's material</h3>
+                                    	  <p>Here you can add the message's material of this event </p>
+                                    </div>
+                                     
+                                               
+                                                <input type="hidden" name="event_id" value="{{event.id}}">
+                                                
+                                                  <div class="col-lg-6 error">
+							<label class="help-inline"> Title </label>
+							<div class="col-lg-6">
+							  <input  type="text"  name="title" value=""/>
+							</div>
+						    </div>
+                                         
+						    <div class="col-lg-6 error">
+							<label class="help-inline"> Message </label>
+							<div class="col-lg-6">
+							  <textarea id="message" name="message" rows="5" cols="40" ></textarea>
+							 
+							</div>
+						    </div>
+						    
+					
+						    
+						<div class="col-lg-6 error">
+						    <label>
+							<input type="radio" name="m_type" value="1"> Cours
+						    </label>
+						    <label>
+							<input type="radio" name="m_type" value="2"> Exercices
+						    </label>
+						</div>
+												    
+						    
+				  
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-brand">Add</button>
                                     </div>
@@ -646,7 +732,20 @@
 
 
 	<script>
+		function duplicated_meeting( meeting_id )
+		{
+			
+			$.getJSON('/calendarapp/duplicate_meeting/'+ meeting_id , function(result){
+					if(result.success)
+					{
+						alert("Meeting duplicated");
+						window.location.reload();
 
+					}
+				});
+		
+		
+		}
 
 		function addMaterialToSelect( event_id, id, title, description, has_answer,m_type,owner,selector )
 		{

@@ -60,30 +60,33 @@
                                     <p>Here you can create your Seance </p>
                                     </div>
                                     {% for field in form %}
-                                      {% if field.errors %}
-		                            <div class="col-lg-6">
-		                                <label for="" class="form-label">{{ field.label_tag }}</label>
-		                                <div class="form-control">
-		                                	{{ field }}
-		                                	<span class="help-inline">{{ field.errors|join:", " }}</span>
-		                                </div>
-		                                
-		                            </div>
-                                    	{% else %}
-		                            		                             
-		                              <div class="col-lg-6">
-		                                <label for="" class="form-label">{{ field.label_tag }}</label>
-		                                <div class="form-control">
-		                                	{{ field }}
-		                                </div>
-		                             </div>
-		                             
-		                       {% endif %}
+                                             {% if field.field.widget.input_type == "checkbox" %}
+						    <div class="col-lg-6 form-check">
+							{{ field }}
+							{{ field.label_tag }}
+							{% if field.errors %}
+							    <span class="help-inline">{{ field.errors|join:", " }}</span>
+							{% endif %}
+						    </div>
+						{% else %}
+						    <div class="col-lg-6">
+							<label class="form-label">{{ field.label_tag }}</label>
+							{{ field }}
+							{% if field.errors %}
+							    <span class="help-inline">{{ field.errors|join:", " }}</span>
+							{% endif %}
+						    </div>
+						{% endif %}
+
+
+                                    
                                     {% endfor %}
                                      
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-brand">Create</button>
                                     </div>
+                                    
+                                  </form>
                             </div>
                     
  							

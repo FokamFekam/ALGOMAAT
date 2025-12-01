@@ -14,7 +14,8 @@ class Activity(Abstract):
     bloc = models.ForeignKey(Bloc, on_delete=models.CASCADE, default=None)
     QUIZZ = 1
     PDF = 2
-    TYPES_CHOICES = ( (QUIZZ, 'Quizz'), (PDF, 'Pdf'))
+    LINK = 3
+    TYPES_CHOICES = ( (QUIZZ, 'Quizz'), (PDF, 'Pdf'), (LINK, 'Link'))
     a_type = models.IntegerField(TYPES_CHOICES, default=1)
     INIT = 1
     OPEN = 2

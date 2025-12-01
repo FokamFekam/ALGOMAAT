@@ -438,6 +438,18 @@ def event_details(request, event_id):
 
 
 
+def duplicate_meeting(request, meeting_id):
+	meeting = get_object_or_404(Meeting, id=meeting_id)			
+	duplicated_meeting =  Meeting.objects.create(m_type=meeting.m_type, link_url=meeting.link_url, event = meeting.event,  is_active=meeting.is_active)
+	publications = meeting.publication_set.all()
+	for publication in publications:
+		publication.meetings.add(duplicated_meeting)
+	return JsonResponse({"success":True})
+	
+		
+	
+
+
 
 #@login_required
 def create_file(request, event_id=None, nodetype_id=11):
@@ -474,6 +486,30 @@ def create_link(request, event_id=None, nodetype_id=11):
     return render(request, template, context_dict)
   
     
+
+
+
+#@login_required
+def create_message(request):
+	if request.method == 'POST':
+		message = request.POST.get('message')
+		event_id = request.POST.get('event_id')
+		event = Event.objects.filter(pk=event_id)[0]
+		material = MaterialEventDoc(
+				has_answer=False,
+				m_type=request.POST.get("m_type"),
+				title=request.POST.get("title"),
+				description= request.POST.get("message"),
+				owner=request.user
+			       )
+		material.save()
+		material.events.add(event)
+		return redirect('calendarapp:event-detail', event_id=event_id) 
+		
+		
+		
+
+
 
 
 
@@ -633,7 +669,7 @@ def clone_meeting_and_update_pub(event_id, cloned_event):
 		EventMember.objects.create(event=cloned_event, user=eventmember.user, is_added=eventmember.is_added)
 		
 	
-			
+
 
 
 

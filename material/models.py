@@ -92,28 +92,32 @@ class File(Document):
 
 """ Material File and Link """
 class Material(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    document = models.ForeignKey(Document, on_delete=models.CASCADE)
-    color = models.CharField(max_length=255, default="black")
-    has_answer = models.BooleanField(default=False, blank=True)
-    COURS = 1
-    EXERCICE = 2
-    REPONSE_EXERCICE = 3
-    CORRECTION = 4
-    TYPES_CHOICES = ( (COURS, 'COURS'), (EXERCICE, 'Exercice'), (REPONSE_EXERCICE, 'Ma Reponse'), (CORRECTION, 'correction') )
-    m_type = models.IntegerField(TYPES_CHOICES, default=1)
-    owner = models.ForeignKey(User,  on_delete=models.CASCADE, default=None)
+	title = models.CharField(max_length=255)
+	description = models.TextField()
+	document = models.ForeignKey(Document, on_delete=models.CASCADE, null=True, blank=True, default=None)
+	color = models.CharField(max_length=255, default="black")
+	has_answer = models.BooleanField(default=False, blank=True)
+	COURS = 1
+	EXERCICE = 2
+	REPONSE_EXERCICE = 3
+	CORRECTION = 4
+	TYPES_CHOICES = ( (COURS, 'COURS'), (EXERCICE, 'Exercice'), (REPONSE_EXERCICE, 'Ma Reponse'), (CORRECTION, 'correction') )
+	m_type = models.IntegerField(TYPES_CHOICES, default=1)
+	owner = models.ForeignKey(User,  on_delete=models.CASCADE, default=None)
 
     
     
-    def doc_type(self):
-        return self.document.get_real_document().doc_type()
+	def doc_type(self):
+		if self.document is None:
+			return None   
+		return self.document.get_real_document().doc_type()
 
     
       
-    def doc_link(self):
-        return self.document.get_real_document().doc_link()
+	def doc_link(self):
+		if self.document is None:
+			return None  
+		return self.document.get_real_document().doc_link()
 
 
 

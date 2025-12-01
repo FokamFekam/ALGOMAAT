@@ -19,6 +19,8 @@ urlpatterns = [
     path("event/themes/", views.event_themes, name="event-themes"),
     path("events/materials/", views.events_materials, name="events-materials"),
     
+    path("create_message/", views.create_message, name="event_create_message"),
+    
     path("create_file/<event_id>/<nodetype_id>/", views.create_file, name="event_create_file"),
     path("create_link/<event_id>/<nodetype_id>/", views.create_link, name="event_create_link"),
     path(
@@ -37,6 +39,9 @@ urlpatterns = [
     ),
     path(
         "add_meeting/<int:publication_id>", views.add_meeting, name="add_meeting"
+    ),
+    path(
+        "duplicate_meeting/<int:meeting_id>", views.duplicate_meeting, name="duplicate_meeting"
     ),
     path(
         "update_meeting_link/", views.update_meeting_link, name="update_meeting_link"
