@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from abstracts.models import Abstract
 from calendarapp.models import Event
-from lessonapp.models import Question, Activity
+from lessonapp.models import Question, Activity, Seance
 
 # Create your models here.
 
@@ -134,6 +134,10 @@ class MaterialQuestionDoc(Material):
 
 class MaterialActivityDoc(Material):
 	activity = models.ForeignKey(Activity, on_delete=models.CASCADE)  
+	
+
+class MaterialSeanceDoc(Material):
+	seance = models.ForeignKey(Seance, on_delete=models.CASCADE)  
 	
 
 class MaterialResponseActivityDoc(Material):

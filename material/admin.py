@@ -91,6 +91,13 @@ class MaterialEventDoc(admin.ModelAdmin):
   
     
 
+@admin.register(models.MaterialSeanceDoc)
+class MaterialSeanceDoc(admin.ModelAdmin):
+    model = models.MaterialSeanceDoc
+    list_display = ["id", "seance"]
+    list_filter = ["seance"]
+    
+
 
 @admin.register(models.MaterialActivityDoc)
 class MaterialActivityDoc(admin.ModelAdmin):
@@ -112,6 +119,9 @@ class MaterialQuestionDoc(admin.ModelAdmin):
     model = models.MaterialQuestionDoc
     list_display = ["id", "question"]
     list_filter = ["question"]
+    
+    
+
     
 
     

@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from . import models
 from calendarapp.models import Event
 from lessonapp.models import Question, Activity
-from material.models import File, Link,  Material,MaterialEventDoc, MaterialQuestionDoc, MaterialActivityDoc,MaterialResponseActivityDoc, InputBox, InputQuestionBox,Component, ActivityComponent
+from material.models import File, Link,  Material,MaterialEventDoc, MaterialQuestionDoc, MaterialActivityDoc,MaterialResponseActivityDoc, MaterialSeanceDoc,InputBox, InputQuestionBox,Component, ActivityComponent
 from django.shortcuts import render
 
 
@@ -24,10 +24,12 @@ class CreateMaterialForm(ModelForm):
 		   last digit 2 for inputBox like checkbox 
 		   last digit 3 for inputBox like  radio
 		   
+		   		   
 		   first digit 1 for event
 		   first digit 2 for activity
 		   first digit 3 for question
 		   first digit 4 for response_activity
+		   first digit 5 for seance
 		"""
 		if int(self.nodetype_id) == int(11): 
 			self.event_id = kwargs.pop('event_id')
@@ -35,6 +37,8 @@ class CreateMaterialForm(ModelForm):
 			self.question_id = kwargs.pop('question_id')
 		elif int(self.nodetype_id) == int(21) or int(self.nodetype_id) == int(41) or int(self.nodetype_id) == int(414):
 			self.activity_id = kwargs.pop('activity_id')
+		elif int(self.nodetype_id) == int(51):
+			self.seance_id = kwargs.pop('seance_id')
 		
 		
 		super(CreateMaterialForm, self).__init__(*args, **kwargs)
@@ -45,7 +49,7 @@ class CreateMaterialForm(ModelForm):
 			self.fields['m_type'].initial = 4
 
 		
-		if int(self.nodetype_id) == int(11) or  int(self.nodetype_id) == int(21) or  int(self.nodetype_id) == int(31):
+		if int(self.nodetype_id) == int(11) or  int(self.nodetype_id) == int(21) or  int(self.nodetype_id) == int(31) or  int(self.nodetype_id) == int(51):
 			#self.fields['title'] = forms.CharField()
 			#self.fields['description'] = forms.CharField(widget=forms.Textarea)
 			self.fields['has_answer'] = forms.BooleanField(required=False, initial=False)
@@ -57,6 +61,18 @@ class CreateMaterialForm(ModelForm):
 		if int(self.nodetype_id) == int(21):
 			activity = Activity.objects.filter(pk=self.activity_id)[0]
 			material = MaterialActivityDoc( color=data["color"],
+				has_answer=data["has_answer"],
+				m_type=data["m_type"],
+				title=data["title"],
+				description=data["description"],
+				document=doc,
+				activity=activity,
+				owner=self.user
+			       )
+			material.save()
+		elif int(self.nodetype_id) == int(51):
+			seance = Seance.objects.filter(pk=self.seance_id)[0]
+			material = MaterialSeanceDoc( color=data["color"],
 				has_answer=data["has_answer"],
 				m_type=data["m_type"],
 				title=data["title"],
