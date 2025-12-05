@@ -237,11 +237,15 @@ def ajax_get_my_materials(request, event_id):
 		response_data['id'] = material.id
 		response_data['title'] = material.title
 		response_data['description'] = material.description
-		response_data['doc_id'] = material.document.id
 		response_data['has_answer'] = material.has_answer
 		response_data['m_type'] = material.m_type
 		response_data['doc_link'] = material.doc_link()
 		response_data['owner'] = material.owner.username
+		
+		if material.document:
+            		response_data['doc_id'] = material.document.id
+		else:
+            		response_data['doc_id'] = None 
 
 		materials_results.append(response_data)
 	return JsonResponse(materials_results, safe=False)
@@ -249,7 +253,7 @@ def ajax_get_my_materials(request, event_id):
 
 
 def ajax_get_materials(request): 
-	materials = MaterialEventDoc.objects.filter(owner=request.user)	
+	materials = MaterialEventDoc.objects.filter(owner=request.user)
 	materials_results = []
 	for material in materials:
 		response_data = {}
