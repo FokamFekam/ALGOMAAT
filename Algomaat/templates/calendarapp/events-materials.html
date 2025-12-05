@@ -42,7 +42,13 @@
 
 			}
 			materialLine += '<td><span style="color:black;">'+ owner +'</span></td>';
-			materialLine += ' <td> <a target="_blank" rel="noopener noreferrer" href="'+ doc_link +'"  style="color:var(--brand);" > show </a></td>';
+			if (doc_link) {
+			    materialLine += ' <td><a target="_blank" rel="noopener noreferrer" href="' + doc_link + '" style="color:var(--brand);">show</a></td>';
+			}
+			else 
+			{
+			    materialLine += ' <td> </td>';  
+			}
 			materialLine  += '</tr>'; 
 
 			$('#list_my_materials_'+ event_id).append(materialLine);
