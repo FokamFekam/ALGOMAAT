@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.http import Http404, HttpResponseRedirect,  JsonResponse
 from lessonapp.models import Session, Sequence, Classe, Categorie, Theme, Examen,  Objectif, Seance, Activity, Control, Question, Activityquestion
 from lessonapp.forms import CreateSequenceForm, CreateThemeForm, CreateExamenForm, CreateSeanceForm, CreateActivityForm, CreateControlForm, CreateQuestionForm
-from material.models import File, Link, Material, MaterialEventDoc, MaterialQuestionDoc, MaterialActivityDoc, InputBox, InputQuestionBox, CheckedResponseInputQuestion, Component, ActivityComponent, MaterialResponseActivityDoc
+from material.models import File, Link, Material, MaterialEventDoc, MaterialQuestionDoc, MaterialActivityDoc, InputBox, InputQuestionBox, CheckedResponseInputQuestion, Component, ActivityComponent, MaterialResponseActivityDoc, MaterialSeanceDoc
 from material.forms import CreateMaterialFileForm, CreateMaterialLinkForm, CreateInputBoxForm, CreateActivityComponentForm
 from lessonapp.serializers import SessionSerializer, SequenceSerializer, ClasseSerializer, ThemeSerializer, ActivityquestionSerializer
 
@@ -44,6 +44,28 @@ def read_theme(request, theme_id):
 	control = 0
 	s = 1
 	for seance in seances:
+		seance_docs = []
+		materialSeanceDocs = MaterialSeanceDoc.objects.filter(seance = seance)
+		sd=1
+		for doc in materialSeanceDocs:
+			doc_dict = {}
+			doc_dict = {
+				"id"  : doc.pk,
+				"index":sd,
+				"url": doc.doc_link,
+				"title": doc.title,
+				"description": doc.description,
+				"color":doc.color,
+				"has_answer":doc.has_answer,
+				"m_type":doc.m_type,
+			}				
+						
+			seance_docs.append(doc_dict)
+			sd = sd+1			
+				
+		
+	
+		
 		activities = Activity.objects.filter(seance = seance)
 		
 		#children = []
@@ -162,7 +184,8 @@ def read_theme(request, theme_id):
 				    "id"  : seance.pk,
 				    "index":s,
 				    "title": seance.title,
-				    "type": seance.s_type,				   
+				    "type": seance.s_type,
+				    "seance_docs":seance_docs,				   
 				    "children":activity_dicts,
 				    "children_count":activities.count()
 				}
@@ -1053,51 +1076,71 @@ def create_component(request, activity_id, seance_id, theme_id, choice_id, seque
    
 
 
-    
 
 
 
 @login_required    
 def create_file(request, activity_id, seance_id, theme_id, sequence_id, nodetype_id):
-    if request.method == 'POST':
-        form = CreateMaterialFileForm(request.POST, request.FILES, user=request.user, activity_id=activity_id, nodetype_id=nodetype_id)
-        if form.is_valid():
-            File = form.save()
-            #log_it(request, thread, ADDITION)
-            #return redirect('lessonapp:sequence_edit', sequence_id=sequence_id)
-    else:
-        form = CreateMaterialFileForm(user=request.user, activity_id=activity_id, nodetype_id=nodetype_id)
-     
+	if request.method == 'POST':
+		if nodetype_id == 41 or nodetype_id == 414:
+			form = CreateMaterialFileForm(request.POST, request.FILES, user=request.user, activity_id=activity_id, nodetype_id=nodetype_id)
+		elif nodetype_id == 51:
+			form = CreateMaterialFileForm(request.POST, request.FILES, user=request.user, seance_id=seance_id, nodetype_id=nodetype_id)
+			if form.is_valid():
+				File = form.save()
+				#log_it(request, thread, ADDITION)
+				#return redirect('lessonapp:sequence_edit', sequence_id=sequence_id)
+	else:
+		if nodetype_id == 41 or nodetype_id == 414:
+			form = CreateMaterialFileForm(user=request.user, activity_id=activity_id, nodetype_id=nodetype_id)
+		elif nodetype_id == 51:
+			form = CreateMaterialFileForm(user=request.user, seance_id=seance_id, nodetype_id=nodetype_id)
+	 
+	 
+	     
+	if nodetype_id == 41 or nodetype_id == 414:
+		activity = get_object_or_404(Activity, id=activity_id)
+	else:
+		
+		activity = None
     
-    if nodetype_id == 41 or nodetype_id == 414:
-    	activity = get_object_or_404(MaterialActivityDoc, id=activity_id)
-    else:
-    	activity = get_object_or_404(Activity, id=activity_id)
-     
-    seance = get_object_or_404(Seance, id=seance_id)
-    theme = get_object_or_404(Theme, id=theme_id)
-    context_dict = {"form": form}
-    return render(request, 'lessonapp/create_file.html', { 'form': form, "activity":activity, "seance":seance, "theme":theme, "sequence_id":sequence_id, "nodetype_id":nodetype_id })
+         
+	seance = get_object_or_404(Seance, id=seance_id)
+	theme = get_object_or_404(Theme, id=theme_id)
+	context_dict = {"form": form}
+	return render(request, 'lessonapp/create_file.html', { 'form': form, "activity":activity, "seance":seance, "theme":theme, "sequence_id":sequence_id, "nodetype_id":nodetype_id })
   
 
 
 
 @login_required
-def create_link(request, activity_id, seance_id, theme_id, sequence_id):
-    if request.method == 'POST':
-        form = CreateMaterialLinkForm(request.POST, request.FILES, user=request.user, activity_id=activity_id, nodetype_id=21)
-        if form.is_valid():
-            Link = form.save()
-            #log_it(request, thread, ADDITION)
-            #return redirect('lessonapp:sequence_edit', sequence_id=sequence_id)
-    else:
-        form = CreateMaterialLinkForm(user=request.user, activity_id=activity_id, nodetype_id=21)
+def create_link(request, activity_id, seance_id, theme_id, sequence_id,  nodetype_id):
+	if request.method == 'POST':
+		if nodetype_id == 41 or nodetype_id == 414:
+			form = CreateMaterialLinkForm(request.POST, request.FILES, user=request.user, activity_id=activity_id, nodetype_id=21)
+		elif nodetype_id == 51:
+			form = CreateMaterialLinkForm(request.POST, request.FILES, user=request.user, seance_id=seance_id, nodetype_id=51)
+			
+			if form.is_valid():
+				Link = form.save()
+				#log_it(request, thread, ADDITION)
+				#return redirect('lessonapp:sequence_edit', sequence_id=sequence_id)
+	else:
+		if nodetype_id == 41 or nodetype_id == 414:
+			form = CreateMaterialLinkForm(user=request.user, activity_id=activity_id, nodetype_id=21)
+		elif nodetype_id == 51:
+			form = CreateMaterialLinkForm(user=request.user, seance_id=seance_id, nodetype_id=51)
+			
     
-    activity = get_object_or_404(Activity, id=activity_id)      
-    seance = get_object_or_404(Seance, id=seance_id)
-    theme = get_object_or_404(Theme, id=theme_id)
-    context_dict = {"form": form}
-    return render(request, 'lessonapp/create_link.html', { 'form': form, "activity":activity, "seance":seance, "theme":theme, "sequence_id":sequence_id })
+	if nodetype_id == 41 or nodetype_id == 414:
+		activity = get_object_or_404(Activity, id=activity_id)
+	else:
+		
+		activity = None  
+	seance = get_object_or_404(Seance, id=seance_id)
+	theme = get_object_or_404(Theme, id=theme_id)
+	context_dict = {"form": form}
+	return render(request, 'lessonapp/create_link.html', { 'form': form, "activity":activity, "seance":seance, "theme":theme, "sequence_id":sequence_id })
   
 
 

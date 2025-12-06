@@ -8,7 +8,10 @@
                        <!-- <h6>My Spaces</h6>   /lessonapp/sequence/edit/{{sequence.id}}
                          <h3 style="color:var(--brand);"><i class='bx bxs-save'></i></h3> -->
                         <h1 style="color:var(--brand);" >Create File </h1>
+                        
+                        {% if activity %}
                         <h3> of Activity: {{ activity.title}}    </h3>
+                        {% endif %}
                         <h4 style="color:var(--brand);" > from Seance: {{ seance.title}}    </h4>
                         <h5 > of Theme: {{ theme.title}}    </h5>
                         <h6>from  <a href="{% url 'lessonapp:sequence_edit'  sequence_id=sequence_id  %}"> sequence {{ sequence.numero}}    </a></h6>

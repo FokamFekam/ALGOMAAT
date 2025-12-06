@@ -736,9 +736,10 @@ function init(){
                        	 
                         label.innerHTML += "<a href='/lessonapp/control/create/"+ node.id.substr(12) +"/"+ node.data["theme_id"] +"/"+ $('#sequenceId').val()  +"' class='container' style='background-color:#F35B04; color:#fff; margin:2px;  padding:4px; text-align:center; width:90%; border-radius:5px; text-decoration:none; ' alt='Add new Activity'><i class='bx bx-folder-plus' id='img-add-activity"+ label.id +"'> </i> Control </a>";
                        	 
+                        label.innerHTML += "<a  href='/lessonapp/file/create/0/"+ node.id.substr(12)  +"/"+ node.data["theme_id"] +"/"+ $('#sequenceId').val() +"/"+ 51 +"' onClick=''  style='color:#F35B04; float:left; margin-left:4px;' alt='Add new file'><i class='bx bx-folder-plus' id='img-add-file"+ label.id +"'> </i>file</a>";
                        
                        
-                       
+                       label.innerHTML += "<br/><a  href='/lessonapp/link/create/0/"+ node.id.substr(12) +"/"+ node.data["theme_id"] +"/"+ $('#sequenceId').val()  +"/"+ 51 +"' onClick=''  style='color:#F35B04; float:left; margin-left:4px;' alt=''><i class='bx bx-folder-plus' id='img-add-classe"+ label.id +"'> </i> link </a>";
                        
                              
                        }
@@ -751,7 +752,7 @@ function init(){
                        	 label.innerHTML += "<a  href='/lessonapp/question/create/"+ node.id.substr(14) +"/"+ node.data["seance_id"] +"/"+  node.data["theme_id"] +"/"+ $('#sequenceId').val() +"' onClick='' class='container'  style='background-color:#590D22; color:#fff; margin:2px; padding:4px; text-align:center; width:90%; border-radius:5px; text-decoration:none;' alt='Add new question'><i class='bx bx-folder-plus' id='img-add-question"+ label.id +"'> </i> Question </a>";
                        
                        
-                         label.innerHTML += "<br/><a  href='/lessonapp/link/create/"+ node.id.substr(14) +"/"+ node.data["seance_id"]  +"/"+ node.data["theme_id"] +"/"+ $('#sequenceId').val()  +"' onClick=''  style='color:#590D22; float:left; margin-left:4px;' alt=''><i class='bx bx-folder-plus' id='img-add-classe"+ label.id +"'> </i> link </a>";
+                         label.innerHTML += "<br/><a  href='/lessonapp/link/create/"+ node.id.substr(14) +"/"+ node.data["seance_id"]  +"/"+ node.data["theme_id"] +"/"+ $('#sequenceId').val()  +"/"+ 21 +"' onClick=''  style='color:#590D22; float:left; margin-left:4px;' alt=''><i class='bx bx-folder-plus' id='img-add-classe"+ label.id +"'> </i> link </a>";
                          
                          
                           label.innerHTML += "<br/><a  href='/lessonapp/component/create/"+ node.id.substr(14) +"/"+ node.data["seance_id"]  +"/"+ node.data["theme_id"] +"/2/"+ $('#sequenceId').val()  +"' onClick=''  style='color:#590D22; float:left; margin-left:4px;' alt=''><i class='bx bx-folder-plus' id='img-add-classe"+ label.id +"'> </i> para </a>";

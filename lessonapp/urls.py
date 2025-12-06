@@ -23,11 +23,12 @@ urlpatterns = [
     path("question/ajax_get_question_activities/<int:question_id>", views.ajax_get_question__activities, name="get_question__activities"),
     path("question/update_value/", views.update_value, name="update_value"),
     
+    
     path("file/create/<int:activity_id>/<int:seance_id>/<int:theme_id>/<int:sequence_id>/<int:nodetype_id>", views.create_file, name="create_file"),
     path("file/getChilds/<int:matactivitydoc_id>/", views.json_matActivityFile_getChilds, name="json_matActivityFile_Childs"),
     path("response_file/getChilds/<int:matresponseactivitydoc_id>/", views.json_matResponseActivityFile_getChilds, name="json_matResponseActivityFile_Childs"),
     path("response_correction_file/getChilds/<int:matresponseactivitydoc_id>/", views.json_matResponseActivityCorrectionFile_getChilds, name="json_matResponseActivityCorrectionFile_Childs"),
-    path("link/create/<int:activity_id>/<int:seance_id>/<int:theme_id>/<int:sequence_id>", views.create_link, name="create_link"),
+    path("link/create/<int:activity_id>/<int:seance_id>/<int:theme_id>/<int:sequence_id>/<int:nodetype_id>", views.create_link, name="create_link"),
     path("link/getChilds/<int:matactivitydoc_id>/", views.json_matActivityLink_getChilds, name="json_matActivityLink_Childs"),
     
     
