@@ -48,7 +48,7 @@
                 <div id="calendar" style="background-color:#FBCEB1; color:black;" ></div>
             </div>
      
-      {% if not is_simple_customer  and not is_parent %}
+      {% if user.groups.all.0.name == 'Admin' %}
       
             <div class="modal fade show" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -194,6 +194,7 @@
                           <div class="modal-footer">
                           <input type="hidden" id="is_simple_customer" name="is_simple_customer" value="{{is_simple_customer}}">
                           <input type="hidden" id="is_parent" name="is_parent" value="{{is_parent}}">
+                           <input type="hidden" id="is_teacher" name="is_teacher" value="{{is_teacher}}">
                           <input type="hidden" id="is_admin" name="is_admin" value="{{is_admin}}">
                           
                           {% if user.groups.all.0.name == 'Admin' %}
@@ -394,6 +395,7 @@ $('#repeatedTimeClose').click(function(){
         
         var is_simple_customer = document.getElementById('is_simple_customer') 
 	var is_parent = document.getElementById('is_parent') 
+	var is_teacher = document.getElementById('is_teacher') 
 	
 	  modal.style.display = 'block';
        

@@ -14,13 +14,21 @@
 	 	
 	 	
 	 	}
+	 	
+	 	function limitToWords(text, maxWords = 3) 
+	 	{ 
+	 	    if (!text) return '';
+		    const words = text.split(/\s+/); 
+		    return words.length > maxWords ? words.slice(0, maxWords).join(' ') + '…' : text;
+		}
+
 
 		function addMaterialToSelect( event_id, id, title, description, has_answer,m_type,owner, doc_id, doc_link )
 		{
 		 
 			materialLine = '<tr id="select_material_' + id + '"  role="row">';
 			materialLine += '<td><span style="color:black;">'+ title +'</span></td>';
-			materialLine += '<td><span style="color:black;">'+ description +'</span></td>';
+			materialLine += '<td><span style="color:black;">'+  limitToWords(description, 3) +'</span></td>';
 			if( m_type == 1 )
 			{
 				materialLine += '<td><span style="color:black;"> Cours </span></td>';

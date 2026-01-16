@@ -3,7 +3,7 @@
 
 {% block scripts %}
 <link href="{% static 'css/cart.css' %}" rel="stylesheet" type="text/css"> 
-<script src="{% static 'js/show_MY_ORders.js' %}" type="text/javascript"></script> 
+<script src="{% static 'js/show_MY_ORDers.js' %}" type="text/javascript"></script> 
 
 <script  type="text/javascript" >
   
@@ -19,9 +19,9 @@
 	              $('#options_title2').text("");
 	              $('#options_title2').hide();
 	              $('#options_icon').hide();	                
-		       $('#paiment_manuel_div').hide();
-	                $('#container' +  currentDiv).empty();
-	                 $('#container' +  currentDiv).show();
+		      $('#paiment_manuel_div').hide();
+	              $('#container' +  currentDiv).empty();
+	              $('#container' +  currentDiv).show();
 		      
 		       /* create category list */
 		       $('<ul />', {id: 'categoriesGrid' + currentDiv}).appendTo('#container' + currentDiv);

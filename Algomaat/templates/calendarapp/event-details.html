@@ -79,7 +79,7 @@
 							  <th style="width: 10px">#</th>
 							  <th>Meeting</th>
 							  <th>Url</th>
-							  {% if user.groups.all.0.name == 'Admin' %}	
+							  {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Teacher' %}
 							  <th>Edit</th>
 							  <th>Duplicate</th>
 							  {% endif %} 
@@ -113,7 +113,8 @@
 		    		 		      {% endif %} 
 								    </td>
 
-							{% if user.groups.all.0.name == 'Admin' %}					   
+							{% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Teacher' %}
+					   
 								    <td>
 		   <span data-bs-toggle="modal" data-bs-target="#modal-edit-meeting" class="btn btn-brand " onclick="update_meeting_link( {{meeting.id}} )">edit</span> 
 								    </td>
@@ -514,7 +515,7 @@
                             </div> 
                          -->
 
-                            <div id="selectMaterials" class="col-lg-8 text-center container">
+                            <div id="selectMaterials"  class="col-lg-8 text-center container">
 	 	                          
  	                        
 			    </div>
@@ -639,6 +640,9 @@
 						    </label>
 						    <label>
 							<input type="radio" name="m_type" value="2"> Exercices
+						    </label>
+						    <label>
+							<input type="radio" name="m_type" value="4"> Correction
 						    </label>
 						</div>
 												    
@@ -811,10 +815,10 @@
 				success: function (data) 
 				{
 					$('#selectMaterials').empty();
-					$('#selectMaterials').append('<h5 style="color:var(--brand);">  Select the material(s) </h5>');
+					$('#selectMaterials').append('<br/><br /><h5 style="color:var(--brand);">  Select the material(s) </h5>');
 					$('#selectMaterials').append('<hr/>');
 
-					$('#selectMaterials').append('<table class="table table-bordered"><thead><tr style="color:var(--brand);"><th> Title </th><th> Description </th><th> Type </th><th>  </th></tr></thead><tbody id="list_my_materials"></tbody></table>');
+					$('#selectMaterials').append('<table class="table table-bordered"><thead><tr style="color:var(--brand);"><th> Title </th><th> Description </th><th> Type </th><th>  </th></tr></thead><tbody id="list_my_materials" >  </tbody></table>');
 				
 							  
 				
@@ -824,7 +828,7 @@
 
 					$.each(data, function(key, value) {
 					
-			addMaterialToSelect( event_id, data[key]["id"],data[key]["title"], data[key]["description"],data[key]["has_answer"],data[key]["m_type"],data[key]["owner"],'#list_my_materials' )
+			addMaterialToSelect( event_id, data[key]["id"],data[key]["title"], data[key]["description"],data[key]["has_answer"],data[key]["m_type"],data[key]["owner"],'#list_my_materials' );
 						
 					
 					});

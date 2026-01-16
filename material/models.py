@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from abstracts.models import Abstract
 from calendarapp.models import Event
 from lessonapp.models import Question, Activity, Seance
+from contents.models import Publication
 
 # Create your models here.
 
@@ -124,6 +125,14 @@ class Material(models.Model):
 class MaterialEventDoc(Material):
     events = models.ManyToManyField(Event)
 	#event = models.ForeignKey(Event, on_delete=models.CASCADE)
+	
+	
+	
+class MaterialPublicationDoc(Material):
+	publications = models.ManyToManyField(Publication)
+
+
+
 
 	 
     

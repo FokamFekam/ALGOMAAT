@@ -147,14 +147,14 @@ def save_event_theme(request):
 
 
 
-
+#we choose only inscriptions which are confirmed.
 #@login_required(login_url="signup")
 def event_themes(request):
 	if not request.user.is_authenticated:
 		return redirect("/registration/login/?page_id=%s&page_type=event_themes" %  0 )
 	inscriptions = []
 	if request.user.groups.filter(name='Simple_Customer').exists():
-		inscriptions = Inscription.objects.filter(participant=request.user, status=2).order_by("created_at")
+		inscriptions = Inscription.objects.filter(participant=request.user,  status=2).order_by("created_at")
 	elif request.user.groups.filter(name='Parent').exists():
 		paiement_entrants = PaiementEntrant.objects.filter(owner=request.user)
 		for paiement in paiement_entrants:
@@ -173,8 +173,7 @@ def event_themes(request):
 		if check_publication_saved(publication, publications_list) == False:
 			publications_list.append(publication)
 			events_list =[]
-			for meeting in publication.meetings.all().order_by('-created_at'):
-				event = meeting.event
+			for event in publication.events.all().order_by('-created_at'):
 				event_themes_list =[]
 				if check_event_saved(event, events_list) == False:
 					eventthemes = EventTheme.objects.filter(event=event)
@@ -418,12 +417,12 @@ def event_details(request, event_id):
 
 	meetings = Meeting.objects.filter(event=event)
 	publications_list =[]
-	for meeting in meetings:
-		publications = meeting.publication_set.all()
-		#check if publication already saved in publications_list
-		for publication in publications:
-			if check_publication_saved(publication, publications_list) == False:
-				publications_list.append(publication)
+	publications = event.publication_set.all()
+	#check if publication already saved in publications_list
+	for publication in publications:
+		if check_publication_saved(publication, publications_list) == False:
+			publications_list.append(publication)
+	
 	
 	
 	users_list = []	
@@ -444,10 +443,7 @@ def event_details(request, event_id):
 
 def duplicate_meeting(request, meeting_id):
 	meeting = get_object_or_404(Meeting, id=meeting_id)			
-	duplicated_meeting =  Meeting.objects.create(m_type=meeting.m_type, link_url=meeting.link_url, event = meeting.event,  is_active=meeting.is_active)
-	publications = meeting.publication_set.all()
-	for publication in publications:
-		publication.meetings.add(duplicated_meeting)
+	duplicated_meeting =  Meeting.objects.create(m_type=meeting.m_type, link_url=None, event = meeting.event,  is_active=meeting.is_active)
 	return JsonResponse({"success":True})
 	
 		
@@ -558,8 +554,7 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 		inscriptions = Inscription.objects.filter(participant=request.user, status=2)
 		
 		for inscription in inscriptions:
-			for meeting in inscription.publication.meetings.all():
-				event = meeting.event
+			for event in inscription.publication.events.all():
 				#check if this event already saved in event_list
 				if self.check_event_exists(event_list, event.id) == False:
 					event_list.append(
@@ -577,8 +572,7 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 				orderInscriptions = OrderInscription.objects.filter(order=paiement.order)
 				for orderInscription in orderInscriptions:
 					#inscriptions.append(orderInscription.inscription)
-					for meeting in orderInscription.inscription.publication.meetings.all():
-						event = meeting.event
+					for event in orderInscription.inscription.publication.events.all():
 						#check if this event already saved in event_list
 						if self.check_event_exists(event_list, event.id) == False:
 							event_list.append(
@@ -628,6 +622,7 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 		
 		is_simple_customer = request.user.groups.filter(name='Simple_Customer').exists()
 		is_parent = request.user.groups.filter(name='Parent').exists()
+		is_teacher = request.user.groups.filter(name='Teacher').exists()
 		is_admin = request.user.groups.filter(name='Admin').exists()
 		context = {"form": forms, "events": event_list,
 		           "events_month": events_month, "is_simple_customer":is_simple_customer, "is_parent":is_parent, "is_admin":is_admin}
@@ -661,12 +656,12 @@ def delete_event(request, event_id):
 def clone_meeting_and_update_pub(event_id, cloned_event):
 	event = get_object_or_404(Event, id=event_id)
 	meetings = Meeting.objects.filter(event=event)
-	publications_from = Publication.objects.filter(meetings__in=meetings).distinct()
+	publications_from = event.publication_set.all()
+	for publication in publications_from:
+		publication.events.add(cloned_event)
 	for meeting in meetings:
-		for publication in publications_from:
-			cloned_meeting =  Meeting.objects.create(m_type=meeting.m_type, link_url=meeting.link_url, event = cloned_event,  is_active=meeting.is_active)
-			#meeting.get_cloned_meeting(cloned_event)
-			publication.meetings.add(cloned_meeting)
+		cloned_meeting =  Meeting.objects.create(m_type=meeting.m_type, link_url=meeting.link_url, event = cloned_event,  is_active=meeting.is_active)
+		
 	#add same event's members
 	eventmembers = EventMember.objects.filter(event=event).order_by('-created_at')
 	for eventmember in eventmembers:
@@ -723,18 +718,19 @@ def event_all_weeks(request):
 			#meetings_from = Meeting.objects.filter(event=event)
 			#publications_from = Publication.objects.filter(meetings__in=meetings_from).distinct()
 			while (to_next_week_date + timedelta(days=7)).strftime('%Y-%m-%d') <= to_date:
-				next = event
-				next.id = None
-				next.start_time = from_next_week_date + timedelta(days=7)
-				next.end_time = to_next_week_date + timedelta(days=7)
-				next.save()
-				clone_meeting_and_update_pub(event_id, next)
-				#for meeting in meetings_from:
-					#for publication in publications_from:
-						#cloned_meeting = meeting.get_cloned_meeting(next)
-						#publication.meetings.add(cloned_meeting)
-				from_next_week_date  += timedelta(days=7)
-				to_next_week_date  += timedelta(days=7)
+				if (from_next_week_date + timedelta(days=7)).strftime('%Y-%m-%d') >= from_date:
+					next = event
+					next.id = None
+					next.start_time = from_next_week_date + timedelta(days=7)
+					next.end_time = to_next_week_date + timedelta(days=7)
+					next.save()
+					clone_meeting_and_update_pub(event_id, next)
+					#for meeting in meetings_from:
+						#for publication in publications_from:
+							#cloned_meeting = meeting.get_cloned_meeting(next)
+							#publication.meetings.add(cloned_meeting)
+				from_next_week_date  = from_next_week_date + timedelta(days=7)
+				to_next_week_date  = to_next_week_date + timedelta(days=7)
 				from_next_week_date2  = from_next_week_date.strftime('%Y-%m-%d')
 				to_next_week_date2  = to_next_week_date.strftime('%Y-%m-%d')
 			
@@ -742,14 +738,14 @@ def event_all_weeks(request):
         
         
         
-def add_meeting(request, publication_id):
+def add_meeting(request, event_id):
 	
 	if request.method == "POST":
-		form = MeetingForm(request.POST, publication_id=publication_id)
+		form = MeetingForm(request.POST, event_id=event_id)
 		if form.is_valid():
         		meeting = form.save()
         	
 	else:
-		form = MeetingForm(publication_id = publication_id)
+		form = MeetingForm(event_id = event_id)
 	context_dict = {"form": form}
 	return render(request, "calendarapp/add_meeting.html", context_dict)

@@ -12,7 +12,7 @@ class Meeting(Abstract):
 	FACE_TO_FACE = 2
 	TYPES_CHOICES = ((GOOGLE_MEET, 'Google_Meet'), (ZOOM, 'Zoom'), (FACE_TO_FACE, 'Face-to-face'),)
 	m_type = models.IntegerField(TYPES_CHOICES, default=0)
-	link_url = models.URLField(max_length = 200)
+	link_url = models.URLField(max_length=200, null=True, blank=True)
 	event = models.ForeignKey(Event,  on_delete=models.CASCADE)
 	
 	

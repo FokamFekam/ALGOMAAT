@@ -95,14 +95,14 @@ def add_publication_to_bucket(request, publication_id):
 
 
 
-def add_or_create_inscription2(participant_id, publication_id):
+def add_or_create_inscription2(participant_id, publication_id, status):
 	foundUser = User.objects.get(id=participant_id)
 	publication = Publication.objects.filter(pk=publication_id)[0]
 	if Inscription.objects.filter(participant=foundUser, status__in=[0, 1], publication=publication).exists():
 		inscription = Inscription.objects.get(participant=foundUser, publication=publication)
 
 	else:	
-		inscription = Inscription.objects.create(participant=foundUser, status=1, publication=publication)
+		inscription = Inscription.objects.create(participant=foundUser, status=status, publication=publication)
 	return inscription
 
 
@@ -209,8 +209,7 @@ def  ajax_get_reservated_users(request):
 def ajax_get_test_events(request, publication_id):
 	publication = Publication.objects.filter(pk=publication_id)[0]
 	events_list =[]
-	for meeting in publication.meetings.all().order_by('created_at'):
-		event = meeting.event
+	for event in publication.events.all().order_by('created_at'):
 		if event.is_test == True:
 			if Reservation.objects.filter(event=event).count() < 1:
 				event_dict = {
@@ -254,7 +253,7 @@ def add_reservations_of_inscriptions(request):
 			
 			if int(publication_id) != int(0) :
 				publication = Publication.objects.filter(pk=publication_id)[0]
-				inscription = add_or_create_inscription2(user_id, publication_id)
+				inscription = add_or_create_inscription2(user_id, publication_id, 0)
 				if event_id is None:
 					reservation = Reservation.objects.create(created_by=request.user, inscription=inscription, email_parent=email_parent, telephone_parent=telephone_parent, list_attente=True)
 				else:
@@ -270,7 +269,7 @@ def add_reservations_of_inscriptions(request):
 				space = Space.objects.filter(pk=space_id)[0]
 				for publication in space.get_publications():
 					if not publication.is_private:
-						inscription = add_or_create_inscription2(user_id, publication_id)
+						inscription = add_or_create_inscription2(user_id, publication_id, 0)
 						if event_id is None:
 							reservation = Reservation.objects.create(created_by=request.user, inscription=inscription, email_parent=email_parent, telephone_parent=telephone_parent, list_attente=True)
 						else:
@@ -300,14 +299,14 @@ def add_publications_to_bucket_of_inscriptions(request):
 			user_id = request.POST.get('participantId_'+ str(index))
 			if int(publication_id) != int(0) :
 				publication = Publication.objects.filter(pk=publication_id)[0]
-				inscription = add_or_create_inscription2(user_id, publication_id)
+				inscription = add_or_create_inscription2(user_id, publication_id, 1)
 				add_inscription_into_order(request, bucket, inscription, order)
 				
 			else:
 				space = Space.objects.filter(pk=space_id)[0]
 				for publication in space.get_publications():
 					if not publication.is_private:
-						inscription = add_or_create_inscription2(user_id, publication_id)
+						inscription = add_or_create_inscription2(user_id, publication_id, 1)
 						add_inscription_into_order(request, bucket, inscription, order)
 				
 		ct_json = JSON_DICT
@@ -323,6 +322,8 @@ def from_reseravtion_make_order(request, reservation_id):
 	reservation = Reservation.objects.filter(pk=reservation_id)[0]
 	order = Order.objects.get_or_create(buyer=request.user, status=1)
 	inscription = reservation.inscription
+	inscription.status = 1
+	inscription.save()
 	bucket = BucketOfInscriptions.objects.get_or_create(owner=request.user)
 	add_inscription_into_order(request, bucket, inscription, order)
 	ct_json = JSON_DICT

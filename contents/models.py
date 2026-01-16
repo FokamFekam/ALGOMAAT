@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from calendarapp.models import Meeting
+from calendarapp.models import Event
 from django.db.models import Q
 from django.db.models import Sum
 
@@ -39,7 +39,7 @@ class Publication(models.Model):
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     price = models.DecimalField(max_digits=8, decimal_places=2, default='00000.00')
-    meetings = models.ManyToManyField(Meeting, blank=True)
+    events = models.ManyToManyField(Event, blank=True)
     categorie = models.ForeignKey(Category, on_delete=models.CASCADE, default=None)
     liste_tags=models.ManyToManyField(Tags,null=True)
     image = models.ImageField(upload_to='img',null=True)

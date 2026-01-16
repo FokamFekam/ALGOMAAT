@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, JsonResponse
 import json as simplejson
 from django.core import serializers
+from django.db.models import Case, When, Value, IntegerField
 from django.contrib.auth.models import User
 from bucket.models import Bucket, BucketOfInscriptions, Inscription, Order, OrderInscription
 from .models import Paiement, PaiementEntrant
@@ -133,9 +134,11 @@ def ajax_get_order_data(request):
 	orders_dicts = []
 	#orders =  Order.objects.filter(buyer=request.user).order_by("status")
 	if request.user.groups.filter(name='Simple_Customer').exists() or request.user.groups.filter(name='Parent').exists():
-		orders = Order.objects.filter(buyer=request.user.id).order_by("status")
+		orders = Order.objects.filter(buyer=request.user.id).order_by('status')
+
 	else:
-		orders =  Order.objects.all().order_by("status")
+		orders =  Order.objects.all().order_by('status')
+
 	
 	for order in orders:
 		orderInscriptions = OrderInscription.objects.filter(order=order)

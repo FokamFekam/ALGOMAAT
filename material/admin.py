@@ -89,7 +89,13 @@ class ActivityComponent(admin.ModelAdmin):
 class MaterialEventDoc(admin.ModelAdmin):
     model = models.MaterialEventDoc
   
-    
+
+
+@admin.register(models.MaterialPublicationDoc)
+class MaterialPublicationDoc(admin.ModelAdmin):
+    model = models.MaterialPublicationDoc
+  
+  
 
 @admin.register(models.MaterialSeanceDoc)
 class MaterialSeanceDoc(admin.ModelAdmin):

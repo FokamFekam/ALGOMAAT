@@ -163,7 +163,7 @@ function addContentsOrder(Data, order_id)
 				content +='</table>';
 				 
 			     content +='</div>';
-		  	  $('#allContents_'+ order_id).prepend(content);
+		  	  $('#allContents_'+ order_id).append(content);
 
 				 	
 		         }
@@ -221,7 +221,7 @@ function addOrders(data)
 		    order += '</div>';
 		 
 
-			$('#contentsOfOrders').prepend(order);    
+			$('#contentsOfOrders').append(order);    
 			addContentsOrder(data[key]["inscriptions"], data[key]["id"]);   
 			$('#paiement').fadeIn('fast'); 	
 		 	
