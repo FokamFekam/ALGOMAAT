@@ -293,8 +293,8 @@ def events_materials(request):
 		
 	for inscription in inscriptions:
 		events_list = []
-		for meeting in inscription.publication.meetings.all().order_by('-created_at'):
-			event = meeting.event
+		
+		for event in inscription.publication.events.all().order_by('-created_at'):
 			#check if this event already saved in event_list
 			if check_event_exists(events_list, event.id) == False:
 				"""materials = event.materialeventdoc_set.all()
@@ -334,8 +334,7 @@ def events_materials(request):
 			for orderInscription in orderInscriptions:
 				events_list = []
 				#inscriptions.append(orderInscription.inscription)
-				for meeting in orderInscription.inscription.publication.meetings.all():
-					event = meeting.event
+				for event in orderInscription.inscription.publication.events.all().order_by('-created_at'):
 					#check if this event already saved in event_list
 					if check_event_exists(events_list, event.id) == False:	
 						events_list.append({   
