@@ -91,10 +91,17 @@ def update_meeting_link(request):
 		event_id = request.POST.get('event_id')
 		link_url = request.POST.get('link_url')
 		meeting_id = request.POST.get('meeting_id')
+
+		# Retirer http:// ou https://
+		if link_url:
+			link_url = link_url.replace("https://", "").replace("http://", "")
+
 		meeting = Meeting.objects.get(id=meeting_id)
 		meeting.link_url = link_url
 		meeting.save()
+
 	return redirect("calendarapp:event-detail", event_id=event_id)
+	
 	
 	
 
