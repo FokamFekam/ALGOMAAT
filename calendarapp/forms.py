@@ -3,6 +3,8 @@ from calendarapp.models import Event, EventMember, Meeting
 from contents.models import Publication, Space
 from django import forms
 from django.forms.widgets import CheckboxSelectMultiple
+from django.contrib.auth.models import Group
+
 
 
 
@@ -76,7 +78,13 @@ class AddMemberForm(forms.ModelForm):
 	class Meta:
         	model = EventMember
         	fields = ["user", "is_added"]
-        
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.fields["user"].queryset = (
+			Group.objects
+			.get(name="Teacher")
+			.user_set.all()
+		)
  
         
 class MeetingForm(forms.ModelForm):
