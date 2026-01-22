@@ -1,6 +1,6 @@
 # cal/views.py
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
 from datetime import timedelta, datetime, date
@@ -524,17 +524,38 @@ def add_eventmember(request, event_id):
 	if request.method == "POST":
 		forms = AddMemberForm(request.POST)
 		if forms.is_valid():
-		    member = EventMember.objects.filter(event=event_id)
-		    event = Event.objects.get(id=event_id)
-		    if member.count() <= 9:
-		        user = forms.cleaned_data["user"]
-		        is_added = forms.cleaned_data["is_added"]
-		        EventMember.objects.create(event=event, user=user, is_added=is_added)
-		        return redirect('calendarapp:event-detail', event_id=event_id)  
-		    else:
-		        print("--------------User limit exceed!-----------------")
-	context = {"form": forms}
-	return render(request, "calendarapp/add_member.html", context)
+			member = EventMember.objects.filter(event=event_id)
+			event = Event.objects.get(id=event_id)
+			if member.count() <= 9:
+				user = forms.cleaned_data["user"]
+				is_added = forms.cleaned_data["is_added"]
+				# check if there is not time conflict
+				eventsOfUser = EventMember.objects.filter(user=user)
+				for item in eventsOfUser:
+					eventOfUser = Event.objects.get(id=item.event_id)
+					# existing event times
+					start_existing = eventOfUser.start_time
+					end_existing = eventOfUser.end_time
+
+					# new event times
+					start_new = event.start_time
+					end_new = event.end_time
+
+					# check overlap
+					if start_existing < end_new and start_new < end_existing:
+						# overlap found
+						print("----- Event time conflict -----")
+						return HttpResponse("there is time conflict", status=405)
+					
+				EventMember.objects.create(event=event, user=user, is_added=is_added)
+				return redirect('calendarapp:event-detail', event_id=event_id) 
+					
+		        	
+		         
+			else:
+				print("--------------User limit exceed!-----------------")
+		context = {"form": forms}	
+		return render(request, "calendarapp/add_member.html", context)
 
 
 class EventMemberDeleteView(generic.DeleteView):
