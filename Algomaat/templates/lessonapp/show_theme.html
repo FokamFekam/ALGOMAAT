@@ -252,10 +252,11 @@
 	 {% for seance in seances_dicts  %}
 		<div  class="container" style="background-color: #DAD7CD; padding:10px;   margin-bottom:30px;" >
 		  
+		     {% if  seance.children %}
 			<button id="" style="float:right; width:100px; margin-top:-9px; margin-right:0px;" class="btn btn-brand" data-bs-toggle='modal' data-bs-target='#modal-show-quizz-link' onClick="loadQuizz({{seance.index}}, 1 , {{seance.children_count}});" > 
 				<b>Show</b> 
 			</button>	
-			    	
+		    {% endif %}    	
 			<h5 style="color:var(--brand);" > 
 				{{ seance.title}}
 			       	   

@@ -1082,7 +1082,7 @@ def create_component(request, activity_id, seance_id, theme_id, choice_id, seque
 @login_required    
 def create_file(request, activity_id, seance_id, theme_id, sequence_id, nodetype_id):
 	if request.method == 'POST':
-		if nodetype_id == 41 or nodetype_id == 414:
+		if nodetype_id == 21 or nodetype_id == 41 or nodetype_id == 414:
 			form = CreateMaterialFileForm(request.POST, request.FILES, user=request.user, activity_id=activity_id, nodetype_id=nodetype_id)
 		elif nodetype_id == 51:
 			form = CreateMaterialFileForm(request.POST, request.FILES, user=request.user, seance_id=seance_id, nodetype_id=nodetype_id)
@@ -1091,14 +1091,14 @@ def create_file(request, activity_id, seance_id, theme_id, sequence_id, nodetype
 				#log_it(request, thread, ADDITION)
 				#return redirect('lessonapp:sequence_edit', sequence_id=sequence_id)
 	else:
-		if nodetype_id == 41 or nodetype_id == 414:
+		if nodetype_id == 21 or  nodetype_id == 41 or nodetype_id == 414:
 			form = CreateMaterialFileForm(user=request.user, activity_id=activity_id, nodetype_id=nodetype_id)
 		elif nodetype_id == 51:
 			form = CreateMaterialFileForm(user=request.user, seance_id=seance_id, nodetype_id=nodetype_id)
 	 
 	 
 	     
-	if nodetype_id == 41 or nodetype_id == 414:
+	if nodetype_id == 21 or nodetype_id == 41 or nodetype_id == 414:
 		activity = get_object_or_404(Activity, id=activity_id)
 	else:
 		
