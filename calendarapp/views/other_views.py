@@ -63,6 +63,7 @@ def create_event(request):
 	form = EventForm(request.POST or None)
 	if request.POST and form.is_valid():
 		event = form.save()
+		#EventMember.objects.create(event=event, user=request.user, is_added=True)
 		"""title = form.cleaned_data["title"]
 		description = form.cleaned_data["description"]
 		start_time = form.cleaned_data["start_time"]
