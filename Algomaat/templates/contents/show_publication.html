@@ -268,12 +268,38 @@ function addParticipantLine( id, name , selector )
 			
 						 
 		         index = index + 1;   
-			 userLine  = '<div id="participant_line_' + id + '" class="col-lg-10" >'; 
-			 userLine += '<input type="hidden" name="participant_name_' + index + '" value="' + name + '" />';
-			 userLine += '<input type="hidden" id="participantId_' + index + '" name="participantId_' + index + '" value="' + id + '" />';
-			// userLine += '<span class="" style="padding:5px; font-size:20px; color:black;" id="text_' + name + '">' + name + '</span>';
-			 userLine += '<button type="button" id="deleteParticipant_'+ id +'_'+ name +'" class="btn btn-brand bx bxs-trash" style=""> ' + name + ' </button>';
-			 userLine  += '</div>'; 
+		          userLine =  '<div id="participant_line_' + id + '" class="container" style="background-color:#fff; width:97%; margin:10px;" >';        
+                
+                             userLine += '<table style="background-color:#efefef; width:97%; margin:10px;" class="bordered-table zebra-striped">';
+		                     userLine += '<input type="hidden" name="participant_name_' + index + '" value="' + name + '" />';
+				      userLine += '<input type="hidden" id="participantId_' + index + '" name="participantId_' + index + '" value="' + id + '" />';
+			      		userLine +='<thead>';
+						userLine +='<tr>';
+						userLine +='<th> Participant </th>';
+						userLine +='<th>Publication</th>';
+						userLine +='<th>Price</th>';
+						//content +='<th> Buy </th>';
+						userLine +='<th> Delete </th>';
+						userLine +='</tr>';
+					userLine +='</thead>';
+					userLine +='<tbody>';
+						userLine +='<tr>';
+						
+						userLine +='<td>'+ name  +'</td>';
+						userLine +='<td>'+ $('#publication_title').val()  +'</td>';
+						userLine +='<td>'+ $('#publication_price').val()  +'</td>';
+						userLine +='<td><button type="button" id="deleteParticipant_'+ id +'_'+ name +'" class="btn btn-brand bx bxs-trash" style=""></button></td>';
+			      			
+			      			userLine +='</tr>';
+			      			
+			      		userLine +='</tbody>';
+				userLine +='</table>';
+				 
+			     userLine +='</div>';
+                             
+                             
+                             
+			
 			$(selector).prepend(userLine);
 		    	
 		    	participant_ids.push(id.toString());
@@ -296,9 +322,10 @@ function addParticipantLine( id, name , selector )
 function deleteParticipantClick(eventObject) 
 {
   
-  divObj = $('#' + eventObject.currentTarget.id).parent();
+  divObj = $('#' + eventObject.currentTarget.id).parent().parent().parent().parent().parent();
   parentId = divObj.attr('id');
   //id =  $('#participantId_' + parentId).val()
+  
   id = parentId.substr(17);
 
   divObj.hide('fast', function(){ $(this).remove();  remove(participant_ids, id.toString()); });
@@ -376,7 +403,9 @@ function addNumberOfParticipants( index, selector )
 		           	 	
                         		<br/>
                         		<h2> {{publication.title}} </h2>
+                        	<input type="hidden" id="publication_title" name="publication_title" value="{{ publication.title }}" />
                        	        <p class="mx-auto"> {{publication.description}} </p>
+                       	<input type="hidden" id="publication_price" name="publication_price" value="{{ publication.price }}" />
                        	        {% if user.groups.all.0.name == 'Admin' %}
                        	      
 			      		  <div    onclick="inscription('{{ publication.id }}', '{{ publication.title }}');" data-bs-toggle="modal" data-bs-target="#modal-participant-to-add"  class="container" style="background-color:#DAD7CD; width:30%; border-radius:10px; padding:10px;   margin-bottom:10px; cursor:pointer;" >
@@ -384,6 +413,7 @@ function addNumberOfParticipants( index, selector )
 		               	        <div  class="mx-auto" style="background-color:var(--brand); border-radius:30px; width:90%; margin:10px; padding:10px; font-size:20px; font-weight:normal; color:#fff; font-family:Helvetica; cursor:pointer;">
 		                
 				      			 <span  id="" class="" style=" " >{{publication.price}} EUR </span>
+
 				      		        <i  class="bx bxs-cart" style="float:right; font-size:20px; font-weight:normal; margin-top:5px;"  >  </i>			</div>
 			      		        
 			      		 </div>

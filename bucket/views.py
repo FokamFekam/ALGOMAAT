@@ -309,7 +309,7 @@ def add_publications_to_bucket_of_inscriptions(request):
 						inscription = add_or_create_inscription2(user_id, publication_id, 1)
 						add_inscription_into_order(request, bucket, inscription, order)
 				
-		ct_json = JSON_DICT
+		ct_json = {"success":True}
 	return JsonResponse(ct_json)
 
 
