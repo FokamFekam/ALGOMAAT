@@ -232,16 +232,35 @@
 				         
 										  <div>
 											  <h4>Paiement Manuel </h4>
-											  <p style="color:var(--brand);">Please, choose your type of paiement </p>
+											  <p style="color:var(--brand);">Please, choose your payment type and payer </p>
 										  </div>
 										  
 										  <form method="post" action="/paiement/entrant/" id="paiement_manually_form" class="">
 											    	{% csrf_token %}
 						    <input type="hidden" id="order_id_form" name="orderId" value="">
+						    
+						    
+						
+						
+						  <!-- SELECT PAYER -->
+    <label for="payeur_form">Payer</label>
+    <select name="payerId" id="payeur_form" required>
+        <option value="" selected disabled hidden>Choose payer</option>
+        {% for payeur in payeurs %}
+            <option value="{{ payeur.id }}">
+                {{ payeur.first_name }} {{ payeur.last_name }} ({{ payeur.username }})
+            </option>
+        {% endfor %}
+    </select>
+
+    <br/><br/>
+						
+						
+						<!-- PAiement Option -->
 						   				  
 						                       							    			  							<div id="options_paiement_div" style="">
-						                        							    			  		<select name="tranche_name" id="tranche_name_form">
-						                        							    			  			  <option value="" selected disabled hidden>Choose here</option>
+				 <label for="tranche_name_form">Type</label>		                        							    			  		<select name="tranche_name" id="tranche_name_form">
+						                        							    			  			  <option value="" selected disabled hidden>Choose Paiement type</option>
 					  <option id="tranche_1" value="1">first Tranche</option>
 					 <!-- 
 					  <option id="tranche_2" value="2">second Tranche</option>

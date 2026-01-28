@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from bucket.models import Bucket, BucketOfInscriptions, Inscription, Order, OrderInscription
 from .models import Paiement, PaiementEntrant
 from paiement.serializers import PaiementEntrantSerializer
+from django.db.models import Q
+
 
 
 # Create your views here.
@@ -31,6 +33,9 @@ def remove_inscriptions_from_bucket(order):
 
 def paiement_entrant(request):
 	if request.method == 'POST':
+		payerId = request.POST.get('payerId')
+		payer = User.objects.get(id=payerId)
+		
 		orderId = request.POST.get('orderId')
 		order = Order.objects.get(id=orderId)
 		paiement_tranche = request.POST.get('tranche_name')
@@ -41,7 +46,7 @@ def paiement_entrant(request):
 			#get last paiement successful
 			#PaiementEntrant.objects.order_by('id')[0]
 			
-			paiement_entrant = PaiementEntrant.objects.create(owner=request.user, tranche=paiement_tranche, montant=montant_tranche,  status=1,order=order)
+			paiement_entrant = PaiementEntrant.objects.create(owner=payer, tranche=paiement_tranche, montant=montant_tranche,  status=1,order=order)
 			order.status = 3
 			order.save()			
 			remove_inscriptions_from_bucket(order)
@@ -49,7 +54,7 @@ def paiement_entrant(request):
 		# Paiement entier		
 		else:
 			montant = order.total_amount;
-			paiement_entrant = PaiementEntrant.objects.create(owner=request.user, montant=montant,  status=1, order=order)
+			paiement_entrant = PaiementEntrant.objects.create(owner=payer, montant=montant,  status=1, order=order)
 			order.status = 2
 			order.save()
 			remove_inscriptions_from_bucket(order)
@@ -199,7 +204,10 @@ def read_enter_all_paiements(request):
 	
 @login_required
 def read_my_orders(request):
-	context_dict = {}
+	payeurs = User.objects.filter(
+	    Q(groups__name='Parent') | Q(groups__name='Admin')
+	).distinct()
+	context_dict = { 'payeurs': payeurs, }
 	template="paiement/show_orders.html"
 	return render(request, template, context_dict)
 

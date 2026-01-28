@@ -2,7 +2,7 @@ var NumberOfContents = 0;
 $(function () { 
 	 
 	 
-	$('select').on('change', function() {
+	$('#tranche_name_form').on('change', function() {
   		if( this.value == 4 )
   		{
   		     $('#montant_tranche_form').hide();
