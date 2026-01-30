@@ -266,7 +266,7 @@ function slideTo(id, choice, reverse) {
 function addThemeClick(eventObject) 
 {
    id = eventObject.currentTarget.id.substr(9);
-   
+
    var url = '/lessonapp/read_theme/'+ id;
    var event_id =  $('#eventId').val();
    // bind theme with event
@@ -306,28 +306,47 @@ function loadThemes(classe_id, sequence_id)
 	        	     
 		    
 			   $('<ul />', {id: 'recipesList' + currentDiv}).appendTo('#lessons_div');
+			   
+content =  '<div id="theme" class="container" style="background-color:#fff; width:97%; margin:10px;" >';       
+		
+		
+		content += '<table style="background-color:#efefef; width:97%; margin:10px;" class="bordered-table zebra-striped">';
+		                    
+			      		content +='<thead>';
+						content +='<tr>';
+						content +='<th> Theme </th>';
+						content +='<th> Delete </th>';
+						content +='</tr>';
+					content +='</thead>';
+					content +='<tbody>';
 			   $.each(data, function(key, val) {
 			   
-	content = '<div  id="theme" class="row" style="margin-bottom:20px;">';
-	//content += ' <form method="post" action="/save_event_theme/"  enctype="multipart/form-data"  class="p-lg-5 col-12 row g-3"> {% csrf_token %}';
- content += '<input type="hidden" id="url_' + data[key]['id'] + '" value="/lessonapp/read_theme/'+ data[key]['id'] +'"/>';		         
-	content += '<a   class="btn btn-brand" href="/lessonapp/read_theme/'+ data[key]['id'] +'">'+ data[key]['title']  +'</a>'; 
-	content += '<button id="addTheme_'+ data[key]['id'] +'" class="btn btn-brand bx bx-plus-circle" style="float:right;" ></button>';	   
-	//content +='</form>';      	
+	        content += '<input type="hidden" id="url_' + data[key]['id'] + '" value="/lessonapp/read_theme/'+ data[key]['id'] +'"/>';
+		
+
+						content +='<tr>';
+						
+							content +='<td><a   class="" href="/lessonapp/read_theme/'+ data[key]['id'] +'">'+ data[key]['title']  +'</a></td>';
+						
+							content +='<td><button type="button" id="addTheme_'+ data[key]['id'] +'"  class="btn btn-brand bx bx-plus-circle" style="height:30px;"></button></td>';
+			      			
+			      			content +='</tr>';
+			      			
+			      	
+			   
 			         
-			         content += '</div>';
-			         
-			         $('#recipesList' + currentDiv).append(content);
-			         
-			        $('#addTheme_' + data[key]['id']).click(addThemeClick);
-			    /* $('<a />', {
-			      class: 'link',
-			      href: '/lessonapp/read_theme/' + data[key]['id'],
-			      text: data[key]['title']
-			     }).appendTo($('<li />').appendTo('#recipesList' + currentDiv)); */
+			       // $('#addTheme_' + data[key]['id']).click(addThemeClick);
+				   
 			     
 			   });
-			         	   
+			   
+			content +='</tbody>';
+		content +='</table>';
+
+content +='</div>';   
+
+	   $('#recipesList' + currentDiv).append(content);
+	   $('[id^="addTheme_"]').click(addThemeClick);	         	   
 	}	      	    
 			      	    
 			      
