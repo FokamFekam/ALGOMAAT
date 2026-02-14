@@ -79,7 +79,7 @@
 							  <th style="width: 10px">#</th>
 							  <th>Meeting</th>
 							  <th>Url</th>
-							  {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Teacher' %}
+							  {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Teacher' or  user.groups.all.0.name == 'Second_Admin' %}
 							  <th>Edit</th>
 							  <th>Add</th>
 							  {% endif %} 
@@ -113,7 +113,7 @@
 		    		 		      {% endif %} 
 								    </td>
 
-							{% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Teacher' %}
+							{% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Teacher' or  user.groups.all.0.name == 'Second_Admin' %}
 					   
 								    <td>
 		   <span data-bs-toggle="modal" data-bs-target="#modal-edit-meeting" class="btn btn-brand " onclick="update_meeting_link( {{meeting.id}} )">edit</span> 
@@ -142,7 +142,7 @@
 				     
 				       <div id="detail3" style="margin-bottom:20px; display:none;"  class="clearfix">
 					    <h4  style="color:var(--brand);" > Members of this Event</h4>
-						{% if user.groups.all.0.name == 'Admin' %}	
+						{% if user.groups.all.0.name == 'Admin' or  user.groups.all.0.name == 'Second_Admin' %}	
 					    <a class="btn btn-brand" data-bs-toggle="modal" data-bs-target="#new-member-modal" href="#"> Add Member </a>
 						{% endif %} 
 					</div>
@@ -171,14 +171,14 @@
 							    <td><span style="color:black;"> {{ member.user.firstname }}</span></td>
 							    <td><span style="color:black;">{{ member.user.username }}</span></td>
 							     <td>
-							     {% if user.groups.all.0.name == 'Admin' %}	
+							     {% if user.groups.all.0.name == 'Admin' or  user.groups.all.0.name == 'Second_Admin'%}	
 							   	<span style="color:black;">{{ member.user.email }}</span>
 							     {% endif %} 
 							    </td>
 							    <td><span style="color:black;"> Algomaat </span></td>
 								
 							    <td>
-								{% if user.groups.all.0.name == 'Admin' %}	
+								{% if user.groups.all.0.name == 'Admin' or  user.groups.all.0.name == 'Second_Admin'%}	
 									
 						 <a class="btn btn-brand" href="{% url 'calendarapp:remove_event' member.id %}">Remove</a> 
 								{% endif %} 

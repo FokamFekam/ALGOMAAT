@@ -65,7 +65,7 @@ def paiement_entrant(request):
 
 
 
-def get_json_paiements(entrants_paiements):
+def get_json_paiements(entrants_paiements, group):
 	paiements_dicts = []
 	for entrant_paiement in entrants_paiements:
 		orderInscriptions = OrderInscription.objects.filter(order=entrant_paiement.order)		
@@ -73,28 +73,32 @@ def get_json_paiements(entrants_paiements):
 		orders_dicts = []
 		inscriptions_dicts = []
 		for orderInscription in orderInscriptions:
-			totalOrderPrice = 0
-			
-			publication_dict = {
-				"id": orderInscription.inscription.publication.id,
-				"title": orderInscription.inscription.publication.title,
-				"description": orderInscription.inscription.publication.description,
-				"price": orderInscription.inscription.publication.price,
-				"is_private": orderInscription.inscription.publication.is_private,
-			}
-			totalPrice = totalPrice + orderInscription.inscription.publication.price
-			totalOrderPrice = totalOrderPrice + orderInscription.inscription.publication.price
+			if (group == 1) or (group == 3) or (
+    				group == 2 and
+    				orderInscription.inscription.publication.spaces.filter(owner=request.user).exists() 
+			):
+				totalOrderPrice = 0
 				
-			user = orderInscription.inscription.participant
-				
-			inscriptions_dict = {
-				"id"  : orderInscription.inscription.pk,
-				"participant": user.pk,
-				"participant_name": user.username,
-				"status": orderInscription.inscription.status,
-				"publications": [publication_dict],
-			}
-			inscriptions_dicts.append(inscriptions_dict)
+				publication_dict = {
+					"id": orderInscription.inscription.publication.id,
+					"title": orderInscription.inscription.publication.title,
+					"description": orderInscription.inscription.publication.description,
+					"price": orderInscription.inscription.publication.price,
+					"is_private": orderInscription.inscription.publication.is_private,
+				}
+				totalPrice = totalPrice + orderInscription.inscription.publication.price
+				totalOrderPrice = totalOrderPrice + orderInscription.inscription.publication.price
+					
+				user = orderInscription.inscription.participant
+					
+				inscriptions_dict = {
+					"id"  : orderInscription.inscription.pk,
+					"participant": user.pk,
+					"participant_name": user.username,
+					"status": orderInscription.inscription.status,
+					"publications": [publication_dict],
+				}
+				inscriptions_dicts.append(inscriptions_dict)
 		order_dict = {
 			"id"  : entrant_paiement.order.pk,
 			"created_by_name": entrant_paiement.order.buyer.username,
@@ -127,18 +131,35 @@ def get_json_paiements(entrants_paiements):
 
 def ajax_get_paiement_data(request):
 	entrants_paiements = PaiementEntrant.objects.filter(owner=request.user)
-	return get_json_paiements(entrants_paiements)
+	return get_json_paiements(entrants_paiements, 3)
 
 
 def ajax_get_all_paiements_data(request):
-	entrants_paiements = PaiementEntrant.objects.all().order_by("status")
-	return get_json_paiements(entrants_paiements)	
+	group = 3  # par défaut utilisateur simple
 
+	entrants_paiements = PaiementEntrant.objects.all().order_by("status")
+
+	user_group = request.user.groups.first()  # récupère le premier groupe
+
+	if user_group and user_group.name == "Admin":
+		group = 1
+
+	elif user_group and user_group.name == "Second_Admin":
+		group = 2
+
+	else:
+		entrants_paiements = PaiementEntrant.objects.filter(owner=request.user)
+		group = 3
+
+	return get_json_paiements(entrants_paiements, group)
+	
+	
 
 def ajax_get_order_data(request):
 	orders_dicts = []
 	#orders =  Order.objects.filter(buyer=request.user).order_by("status")
-	if request.user.groups.filter(name='Simple_Customer').exists() or request.user.groups.filter(name='Parent').exists():
+	if request.user.groups.filter(name='Simple_Customer').exists() or request.user.groups.filter(name='Parent').exists() or request.user.groups.filter(name='Teacher').exists() or request.user.groups.filter(name='Second_Admin').exists():
+		# il serait plus juste de choisir uniquement les orders venant publications cree par user.id
 		orders = Order.objects.filter(buyer=request.user.id).order_by('status')
 
 	else:
@@ -204,9 +225,21 @@ def read_enter_all_paiements(request):
 	
 @login_required
 def read_my_orders(request):
-	payeurs = User.objects.filter(
-	    Q(groups__name='Parent') | Q(groups__name='Admin')
-	).distinct()
+	user_group = request.user.groups.first()  # récupère le premier groupe
+
+	if user_group and user_group.name == "Admin":
+		payeurs = User.objects.filter(
+		    Q(groups__name='Parent') | Q(groups__name='Admin') | Q(groups__name='Second_Admin')
+		).distinct()
+		
+	elif user_group and user_group.name == "Second_Admin":
+		payeurs = User.objects.filter(
+		    Q(groups__name='Parent')  | Q(groups__name='Second_Admin')
+		).distinct()
+	else:
+		payeurs = User.objects.filter(
+		    Q(groups__name='Parent') 
+		).distinct()	
 	context_dict = { 'payeurs': payeurs, }
 	template="paiement/show_orders.html"
 	return render(request, template, context_dict)

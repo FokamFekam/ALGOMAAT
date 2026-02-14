@@ -225,12 +225,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 aria-controls="dropdown-menu" aria-expanded="false" >MySpaces</a>
 			  <ul id="dropdown-menu" style=""  class=" collapse " >
 
-                {% if user.groups.all.0.name == 'Admin' %}
+                {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Second_Admin' %}
 			      <li class="nav-item" ><a class="nav-link"  data-bs-toggle="modal" data-bs-target="#new-space-modal" href="#" >+ Space</a></li>
 			      <li class="nav-item" ><a class="nav-link" href="/publications/new/">+ Publications</a></li>
 			      <li class="nav-item" ><a class="nav-link" href="{% url 'contents:public_spaces' True %}"> My Contents</a></li>
                 {% endif %}
-		      	       {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Parent' %}
+		      	       {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Second_Admin' or user.groups.all.0.name == 'Parent' %}
 			      	<li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> Parent </a></li>
 			       {% else %}
 			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:event-themes'  %}"> Lessons </a></li>
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			       {% endif %}
 			        <li class="nav-item" ><a class='nav-link' href="{% url 'calendarapp:events-materials'  %}"> Materials
 			      
-			      {% if user.groups.all.0.name == 'Admin' %}
+			      {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Second_Admin' %}
 			      <li class="nav-item" ><a class='nav-link' href="{% url 'lessonapp:my_lessons'  %}"> All lessons </a></li>
 			      <li class="nav-item" ><a class='nav-link' href="{% url 'paiement:read_my_orders'  %}"> Orders </a></li>
 			       <li class="nav-item" ><a class='nav-link' href="{% url 'paiement:read_enter_all_paiements'  %}"> Paiements </a></li>
@@ -269,6 +269,12 @@ document.addEventListener("DOMContentLoaded", function() {
 			  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#user-dropdown-menu"
                 aria-controls="user-dropdown-menu" aria-expanded="false" >{{user.username}}</a>
 			  <ul id="user-dropdown-menu" style=""  class=" collapse " >
+			  
+			        {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Second_Admin'  %}
+			     <li class="nav-item" ><a class="nav-link" href="/administration/">Administration</a></li>
+
+               		{% endif %}
+			  
 			      <li class="nav-item" >
 			      		<form id="my_form"  action="{% url 'registration:logout'  %}" method="post"  >
                     		 		{% csrf_token %} 

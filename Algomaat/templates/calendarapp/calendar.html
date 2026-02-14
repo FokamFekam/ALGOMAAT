@@ -197,7 +197,7 @@
                            <input type="hidden" id="is_teacher" name="is_teacher" value="{{is_teacher}}">
                           <input type="hidden" id="is_admin" name="is_admin" value="{{is_admin}}">
                           
-                          {% if user.groups.all.0.name == 'Admin' %}
+                          {% if user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Second_Admin'  %}
                           
                               <button id="delete-event-button" data-event-id="" type="button" class="btn btn-brand bx bxs-trash"></button>
                               <button id="add-to-all-week" data-event-id-all-week="" type="button" class="btn btn-brand"> all weeks </button>

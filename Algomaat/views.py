@@ -15,6 +15,10 @@ def about(request):
 def homepage(request):
 	return render(request, 'home.html')
 	
+	
+def administration(request):
+	return render(request, 'administration.html')
+	
 
 
 

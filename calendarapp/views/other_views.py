@@ -19,6 +19,7 @@ from bucket.models import Inscription, Order, OrderInscription
 from paiement.models import Paiement, PaiementEntrant
 from material.models import File, Link,   Material, MaterialEventDoc, MaterialQuestionDoc
 from material.forms import CreateMaterialFileForm, CreateMaterialLinkForm
+from django.db.models import Q
 
 def get_date(req_day):
 	if req_day:
@@ -651,7 +652,7 @@ class CalendarViewNew(LoginRequiredMixin, generic.View):
 		is_simple_customer = request.user.groups.filter(name='Simple_Customer').exists()
 		is_parent = request.user.groups.filter(name='Parent').exists()
 		is_teacher = request.user.groups.filter(name='Teacher').exists()
-		is_admin = request.user.groups.filter(name='Admin').exists()
+		is_admin = request.user.groups.filter(Q(name='Admin') | Q(name='Second_Admin')).exists()
 		context = {"form": forms, "events": event_list,
 		           "events_month": events_month, "is_simple_customer":is_simple_customer, "is_parent":is_parent, "is_admin":is_admin}
 		           

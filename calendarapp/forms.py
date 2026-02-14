@@ -80,7 +80,7 @@ class AddMemberForm(forms.ModelForm):
         	fields = ["user", "is_added"]
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.fields["user"].queryset = User.objects.filter(groups__name__in=["Teacher", "Admin"]).distinct()
+		self.fields["user"].queryset = User.objects.filter(groups__name__in=["Teacher", "Admin", "Second_Admin"]).distinct()
 		
  
         

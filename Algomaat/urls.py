@@ -21,6 +21,7 @@ from .views import DashboardView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('administration/', views.administration),
     path('', views.homepage),
     path('about/', views.about),
     path('bucket/', include('bucket.urls')),
