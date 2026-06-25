@@ -29,6 +29,9 @@ $(function () {
 	       else
 	               getSpacesUrl = '/spaces/ajax_get_space_data/'+ $('#space_id').val();
 	               
+	               
+	              
+	               
 		$.ajax({
 		    url: getSpacesUrl , 
 		    dataType: 'json',

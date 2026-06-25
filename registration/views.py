@@ -30,6 +30,25 @@ def new_user_view(request, template="registration_form.html"):
 	    
 
 
+@csrf_protect
+def admin_new_user_view(request, template="registration_form.html"):
+	group_type = "Admin"
+	if request.user.groups.filter(name__icontains="Second_Admin").exists():
+		group_type = "Second_Admin"
+	
+	if request.method == 'POST':
+		form = RegistrationForm(request.POST, group_type=group_type, user_id=request.user.id)
+		if form.is_valid():
+			new_user = form.save()
+			login(request, new_user, backend="allauth.account.auth_backends.AuthenticationBackend")
+			return redirect("/")
+		   
+	else:
+		form = RegistrationForm(group_type=group_type, user_id=request.user.id)
+	context_dict = {"form": form}
+	return render(request, 'registration/registration_admin_add_form.html', context_dict)
+	
+
 
 def new_participant(request):
     if request.method == 'POST':

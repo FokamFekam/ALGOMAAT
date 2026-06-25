@@ -40,11 +40,16 @@ class RegistrationManager(models.Manager):
 		return new_user
 		
 		
-	def create_participant_user(self, username, email, password):
+	def create_participant_user(self, username, email, password, group=None, user_id=None):
 		new_user = User.objects.create_user(username, email, password)
 		new_user.is_active = True
-		group = Group.objects.get(name='Simple_Customer') 
-		new_user.groups.add(group)
+		if not group:
+			group_obj, _ = Group.objects.get_or_create(name="Simple_Customer") 
+		else:
+			group_name = f"{user_id}_{group}"
+			group_obj, _ = Group.objects.get_or_create(name=group_name)
+
+		new_user.groups.add(group_obj)	
 		new_user.save()
 		return new_user	 
 			                         
@@ -82,6 +87,13 @@ class RegistrationProfile(models.Model):
     
 	user = models.ForeignKey(User, unique=True, verbose_name='user', on_delete=models.CASCADE)
 	activation_key = models.CharField(verbose_name='activation key', max_length=40)
+	parent = models.ForeignKey(
+		User,
+		on_delete=models.SET_NULL,
+		null=True,
+		blank=True,
+		related_name="children"
+	)
     
 	objects = RegistrationManager()
     

@@ -85,36 +85,31 @@ $(function () {
 
 	if( choice == 1 ) 
 	{  
-	
-		     $('#add_session_div').hide();
-	             $('#add_sequence_div').hide();
-	              $('#edit_sequence_div').hide();
-		         
-		      
+	 
 		       /* create category list */
 		       $('<ul />', {id: 'categoriesGrid' + currentDiv}).appendTo('#container' + currentDiv);
 		      
 			 $('<li />', {
 			   class: 'ui-state-default',
-			   id: 'read_lessons',
+			   id: 'user_admin',
 			   text:" Users "
 			 }).appendTo('#categoriesGrid' + currentDiv);
 			 
 			  $('<li />', {
 			   class: 'ui-state-default',
-			   id: 'new_session',
+			   id: 'pub_admin',
 			   text:"Publications"
 			 }).appendTo('#categoriesGrid' + currentDiv);
 			 
 			  $('<li />', {
 			   class: 'ui-state-default',
-			   id: 'new_sequence',
+			   id: 'space_admin',
 			   text:"Spaces"
 			 }).appendTo('#categoriesGrid' + currentDiv);
 			 
 			  $('<li />', {
 			   class: 'ui-state-default',
-			   id: 'edit_sequence',
+			   id: 'event_admin',
 			   text:"Events"
 			 }).appendTo('#categoriesGrid' + currentDiv);
 
@@ -122,36 +117,22 @@ $(function () {
 
 
 			 /* add click event */
-			 $('#read_lessons').click(function() {
-			     window.location = '/lessonapp/read_lessons/';
+			 $('#user_admin').click(function() {
+
+			      slideTo(11, false);
 			 });
-		        $('#new_session').click(function() {
-			      slideTo(2, false);
-			 });
-			 
-			  $('#new_sequence').click(function() {
-			      slideTo(3, false);
+		        $('#pub_admin').click(function() {
+			      slideTo(12, false);
 			 });
 			 
-			 $('#edit_sequence').click(function() 
+			  $('#space_admin').click(function() {
+			      slideTo(13, false);
+			 });
+			 
+			 $('#event_admin').click(function() 
 			 {
-			      	loadSequences()
-			      	slideTo(4, false);
-					var acc = document.getElementsByClassName("accordion");
-					var i;
-					for (i = 0; i < acc.length; i++) 
-					{
-					  acc[i].addEventListener("click", function() {
-					    this.classList.toggle("active");
-					    var panel = this.nextElementSibling;
-					    if (panel.style.display === "block") {
-					      panel.style.display = "none";
-					    } else {
-					      panel.style.display = "block";
-					    }
-					  });
-					}
-			      
+			            	slideTo(14, false);
+				
 			 });
 			 
 			  $('#options_title').click(function() {
@@ -170,44 +151,64 @@ $(function () {
 	      
 	      
 	}
-	else if( choice == 2 ) 
+	else if( choice == 11 ) 
 	{
-	      $('#add_session_div').show();
-	             $('#add_sequence_div').hide();
-	              $('#edit_sequence_div').hide();
-	              
+
+	         /* create category list */
+		       $('<ul />', {id: 'categoriesGrid' + currentDiv}).appendTo('#container' + currentDiv);
+		      
+			 $('<li />', {
+			   class: 'ui-state-default',
+			   id: 'user_add',
+			   text:" Add  "
+			 }).appendTo('#categoriesGrid' + currentDiv);
+			 
+			  $('<li />', {
+			   class: 'ui-state-default',
+			   id: 'user_edit',
+			   text:"Edit"
+			 }).appendTo('#categoriesGrid' + currentDiv);
+			 
+			  $('<li />', {
+			   class: 'ui-state-default',
+			   id: 'user_delete',
+			   text:"Delete"
+			 }).appendTo('#categoriesGrid' + currentDiv);
+			 
+			  $('<li />', {
+			   class: 'ui-state-default',
+			   id: 'user_read',
+			   text:"Read"
+			 }).appendTo('#categoriesGrid' + currentDiv);
+
+	          
+	               /* show list */
+    			 $('#categoriesGrid' + currentDiv).show();
+
 	              
 		     $('#options_icon').show();
-	             $('#new_session_title').show();
-	              $('#new_sequence_title').hide();
-	               $('#edit_sequence_title').hide();
+	             $('#user_title').show();
+	              $('#publication_title').hide();
+	               $('#space_title').hide();
 		         
 	
+		 	$('#user_add').click(function() 
+			 {
+				window.location.href = '/registration/admin_new_user/';
+				
+			 });
 	
+	      
+	   
 	}
 	else if( choice == 3 ) 
 	{
-	      $('#add_session_div').hide();
-	             $('#add_sequence_div').show();
-	              $('#edit_sequence_div').hide();
-	              
-	                $('#options_icon').show();
-	             $('#new_session_title').hide();
-	              $('#new_sequence_title').show();
-	               $('#edit_sequence_title').hide();
-		         
+	    
 	
 	}
 	else if( choice == 4 ) 
 	{
-	       $('#add_session_div').hide();
-	             $('#add_sequence_div').hide();
-	              $('#edit_sequence_div').show();
-	              
-	                $('#options_icon').show();
-	             $('#new_session_title').hide();
-	              $('#new_sequence_title').hide();
-	               $('#edit_sequence_title').show();
+	     
 		         
 	
 	}
@@ -235,7 +236,8 @@ $(function () {
   }
 
   /* clear containers */
- // $('#container' + currentDiv).empty();
+  $('#container' + currentDiv).empty();
+  $('#container' + prevDiv).empty();
   
  
   /* update content */

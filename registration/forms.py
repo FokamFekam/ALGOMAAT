@@ -4,7 +4,7 @@ Forms and validation code for user registration.
 """
 
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from . import models
 from django import forms
 from django.utils.translation import gettext_lazy as _
@@ -42,6 +42,34 @@ class RegistrationForm(forms.Form):
 	password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict, render_value=False),
                                 label=_("Password (again)"))
                                 
+                                
+	def __init__(self, *args, **kwargs):
+		self.group_type = kwargs.pop('group_type', None)
+		self.user_id = kwargs.pop('user_id', None)
+		super().__init__(*args, **kwargs)
+		
+		if self.group_type is not None and self.group_type != "":
+			if self.group_type.lower() == "admin":
+				groups = Group.objects.all()
+			elif self.group_type.lower() == "second_admin":
+				groups = Group.objects.filter(name__icontains="Second_Admin")
+			
+			self.fields['group'] = forms.ModelChoiceField(
+				queryset=groups,
+				label=_("User group"),
+				empty_label=None,
+				required=True
+			)
+			
+			
+			self.fields['parent'] = forms.ModelChoiceField(
+				queryset=User.objects.filter(groups__name="Parent"),
+				required=False,
+				label=_("Parent user")
+			)
+					
+
+                                
 	def clean_username(self):
 		try:
 			 user = User.objects.get(username__iexact=self.cleaned_data['username'])
@@ -69,8 +97,12 @@ class RegistrationForm(forms.Form):
 			
 	def save(self):
 		data = self.cleaned_data
-		new_user = RegistrationProfile.objects.create_participant_user( data['username'], data['email'], data['password1'])
+		group = data.get('group')
+		parent = data.get('parent')
+		new_user = RegistrationProfile.objects.create_participant_user( data['username'], data['email'], data['password1'], group, self.user_id)
 		#new_user = RegistrationProfile.objects.create_inactive_user(data['firstname'], data['username'], data['email'], data['password1'], site="127.0.0.1:8000/", send_email=True)
+		RegistrationProfile.objects.filter(user=new_user).update(parent=parent)
+				
 		return new_user
 		
 		

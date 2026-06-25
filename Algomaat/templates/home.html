@@ -13,8 +13,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 text-center text-white">
-                        <h6 class="text-white text-uppercase">2D/3D Game Programming - Intelligence Artificielle - Robotique - Developpement Applications</h6>
-                        <h1 class="display-3 my-4">Apprentissage pour<br />Enfants</h1>
+                        <h6 class="text-white text-uppercase"> <span style="color:var(--brand);"> Robotique - Intelligence Artificielle - 2D/3D Game Programming  - Developpement Applications </span></h6>
+                        <!--<h1 class="display-3 my-4">Apprentissage pour<br />Enfants</h1> -->
+                        <h1 class="display-3 my-4">Stages de vacances et <br />cours de programmation à l'année </h1>
                         {% if not user.is_authenticated %}
                 		<a href="{% url 'registration:login' %}"  class="btn btn-brand">Login?</a> 
                 		<a href="{% url 'contents:all_public_spaces' %}" class="btn btn-outline-light ms-3">Nos services</a>
@@ -30,7 +31,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-10 offset-lg-1 text-white">
-                        <h6 class="text-white text-uppercase">Microbit programming  for kids</h6>
+                        <h6 class="text-white text-uppercase"><span style="color:var(--brand);">Microbit programming  for kids</span></h6>
                         <h1 class="display-3 my-4">Robotique & <br /> Intelligence Artificielle </h1>
                         {% if not user.is_authenticated %}
                 		<a href="{% url 'registration:login' %}"  class="btn btn-brand">Login?</a> 
@@ -48,7 +49,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-10 offset-lg-1 text-white">
-                        <h6 class="text-white text-uppercase">Roblox- Scratch - Web - Android </h6>
+                        <h6 class="text-white text-uppercase"> <span style="color:var(--brand);">Roblox- Scratch - Web - Android </span></h6>
                         <h1 class="display-3 my-4"> 2D/3D Game Programming  & <br/> Developpement d'applications </h1>
                         {% if not user.is_authenticated %}
                 		<a href="{% url 'registration:login' %}"  class="btn btn-brand">Login?</a> 
@@ -79,7 +80,7 @@
                             <div class="info-box">
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeE.png' %}" alt="">
                                 <div class="ms-4">
-                                    <h5>Enfants de 8 à 10 ans:</h5>
+                                    <h5>Enfants de 7 à 10 ans:</h5>
                                     <p>Apprentissage des bases de la programmation avec Scratch, création de jeux vidéo 2D, initiation à l’ordinateur et à la logique mathématique. </p>
                                   
                                 </div>
@@ -99,7 +100,7 @@
                                 <img style="width:50px; height:50px;" src="{% static 'img/iconeO.png' %}" alt="">
                                 <div class="ms-4">
                                     <h5>Lieu</h5>
-                                    <p>Les séances se déroulent en ligne(Google Meet), sous la supervision d’un enseignant certifié. Notre plateforme intègre des outils interactifs qui facilitent l’apprentissage des enfants. </p>
+                                    <p>Les séances se déroulent en ligne, via notre plateforme et sous la supervision d’un enseignant certifié. Notre plateforme intègre des outils interactifs qui facilitent l’apprentissage des enfants. </p>
                                 </div>
                             </div>
                           <!--  <a href="{% url 'contents:all_public_spaces' %}" class="btn btn-brand bxl-whatsapp">J'ai une question</a> -->
@@ -148,6 +149,9 @@
             
               <div  class="row" style="background-color: #efefef;   margin-bottom:20px; border-radius:5px;" >
               
+              
+
+              
               <!--  <div class="col-lg-4 col-md-6">
                     <div class="service">
                         <img src="{% static 'img/CAT3.png' %}" alt="">
@@ -159,6 +163,9 @@
                     </div>
                     
                 </div> -->
+                
+              
+                
                 
                 <div class="col-lg-4 col-md-6">
                     <div class="service">
@@ -261,7 +268,32 @@
     
     
     
+  <!--  
+    <script>
+                       var getSpacesUrl = '/spaces/ajax_get_spaces_data/0/0';
+                       
+                       
+			$.ajax({
+			    url: getSpacesUrl,
+			    dataType: 'json',
+			    async: false,
+			    type: 'GET',
+			    success: function(data) {
+				$('#spaceContents').empty();
+				addSpacesPublications(data, 0);
+			    },
+
+			    error: function(xhr, textStatus, errorThrown) {
+				console.log("ERROR : ", errorThrown);
+				console.log("ERROR : ", xhr);
+				console.log("ERROR : ", textStatus);
+			    }
+			});
+   </script>
     
+   -->
+
+
 
 
     <!-- MILESTONE -->

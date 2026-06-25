@@ -20,13 +20,13 @@
 
             </h4>   
 
-            <h1>Créer un compte</h1>
+            <h1> <a href="/administration/" style="color:#D90229;">Admin:</a> add new user</h1>
         
             {% if form.non_field_errors %}
               <div class="error-box">{{ form.non_field_errors }}</div>
             {% endif %}
         
-            <form method="post" action="/registration/new_user/" enctype="multipart/form-data"  novalidate>
+            <form method="post" action="/registration/admin_new_user/" enctype="multipart/form-data"  novalidate>
               {% csrf_token %}
                 
               <div>
@@ -54,7 +54,23 @@
                 {% endif %}
               </div>
               
-             
+              <div>
+		  <label for="{{ form.group.id_for_label }}">Groupe utilisateur</label>
+		  {{ form.group }}
+		  {% if form.group.errors %}
+		    <p class="error-box">{{ form.group.errors|striptags }}</p>
+		  {% endif %}
+		</div>
+		
+		 <div>
+		  <label for="{{ form.parent.id_for_label }}"> Parent </label>
+		  {{ form.parent }}
+		  {% if form.parent.errors %}
+		    <p class="error-box">{{ form.parent.errors|striptags }}</p>
+		  {% endif %}
+		</div>
+        
+        
               <div>
                 <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
                 {{ form.password1 }}
